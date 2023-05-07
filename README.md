@@ -3,35 +3,20 @@
 #### 介绍
 顶级开发团队最新力作——音乐网站！
 
-#### 软件架构
-软件架构说明
+#### 软件框架
+gin  处理前后端交互
+gorm 处理后端与数据库交互
+
+#### git的简单操作速通
+1.  Fork 仓库到自己仓库 https://gitee.com/guo-kb/music-player.git
+2.  git clone 复制自己的仓库
+3.  git add . 添加修改
+4.  git commit -m '本次提交的简单信息' 提交修改
+5.  git push 推送至自己仓库
+6.  从自己仓库提出PR
+7.  先更新自己仓库，再git pull以更新版本
+
+#### 版本迭代
+v0.0 创建仓库
 
 
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
