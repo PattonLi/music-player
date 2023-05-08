@@ -1,5 +1,5 @@
 {
-  "name": "vue-music-player-api",
+  "name": "vue-music-player-frontend",
   "version": "0.0.0",
   "private": true,
   "scripts": {
