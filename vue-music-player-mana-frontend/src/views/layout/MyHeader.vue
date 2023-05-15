@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import {pathMap} from '@/utils'
+import { pathMap } from '@/utils'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 

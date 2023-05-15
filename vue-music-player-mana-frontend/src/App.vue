@@ -4,7 +4,7 @@ import MyFotter from '@/views/layout/MyFotter.vue'
 import MyMenu from '@/views/layout/MyMenu.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { localGet ,pathMap} from '@/utils/index'
+import { localGet, pathMap } from '@/utils/index'
 
 //登录相关逻辑
 const state = ref({
@@ -22,10 +22,10 @@ router.beforeEach((to, from, next) => {
     //判断是否有token
     if (localGet('token') !== null) {
       // 如果没有，则跳至登录页面
-      console.log('token',localGet('token'));
+      console.log('token', localGet('token'))
       next()
     } else {
-      console.log('token',localGet('token'));
+      console.log('token', localGet('token'))
       next({ path: '/login' })
     }
   }

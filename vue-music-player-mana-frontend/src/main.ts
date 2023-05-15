@@ -5,11 +5,10 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import App from './App.vue'
 import router from './router'
 
-
-//add axios config
-import '@/utils/axios'
 // TODO:REMEBER TO DELETE
 import '../mock/index'
+//add axios config
+import '@/utils/axios'
 
 const app = createApp(App)
 
