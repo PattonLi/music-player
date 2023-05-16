@@ -1,0 +1,57 @@
+接收外部请求，controller 层分发请求、校验请求参数
+请求有效分发后，在 service 层与 dao 层进行交互后做逻辑处理
+dao 层负责数据操作，主要是数据库或持久化存储相关的操作
+
+1.Controllers: 
+Controllers are responsible for receiving and processing HTTP requests from clients. They interact 
+with the router to match incoming requests to the appropriate handler function. The controller also 
+defines the response structure and format.
+
+2.DAOs (Data Access Objects): 
+DAOs are responsible for interacting with the database. They encapsulate all the necessary database 
+operations, such as querying, updating, and deleting data, in a single place. DAOs also help to decouple 
+the application logic from the specific database implementation.
+
+3.Models: 
+Models define the data structures of your application. They represent the objects that your application 
+manipulates, such as users, orders, or products. Models usually map to database tables or collections, 
+and their properties define the structure of the data stored in the database.
+
+4.Routers: 
+Routers define the URL routes of your application and map them to specific controllers. They define the 
+available endpoints of your application and their corresponding handlers.
+
+5.Services: 
+Services are responsible for encapsulating the business logic of your application. They orchestrate the 
+interaction between controllers, DAOs, and models. Services typically perform complex operations that 
+involve multiple steps, such as authentication, authorization, and validation.
+
+To organize these components, you can use a layered architecture pattern. The layered architecture pattern 
+separates the application into logical layers, each with a specific responsibility and role. In this pattern, 
+each layer communicates only with the layer directly below or above it, resulting in a clear separation of 
+concerns and a more maintainable codebase.
+
+Here's an example of a layered architecture for a web application:
+
+Presentation Layer (Controllers and Routers)
+Application Layer (Services)
+Data Access Layer (DAOs)
+Database Layer (Database)
+
+The Presentation Layer is responsible for handling user requests and displaying data to the user. It communicates 
+with the Application Layer to perform business logic operations.
+
+The Application Layer is responsible for implementing the business logic of the application. It communicates with 
+the Data Access Layer to read and write data.
+
+The Data Access Layer is responsible for accessing the database. It communicates with the Database Layer to perform 
+database operations.
+
+The Database Layer is responsible for managing the database and storing the data.
+
+By organizing your application into layers, you can easily manage the complexity of your codebase, reduce coupling 
+between components, and improve the scalability and maintainability of your application.
+
+
+
+

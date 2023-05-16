@@ -1,0 +1,16 @@
+JSON tags:
+
+json:"fieldname": Specifies the name of the field when it is encoded to or decoded from JSON.
+json:"-": Ignores the field during encoding and decoding.
+json:",omitempty": Omits the field from the encoded JSON if its value is empty (zero value or nil).
+
+GORM tags:
+
+gorm:"column:fieldname": Specifies the column name for the field in the database table.
+gorm:"type:type": Specifies the SQL data type for the field.
+gorm:"primary_key": Marks the field as the primary key for the table.
+gorm:"not null": Specifies that the field cannot be null in the database.
+gorm:"default:value": Specifies the default value for the field in the database.
+gorm:"unique": Marks the field as a unique constraint in the database.
+gorm:"autoCreateTime": Specifies that the field should be set to the current time on record creation.
+gorm:"autoUpdateTime": Specifies that the field should be set to the current time on record update.
