@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"music-player/musicplayerserver/model"
-	"music-player/musicplayerserver/service"
+	"musicplayerserver/model"
+	"musicplayerserver/service"
 
 	"github.com/gin-gonic/gin"
 )
