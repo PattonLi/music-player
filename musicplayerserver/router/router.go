@@ -1,7 +1,7 @@
 package router
 
 import (
-	"music-player/musicplayerserver/controller"
+	"musicplayerserver/controller"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

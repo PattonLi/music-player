@@ -1,8 +1,8 @@
 package main
 
 import (
-	"music-player/musicplayerserver/dao"
-	"music-player/musicplayerserver/router"
+	"musicplayerserver/dao"
+	"musicplayerserver/router"
 
 	"github.com/gin-gonic/gin"
 )
