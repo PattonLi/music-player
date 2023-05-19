@@ -2,35 +2,31 @@
 import MyHeader from '@/views/layout/MyHeader.vue'
 import MyFotter from '@/views/layout/MyFotter.vue'
 import MyMenu from '@/views/layout/MyMenu.vue'
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { localGet, pathMap } from '@/utils/index'
+import { pathMap } from '@/router/pathMap'
+import { useAuthStore } from './stores/auth'
 
 //登录相关逻辑
-const state = ref({
-  showMenu: true // 是否需要显示菜单
-})
-const noMenu = ['/login']
 const router = useRouter()
-// 监听路由的变化
+const authStore = useAuthStore()
+
 //若未登录则跳转登录
 router.beforeEach((to, from, next) => {
   if (to.path == '/login') {
     // 如果路径是 /login 则正常执行
     next()
   } else {
-    //判断是否有token
-    if (localGet('token') !== null) {
-      // 如果没有，则跳至登录页面
-      console.log('token', localGet('token'))
+    //判断是否已登录
+    if (authStore.getAuthStatus.isLogin == true) {
+      console.log('已登录！')
       next()
     } else {
-      console.log('token', localGet('token'))
+      //没有则跳至登录页面
+      console.log('未登录！')
       next({ path: '/login' })
     }
   }
-  //如果未
-  state.value.showMenu = !noMenu.includes(to.path)
+  //设置网页名称
   document.title = pathMap[to.name as keyof typeof pathMap]
 })
 </script>
@@ -38,7 +34,7 @@ router.beforeEach((to, from, next) => {
 <template>
   <div id="app">
     <div class="layout">
-      <el-container v-if="state.showMenu" class="container">
+      <el-container v-if="authStore.getAuthStatus.isLogin" class="container">
         <MyMenu></MyMenu>
         <!--main container-->
         <el-container class="content">
@@ -65,7 +61,7 @@ router.beforeEach((to, from, next) => {
   display: flex;
   flex-direction: column;
   max-height: 100vh;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .main {
