@@ -6,7 +6,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from './App.vue'
 import router from './router'
 //TODO:记得删除
-import '../mock/index'
+// import '../mock/index'
 //add axios config
 // import '@/utils/axios'
 
