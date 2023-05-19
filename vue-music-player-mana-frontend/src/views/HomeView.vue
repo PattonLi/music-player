@@ -12,23 +12,26 @@ import axios from 'axios'
 import { ref } from 'vue'
 
 const str = ref({
-  name: String
+  Username :"",
+	Gender  :"",
+	Age      :"",
+	Email      :"",
+	Password   :"",
 })
-
 //异步回调
 function getAsync() {
   axios.get('http://localhost:8080/hello').then(function (response: any) {
     //回调
-    str.value.name = response
+    // str.value.name = response
   })
 }
 
 //同步方式
 async function getsync() {
-  await axios.get('http://localhost:8080/hello').then(function (response: any) {
+  await axios.post('http://localhost:8080/register').then(function (response: any) {
     //回调
     try {
-      str.value.name = response
+      str.value = response
     } catch (error: any) {
       console.log(error)
     }
