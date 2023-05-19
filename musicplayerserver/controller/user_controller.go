@@ -7,13 +7,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var userservice = service.UserService{}
-
-func UserControllerInit() {
-	userservice.NewUserService()
+type UserController struct {
+	userservice *service.UserService
 }
 
-func AddUserHandler(c *gin.Context) model.UserInfo {
+func NewUserController() *UserController {
+	uss := service.NewUserService()
+	return &UserController{
+		userservice: uss,
+	}
+}
+
+func (usc *UserController) AddUserHandler(c *gin.Context) model.UserInfo {
 	username := c.PostForm("username")
 	gender := c.PostForm("gender")
 	age := c.PostForm("age")
@@ -26,6 +31,6 @@ func AddUserHandler(c *gin.Context) model.UserInfo {
 		Email:    email,
 		Password: password,
 	}
-	userservice.UserRegister(&user)
+	usc.userservice.UserRegister(&user)
 	return user
 }
