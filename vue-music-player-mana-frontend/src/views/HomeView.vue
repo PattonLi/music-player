@@ -28,7 +28,13 @@ function getAsync() {
 
 //同步方式
 async function getsync() {
-  await axios.post('http://localhost:8080/register').then(function (response: any) {
+  await axios.post('http://localhost:8080/register',{
+  Username :"asdasd",
+	Gender  :"asdasd",
+	Age      :"ssssss",
+	Email      :"asdasdsa",
+	Password   :"asdsdsdsd",
+}).then(function (response: any) {
     //回调
     try {
       str.value = response
