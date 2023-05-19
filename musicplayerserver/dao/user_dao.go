@@ -2,7 +2,7 @@ package dao
 
 import (
 	"fmt"
-	"musicplayerserver/model"
+	"music-player/musicplayerserver/model"
 )
 
 type UserDao struct {

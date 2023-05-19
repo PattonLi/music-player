@@ -2,8 +2,8 @@ package service
 
 import (
 	"fmt"
-	"musicplayerserver/dao"
-	"musicplayerserver/model"
+	"music-player/musicplayerserver/dao"
+	"music-player/musicplayerserver/model"
 )
 
 type UserService struct {
