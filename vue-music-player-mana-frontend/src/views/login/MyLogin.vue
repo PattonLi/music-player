@@ -43,10 +43,10 @@
 
 <script setup lang="ts">
 import axios from 'axios'
-import { ref, toRef } from 'vue'
-import { localSet } from '@/utils/index'
+import { ref } from 'vue'
 import { Md5 } from 'ts-md5'
-
+import { useAuthStore } from '@/stores/auth'
+const authStore = useAuthStore()
 const loginForm = ref()
 const state = ref({
   ruleForm: {
@@ -66,29 +66,22 @@ const submitForm = async () => {
   loginForm.value.validate((valid: boolean) => {
     //表示表单是否通过了上面 rules 的规则。
     if (valid) {
-      // /adminUser/login登录接口路径
       axios
         .post('/adminUser/login', {
           userName: state.value.ruleForm.username || '',
           passwordMd5: Md5.hashStr(state.value.ruleForm.password)
         })
         .then((res) => {
-          // 返回一个 token，我们后续去请求别的接口时要带上的
-          // 将其存储到 localStorage 里面。
-          localSet('token', res.data['token'])
+          // 返回一个 token
+          authStore.SetToken(res.data['token'])
           // 刷新页面
           window.location.href = '/'
         })
     } else {
-      console.log('error submit!!')
+      console.log('登录表单不符合规则！')
       return false
     }
   })
-}
-// reset form
-const resetForm = () => {
-  // loginForm能拿到 el-form 的重制方法
-  loginForm.value.resetFields()
 }
 </script>
 
