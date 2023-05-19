@@ -1,4 +1,4 @@
-module music-player
+module musicplayerserver
 
 go 1.20
 

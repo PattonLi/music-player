@@ -1,7 +1,7 @@
 package main
 
 import (
-	"music-player/musicplayerserver/dao"
+	musicplayerserver/dao"
 )
 
 func main() {

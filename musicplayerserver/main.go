@@ -1,12 +1,5 @@
 package main
 
-// import (
-// 	"music-player/musicplayerserver/dao"
-// 	"music-player/musicplayerserver/router"
-
-// 	"github.com/gin-gonic/gin"
-// )
-
 // func main() {
 // 	dao.Init()
 // 	/*
