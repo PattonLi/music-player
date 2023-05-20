@@ -1,21 +1,23 @@
 <template>
   <div class="header">
+    <!--页面名称-->
     <div class="left">
       <span style="font-size: 30px">{{ state.name }}</span>
     </div>
+    <!--退出按钮-->
     <div class="right">
       <el-popover placement="bottom" :width="300" trigger="click" popper-class="popper-user-box">
         <template #reference>
           <div class="author">
-            <i class="icon el-icon-custom" />
-            {{ (state.userInfo && state.userInfo.nickName) || '' }}
-            <i class="el-icon-caret-bottom" />
+            <el-icon><Avatar /></el-icon>
+            <span class="tip">你好！{{ state.userInfo.nickName }}</span>
+            <el-icon><ArrowDown /></el-icon>
           </div>
         </template>
         <div class="nickname">
-          <p>登录名：{{ (state.userInfo && state.userInfo.loginUserName) || '' }}</p>
-          <p>昵称：{{ (state.userInfo && state.userInfo.nickName) || '' }}</p>
-          <el-tag size="small" effect="dark" class="logout" @click="logout">退出</el-tag>
+          <p>登录名：{{ state.userInfo.loginUserName }}</p>
+          <p>昵称：{{ state.userInfo.nickName }}</p>
+          <el-tag size="small" effect="dark" class="logout" @click="logout">退出登录</el-tag>
         </div>
       </el-popover>
     </div>
@@ -25,48 +27,45 @@
 <script setup lang="ts">
 import { pathMap } from '@/router/pathMap'
 import { useAuthStore } from '@/stores/auth'
-import axios from '@/utils/axios'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { getUserInfo } from '@/utils/api/user'
+import type { UserInfo } from '@/model/UserInfo'
 
 const authStore = useAuthStore()
 const router = useRouter()
-const state = reactive({
-  name: 'dashboard',
-  userInfo: {
-    nickName: null,
-    loginUserName: null
-  } // 用户信息变量
+
+// watch router change,显示页面名称
+router.afterEach((to) => {
+  console.log('to', to)
+  state.name = pathMap[to.name as keyof typeof pathMap]
 })
 
-// onMounted方法
+//显示登录用户的信息
+const state = reactive({
+  name: '',
+  userInfo: {} as UserInfo
+})
+
+// onMounted加载,在组件被挂载后，根据URL的哈希值判断是否为登录页面
 onMounted(() => {
   const pathname = window.location.hash.split('/')[1] || ''
   if (!['login'].includes(pathname)) {
-    getUserInfo()
+    getUserInfo().then((userInfo) => {
+      state.userInfo = userInfo
+      console.log('Received userInfo:', userInfo)
+    })
   }
 })
-// 获取用户信息
-const getUserInfo = async () => {
-  const userInfo = await (await axios.get('/adminUser/profile')).data.userInfo
-  state.userInfo = userInfo
-}
+
 // 退出登录
 const logout = () => {
-  axios.delete('/adminUser/logout').then(() => {
-    // 退出之后，将本地保存的 token  清理掉
-    authStore.removeToken()
-    // 回到登录页
-    router.push({ path: '/login' })
-  })
+  authStore.removeToken()
+  // 回到登录页
+  router.push({ path: '/login' })
 }
-// watch router change
-router.afterEach((to) => {
-  console.log('to', to)
-  //to.name is the router name
-  state.name = pathMap[to.name as keyof typeof pathMap]
-})
 </script>
+
 <style scoped>
 .header {
   height: 50px;
@@ -77,16 +76,21 @@ router.afterEach((to) => {
   padding: 0 20px;
 }
 
-.right > div > .icon {
+.right > .author {
   font-size: 18px;
-  margin-right: 6px;
 }
 .author {
   margin-left: 10px;
   cursor: pointer;
 }
 </style>
+
+<!--注意这些弹出式组件不能使用style scope,因为他们定义在app外面！-->
 <style>
+.tip {
+  margin-right: 10px;
+}
+
 .popper-user-box {
   background: url('https://s.yezgea02.com/lingling-h5/static/account-banner-bg.png') 50% 50%
     no-repeat !important;

@@ -10,8 +10,7 @@
     <!--icon menu devide-->
     <div class="line"></div>
     <!--默认展开菜单栏-->
-    <el-menu backgroud-color="#222832" :router="true" :default-openeds="['1', '2', '3','4']">
-
+    <el-menu backgroud-color="#222832" :router="true" :default-openeds="['1', '2', '3', '4']">
       <!--一级menu-->
       <el-sub-menu index="1">
         <template #title>
@@ -81,13 +80,11 @@
           </el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
-
     </el-menu>
   </el-aside>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 .line {

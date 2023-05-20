@@ -46,6 +46,7 @@ import axios from 'axios'
 import { ref } from 'vue'
 import { Md5 } from 'ts-md5'
 import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
 const authStore = useAuthStore()
 const loginForm = ref()
 const state = ref({
@@ -75,6 +76,7 @@ const submitForm = async () => {
           // 返回一个 token
           authStore.SetToken(res.data['token'])
           // 刷新页面
+          const router = useRouter()
           window.location.href = '/'
         })
     } else {

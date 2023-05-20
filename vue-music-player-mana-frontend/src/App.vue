@@ -56,7 +56,7 @@ router.beforeEach((to, from, next) => {
   </div>
 </template>
 
-<style scoped>
+<style>
 .content {
   display: flex;
   flex-direction: column;
