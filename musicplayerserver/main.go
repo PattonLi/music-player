@@ -25,7 +25,7 @@ func main() {
 		userdao.AddUser(&user)
 	*/
 	r := gin.Default()
-	//跨域配置
+	//跨域配置，解决CORS跨域问题
 	corsConfig := cors.Config{
 		AllowAllOrigins: true,
 		AllowMethods: []string{
