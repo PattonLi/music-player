@@ -17,26 +17,9 @@ const router = createRouter({
     },
     //歌曲相关
     {
-      path: '/song',
+      path: '/addSong',
       component: () => import('@/views/song-mana/AddSong.vue'),
-      name: 'song',
-      children: [
-        {
-          path: '/add',
-          component: () => import('@/views/song-mana/AddSong.vue'),
-          name: 'add'
-        },
-        {
-          path: '/deleteSong',
-          component: () => import('@/views/song-mana/AddSong.vue'),
-          name: 'deleteSong'
-        },
-        {
-          path: '/modiSong',
-          component: () => import('@/views/song-mana/AddSong.vue'),
-          name: 'modiSong'
-        }
-      ]
+      name: 'addSong'
     }
 
     //用户相关

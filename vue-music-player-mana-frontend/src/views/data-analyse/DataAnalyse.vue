@@ -35,127 +35,114 @@
 
 <script setup lang="ts">
 import * as echarts from 'echarts'
-import { onMounted,onUnmounted, reactive, toRefs } from 'vue'
+import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import type { DataAnalyse } from '@/model/DataAnalyse.js'
 import { getDataAnalyse } from '@/utils/api/dataAnalys'
-let myChart : echarts.ECharts
-const state = reactive({
+let myChart: echarts.ECharts
+const state = ref({
   totalData: {
-    numOfDownloadSong:[1,1231,2,2,2,2,2],
-    numOfLoginUsers:[1,2,2,2,2,2,2],
-    numOfPlaySong:[1,2,2,2,2,2,2],
-    numOfRegisterUsers:[1,2,2,2,2,2,2]
+    numOfDownloadSong: [],
+    numOfLoginUsers: [],
+    numOfPlaySong: [],
+    numOfRegisterUsers: []
   } as DataAnalyse
 })
 
-
-//记得修改
 onMounted(() => {
   // 获取数据
-    getDataAnalyse().then((data) => {
-    console.log('data',data);
-    state.totalData.numOfDownloadSong=data.numOfDownloadSong
-    console.log('data.numOfDownloadSong',data.numOfDownloadSong);
-  })
-  console.log('numOfDownloadSong',state.totalData.numOfDownloadSong);
-  let array:number[] = state.totalData.numOfDownloadSong
-  for (let index = 0; index < state.totalData.numOfDownloadSong.length; index++) {
-    console.log(state.totalData.numOfDownloadSong[index]);
-    
-    array[index]=state.totalData.numOfDownloadSong[index]
-  }
-  
-  
-  
-  // 建立表格
-  let chartDom = document.getElementById('chart1')
-  myChart = echarts.init(chartDom as HTMLElement)
-  let option
+  getDataAnalyse().then((data) => {
+    console.log('data', data)
+    state.value.totalData = data
+    // 建立表格
+    let chartDom = document.getElementById('chart1')
+    myChart = echarts.init(chartDom as HTMLElement)
+    let option
 
-  option = {
-    title: {
-      text: '大盘数据'
-    },
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'cross',
-        label: {
-          backgroundColor: '#6a7985'
+    option = {
+      title: {
+        text: '大盘数据'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#6a7985'
+          }
         }
-      }
-    },
-    legend: {
-      data: ['播放歌曲数量', '下载歌曲数量', '登录用户数量', '用户注册数量']
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {}
-      }
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
-    },
-    xAxis: [
-      {
-        type: 'category',
-        boundaryGap: false,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-      }
-    ],
-    yAxis: [
-      {
-        type: 'value'
-      }
-    ],
-    series: [
-      {
-        name: '播放歌曲数量',
-        type: 'line',
-        stack: 'Total',
-        areaStyle: {},
-        emphasis: {
-          focus: 'series'
-        },
-        data: array
       },
-      {
-        name: '登录用户数量',
-        type: 'line',
-        stack: 'Total',
-        areaStyle: {},
-        emphasis: {
-          focus: 'series'
-        },
-        data: [1,3332,2223,4,5123,123,123]
+      legend: {
+        data: ['播放歌曲数量', '下载歌曲数量', '登录用户数量', '用户注册数量']
       },
-      {
-        name: '用户注册数量',
-        type: 'line',
-        stack: 'Total',
-        areaStyle: {},
-        emphasis: {
-          focus: 'series'
-        },
-        data: [1,3332,2223,4,5123,123,123]
+      toolbox: {
+        feature: {
+          saveAsImage: {}
+        }
       },
-      {
-        name: '下载歌曲数量',
-        type: 'line',
-        stack: 'Total',
-        areaStyle: {},
-        emphasis: {
-          focus: 'series'
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          boundaryGap: false,
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: '播放歌曲数量',
+          type: 'line',
+          stack: 'Total',
+          areaStyle: {},
+          emphasis: {
+            focus: 'series'
+          },
+          data: state.value.totalData.numOfPlaySong
         },
-        data: [1,3332,2223,4,5123,123,123]
-      }
-    ]
-  }
+        {
+          name: '登录用户数量',
+          type: 'line',
+          stack: 'Total',
+          areaStyle: {},
+          emphasis: {
+            focus: 'series'
+          },
+          data: state.value.totalData.numOfLoginUsers
+        },
+        {
+          name: '用户注册数量',
+          type: 'line',
+          stack: 'Total',
+          areaStyle: {},
+          emphasis: {
+            focus: 'series'
+          },
+          data: state.value.totalData.numOfRegisterUsers
+        },
+        {
+          name: '下载歌曲数量',
+          type: 'line',
+          stack: 'Total',
+          areaStyle: {},
+          emphasis: {
+            focus: 'series'
+          },
+          data: state.value.totalData.numOfDownloadSong
+        }
+      ]
+    }
 
-  option && myChart.setOption(option)
+    option && myChart.setOption(option)
+  })
 })
 
 onUnmounted(() => {

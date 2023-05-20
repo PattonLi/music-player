@@ -50,10 +50,10 @@
         </template>
         <!--二级menu-->
         <el-menu-item-group>
-          <el-menu-item index="/">
+          <el-menu-item index="/addsong">
             <el-icon> <DataLine /> </el-icon>添加歌曲
           </el-menu-item>
-          <el-menu-item index="/addsong">
+          <el-menu-item index="/deleteSong">
             <el-icon> <DataLine /> </el-icon>删除歌曲
           </el-menu-item>
           <el-menu-item index="/addsong">
