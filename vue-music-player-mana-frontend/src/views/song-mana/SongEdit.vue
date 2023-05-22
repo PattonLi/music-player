@@ -25,11 +25,6 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
-      <el-table-column label="图片" width="120">
-        <template #default="scope">
-          <img style="width: 150px; height: 150px" :src="scope.row.carouselUrl" alt="轮播图" />
-        </template>
-      </el-table-column>
       <el-table-column prop="name" label="歌曲名" width="120"> </el-table-column>
       <el-table-column prop="artist" label="演唱者" width="120"> </el-table-column>
       <el-table-column prop="album" label="专辑" width="120"> </el-table-column>
@@ -46,23 +41,29 @@
       :current-page="state.currentPage"
       @current-change="changePage"
     />
+    <!--对话框-->
+    <EditSongDialog :app="dialogState.app" :dialog-form-visible="dialogState.dialogFormVisible"></EditSongDialog>
   </el-card>
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
 import { getSongInfo } from '@/utils/api/song'
 import type { SongInfo } from '@/model/SongInfo'
+import EditSongDialog from '@/components/edit-dialog/EditSongDialog.vue'
 
 const state = reactive({
   tableData: [] as SongInfo[], // 数据列表
   currentPage: 1, // 当前页数
   pageSize: 10, // 每页请求数
   type: 'add', // 操作类型
-  totals: 0,//所有项的总数
+  totals: 0, //所有项的总数
   multipleSelection: [] // 选中项
 })
-
+//控制操作方式
+const dialogState=reactive({
+  dialogFormVisible:false,
+  app:''
+})
 //加载数据
 onMounted(() => {
   getSongInfo(1, state.pageSize).then((data) => {
@@ -71,7 +72,11 @@ onMounted(() => {
   })
 })
 
-const handleAdd = () => {}
+//添加歌曲
+const handleAdd = () => {
+  dialogState.app='add'
+  dialogState.dialogFormVisible=true
+}
 const handleDelete = () => {}
 const handleSelectionChange = () => {}
 

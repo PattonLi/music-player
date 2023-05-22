@@ -22,6 +22,7 @@ const generateMultipleSongInfo = (count) => {
   return songInfoList
 }
 
+//模拟获取歌曲信息
 Mock.mock(RegExp('/adminUser/songInfo' + '.*'), 'get', () => {
   let data = generateMultipleSongInfo(10)
   return {
@@ -29,4 +30,16 @@ Mock.mock(RegExp('/adminUser/songInfo' + '.*'), 'get', () => {
     totals: 250,
     songInfo: data
   }
+})
+
+//模拟添加歌曲
+Mock.mock('/admin/addSong', 'post', {
+  code: 200,
+  songID: 666
+})
+
+//模拟添加歌曲
+Mock.mock('/admin/modiSong', 'post', {
+  code: 200,
+  songID: 777
 })

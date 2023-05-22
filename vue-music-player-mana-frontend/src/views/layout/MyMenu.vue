@@ -50,14 +50,14 @@
         </template>
         <!--二级menu-->
         <el-menu-item-group>
-          <el-menu-item index="/addsong">
-            <el-icon> <DataLine /> </el-icon>添加歌曲
+          <el-menu-item index="/songEdit">
+            <el-icon> <DataLine /> </el-icon>歌曲配置
           </el-menu-item>
-          <el-menu-item index="/deleteSong">
-            <el-icon> <DataLine /> </el-icon>删除歌曲
+          <el-menu-item index="/albumEdit">
+            <el-icon> <DataLine /> </el-icon>专辑配置
           </el-menu-item>
-          <el-menu-item index="/addsong">
-            <el-icon> <DataLine /> </el-icon>修改歌曲信息
+          <el-menu-item index="/singerEdit">
+            <el-icon> <DataLine /> </el-icon>歌手配置
           </el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>

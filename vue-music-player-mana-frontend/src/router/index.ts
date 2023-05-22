@@ -15,10 +15,24 @@ const router = createRouter({
       component: () => import('@/views/login/MyLogin.vue'),
       name: 'login'
     },
+
     //歌曲相关
+    //歌曲编辑
     {
-      path: '/addSong',
-      component: () => import('@/views/song-mana/AddSong.vue'),
+      path: '/songEdit',
+      component: () => import('@/views/song-mana/SongEdit.vue'),
+      name: 'songEdit'
+    },
+    //专辑编辑
+    {
+      path: '/',
+      component: () => import('@/views/song-mana/SongEdit.vue'),
+      name: 'addSong'
+    },
+    //歌手编辑
+    {
+      path: '/',
+      component: () => import('@/views/song-mana/SongEdit.vue'),
       name: 'addSong'
     }
 

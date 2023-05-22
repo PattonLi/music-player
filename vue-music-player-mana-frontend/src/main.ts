@@ -11,7 +11,7 @@ import router from './router'
 import '../mock/index'
 import '../mock/user.js'
 import '../mock/dataAnalyse.js'
-import "../mock/songInfo.js";
+import '../mock/song.js'
 
 //add axios config
 // import '@/utils/axios'
