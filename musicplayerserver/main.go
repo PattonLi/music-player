@@ -1,8 +1,8 @@
 package main
 
 import (
-	"musicplayerserver/dao"
-	"musicplayerserver/router"
+	"music-player/musicplayerserver/dao"
+	"music-player/musicplayerserver/router"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -25,7 +25,7 @@ func main() {
 		userdao.AddUser(&user)
 	*/
 	r := gin.Default()
-	//跨域配置
+	//跨域配置，解决CORS跨域问题
 	corsConfig := cors.Config{
 		AllowAllOrigins: true,
 		AllowMethods: []string{
@@ -39,5 +39,6 @@ func main() {
 	r.Use(cors.New(corsConfig))
 	//
 	router.Posts(r)
+	router.Gets(r)
 	r.Run()
 }

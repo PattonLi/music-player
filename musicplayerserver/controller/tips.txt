@@ -1,0 +1,6 @@
+1. 如果想要在类里面用this，可以这样：
+func (t *myclass) funcname (...) ... {
+    t.func() // 就相当于this,func()
+}
+
+2.
