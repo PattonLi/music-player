@@ -21,6 +21,7 @@ func main() {
 		userdao.AddUser(&user)
 	*/
 	r := gin.Default()
-	router.Posts(r)
+	router.Gets(r)
 	r.Run()
+
 }

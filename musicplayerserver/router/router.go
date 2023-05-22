@@ -13,3 +13,11 @@ func Posts(r *gin.Engine) {
 		c.JSON(http.StatusOK, user)
 	})
 }
+
+func Gets(r *gin.Engine) {
+	r.GET("/lyric", func(c *gin.Context) {
+		lyric := controller.GetSongHandler(c)
+		c.String(http.StatusOK, lyric)
+	})
+
+}
