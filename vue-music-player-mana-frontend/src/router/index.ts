@@ -25,20 +25,38 @@ const router = createRouter({
     },
     //专辑编辑
     {
-      path: '/',
-      component: () => import('@/views/song-mana/SongEdit.vue'),
-      name: 'addSong'
+      path: '/albumEdit',
+      component: () => import('@/views/song-mana/AlbumEdit.vue'),
+      name: 'albumEdit'
     },
     //歌手编辑
     {
-      path: '/',
-      component: () => import('@/views/song-mana/SongEdit.vue'),
-      name: 'addSong'
-    }
+      path: '/singerEdit',
+      component: () => import('@/views/song-mana/SingerEdit.vue'),
+      name: 'singerEdit'
+    },
 
     //用户相关
 
+    //用户管理
+    {
+      path: '/userEdit',
+      component: () => import('@/views/user-mana/UserEdit.vue'),
+      name: 'userEdit'
+    },
+    //管理员管理
+    {
+      path: '/adminEdit',
+      component: () => import('@/views/user-mana/AdminEdit.vue'),
+      name: 'adminEdit'
+    },
+
     //日志相关
+    //登录日志
+    
+    //注册日志
+
+    //播放日志
   ]
 })
 

@@ -32,7 +32,7 @@
       <el-table-column prop="style" label="歌曲分类" width="120"> </el-table-column>
       <el-table-column fixed="right" label="Operations" width="120">
       <template #default>
-        <el-button link type="primary" size="default" @click="handleModi">修改</el-button>
+        <el-button link type="warning" size="default" @click="handleModi">修改</el-button>
       </template>
     </el-table-column>
     </el-table>
@@ -47,7 +47,7 @@
       @current-change="changePage"
     />
     <!--对话框-->
-    <EditSongDialog :app="dialogState.app" :dialog-form-visible="dialogState.dialogFormVisible"></EditSongDialog>
+    <EditSongDialog ref="dialog"></EditSongDialog>
   </el-card>
 </template>
 
@@ -55,7 +55,9 @@
 import { getSongInfo } from '@/utils/api/song'
 import type { SongInfo } from '@/model/SongInfo'
 import EditSongDialog from '@/components/edit-dialog/EditSongDialog.vue'
+import {useSongManaStore} from '@/stores/songMana'
 
+const songManaStore = useSongManaStore()
 const state = reactive({
   tableData: [] as SongInfo[], // 数据列表
   currentPage: 1, // 当前页数
@@ -63,11 +65,6 @@ const state = reactive({
   type: 'add', // 操作类型
   totals: 0, //所有项的总数
   multipleSelection: [] // 选中项
-})
-//控制操作方式
-const dialogState=reactive({
-  dialogFormVisible:false,
-  app:''
 })
 //加载数据
 onMounted(() => {
@@ -79,13 +76,11 @@ onMounted(() => {
 
 //添加歌曲
 const handleAdd = () => {
-  dialogState.app='add'
-  dialogState.dialogFormVisible=true
+  songManaStore.SetSongDialog('添加歌曲',true)  
 }
 //修改歌曲
 const handleModi = () => {
-  dialogState.app='modi'
-  dialogState.dialogFormVisible=true
+  songManaStore.SetSongDialog('修改歌曲',true)
 }
 const handleDelete = () => {}
 const handleSelectionChange = () => {}

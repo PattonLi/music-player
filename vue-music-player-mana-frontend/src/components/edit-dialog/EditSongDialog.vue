@@ -1,8 +1,10 @@
 <template>
   <!--更新信息对话框-->
   <el-dialog 
-  v-model="dialogFormVisible" 
-  :title="title">
+  :model-value=songManaStore.$state.isVisible 
+  :title="title"
+  @close="songManaStore.$state.isVisible=false"
+  >
     <!--提交表单-->
     <el-form :model="ruleForm" ref="ruleFormRef" :rules="rules" status-icon>
       <el-form-item label="歌曲名" :label-width="state.formLabelWidth" prop="name">
@@ -28,7 +30,7 @@
     <!--确认按钮-->
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button @click="songManaStore.$state.isVisible = false">取消</el-button>
         <el-button type="primary" @click="submitForm(ruleFormRef)"> 确认 </el-button>
       </span>
     </template>
@@ -38,27 +40,20 @@
 <script lang="ts" setup>
 import type { SongInfo } from '@/model/SongInfo'
 import { musicStyles } from '@/model/musicStyles'
+import { useSongManaStore } from '@/stores/songMana'
 import { AlertError, AlertSuccess } from '@/utils/alert/AlertPop'
 import { addSong, modiSong } from '@/utils/api/song'
 import type { FormRules, FormInstance } from 'element-plus'
 
-const props = defineProps({
-  app:String,
-  dialogFormVisible:Boolean
-})
+const songManaStore = useSongManaStore()
 const title = computed(()=>{
-  if( props.app == 'add') return '添加歌曲'
+  if( state.app == 'add') return '添加歌曲'
   else return '修改歌曲'
 })
-const dialogFormVisible = computed(()=>{
-  if(props.dialogFormVisible)return true
-  else return false
-})
 const state = reactive({
-  formLabelWidth : '120px',
   app:'',
+  formLabelWidth : '120px',
 })
-
 //表单相关
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive<SongInfo>({
@@ -88,7 +83,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         } else {
           AlertError('添加歌曲失败')
         }
-        
+        songManaStore.$state.isVisible = false
       })
     }
   })

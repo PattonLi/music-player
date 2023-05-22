@@ -1,5 +1,4 @@
-export interface AlbumInfo {
-    name: string
+export interface SingerInfo {
     artist: string
     album: string
     time: string
