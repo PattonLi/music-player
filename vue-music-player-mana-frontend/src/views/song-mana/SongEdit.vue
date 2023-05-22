@@ -30,6 +30,11 @@
       <el-table-column prop="album" label="专辑" width="120"> </el-table-column>
       <el-table-column prop="time" label="发行时间" width="120"> </el-table-column>
       <el-table-column prop="style" label="歌曲分类" width="120"> </el-table-column>
+      <el-table-column fixed="right" label="Operations" width="120">
+      <template #default>
+        <el-button link type="primary" size="default" @click="handleModi">修改</el-button>
+      </template>
+    </el-table-column>
     </el-table>
 
     <!--分页按钮-->
@@ -75,6 +80,11 @@ onMounted(() => {
 //添加歌曲
 const handleAdd = () => {
   dialogState.app='add'
+  dialogState.dialogFormVisible=true
+}
+//修改歌曲
+const handleModi = () => {
+  dialogState.app='modi'
   dialogState.dialogFormVisible=true
 }
 const handleDelete = () => {}

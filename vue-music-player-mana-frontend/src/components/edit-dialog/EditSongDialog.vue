@@ -48,7 +48,7 @@ const props = defineProps({
 })
 const title = computed(()=>{
   if( props.app == 'add') return '添加歌曲'
-  else return '删除歌曲'
+  else return '修改歌曲'
 })
 const dialogFormVisible = computed(()=>{
   if(props.dialogFormVisible)return true
