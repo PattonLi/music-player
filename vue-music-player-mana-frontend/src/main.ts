@@ -5,8 +5,14 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import App from './App.vue'
 import router from './router'
+
 //TODO:记得删除
-// import '../mock/index'
+//mock js 配置
+import '../mock/index'
+import '../mock/user.js'
+import '../mock/dataAnalyse.js'
+import '../mock/song.js'
+
 //add axios config
 // import '@/utils/axios'
 

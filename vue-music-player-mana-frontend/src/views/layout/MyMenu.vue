@@ -10,8 +10,7 @@
     <!--icon menu devide-->
     <div class="line"></div>
     <!--默认展开菜单栏-->
-    <el-menu backgroud-color="#222832" :router="true" :default-openeds="['1', '2', '3','4']">
-
+    <el-menu backgroud-color="#222832" :router="true" :default-openeds="['1', '2', '3', '4']">
       <!--一级menu-->
       <el-sub-menu index="1">
         <template #title>
@@ -32,14 +31,14 @@
         </template>
         <!--二级menu-->
         <el-menu-item-group>
-          <el-menu-item index="/addsong">
-            <el-icon> <DataLine /> </el-icon>添加用户
+          <el-menu-item index="/userEdit">
+            <el-icon> <DataLine /> </el-icon>用户管理
           </el-menu-item>
-          <el-menu-item index="/deletesong">
-            <el-icon> <DataLine /> </el-icon>删除用户
+          <el-menu-item index="/adminEdit">
+            <el-icon> <DataLine /> </el-icon>管理员管理
           </el-menu-item>
-          <el-menu-item index="/deletesong">
-            <el-icon> <DataLine /> </el-icon>修改用户信息
+          <el-menu-item index="/userLikeEdit">
+            <el-icon> <DataLine /> </el-icon>用户收藏管理
           </el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
@@ -51,14 +50,14 @@
         </template>
         <!--二级menu-->
         <el-menu-item-group>
-          <el-menu-item index="/">
-            <el-icon> <DataLine /> </el-icon>添加歌曲
+          <el-menu-item index="/songEdit">
+            <el-icon> <DataLine /> </el-icon>歌曲配置
           </el-menu-item>
-          <el-menu-item index="/addsong">
-            <el-icon> <DataLine /> </el-icon>删除歌曲
+          <el-menu-item index="/albumEdit">
+            <el-icon> <DataLine /> </el-icon>专辑配置
           </el-menu-item>
-          <el-menu-item index="/addsong">
-            <el-icon> <DataLine /> </el-icon>修改歌曲信息
+          <el-menu-item index="/singerEdit">
+            <el-icon> <DataLine /> </el-icon>歌手配置
           </el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
@@ -70,24 +69,22 @@
         </template>
         <!--二级menu-->
         <el-menu-item-group>
-          <el-menu-item index="/">
+          <el-menu-item index="/loginHistory">
             <el-icon> <DataLine /> </el-icon>登录日志
           </el-menu-item>
-          <el-menu-item index="/">
+          <el-menu-item index="/registerHistory">
             <el-icon> <DataLine /> </el-icon>注册日志
           </el-menu-item>
-          <el-menu-item index="/addsong">
+          <el-menu-item index="/playHistory">
             <el-icon> <DataLine /> </el-icon>播放日志
           </el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
-
     </el-menu>
   </el-aside>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 .line {

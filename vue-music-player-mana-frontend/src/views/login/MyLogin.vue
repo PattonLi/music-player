@@ -12,7 +12,7 @@
       </div>
       <el-form
         label-position="top"
-        :rules="state.rules"
+        :rules="rules"
         :model="state.ruleForm"
         ref="loginForm"
         class="login-form"
@@ -43,22 +43,23 @@
 
 <script setup lang="ts">
 import axios from 'axios'
-import { ref } from 'vue'
 import { Md5 } from 'ts-md5'
 import { useAuthStore } from '@/stores/auth'
+import type { FormRules } from 'element-plus'
+
 const authStore = useAuthStore()
 const loginForm = ref()
-const state = ref({
+const rules = reactive<FormRules>({
+  username: [{ required: true, message: '账户不能为空', trigger: 'blur' }],
+  password: [{ required: true, message: '密码不能为空', trigger: 'blur' }]
+})
+const state = reactive({
   ruleForm: {
     username: '',
     password: ''
   },
-  checked: true,
+  checked: true
   // 表单验证判断。
-  rules: {
-    username: [{ required: 'true', message: '账户不能为空', trigger: 'blur' }],
-    password: [{ required: 'true', message: '密码不能为空', trigger: 'blur' }]
-  }
 })
 
 // 表单提交方法,回调函数
@@ -68,8 +69,8 @@ const submitForm = async () => {
     if (valid) {
       axios
         .post('/adminUser/login', {
-          userName: state.value.ruleForm.username || '',
-          passwordMd5: Md5.hashStr(state.value.ruleForm.password)
+          userName: state.ruleForm.username || '',
+          passwordMd5: Md5.hashStr(state.ruleForm.password)
         })
         .then((res) => {
           // 返回一个 token
