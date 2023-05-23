@@ -31,14 +31,14 @@
         </template>
         <!--二级menu-->
         <el-menu-item-group>
-          <el-menu-item index="/addsong">
-            <el-icon> <DataLine /> </el-icon>添加用户
+          <el-menu-item index="/userEdit">
+            <el-icon> <DataLine /> </el-icon>用户管理
           </el-menu-item>
-          <el-menu-item index="/deletesong">
-            <el-icon> <DataLine /> </el-icon>删除用户
+          <el-menu-item index="/adminEdit">
+            <el-icon> <DataLine /> </el-icon>管理员管理
           </el-menu-item>
-          <el-menu-item index="/deletesong">
-            <el-icon> <DataLine /> </el-icon>修改用户信息
+          <el-menu-item index="/userLikeEdit">
+            <el-icon> <DataLine /> </el-icon>用户收藏管理
           </el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
@@ -69,13 +69,13 @@
         </template>
         <!--二级menu-->
         <el-menu-item-group>
-          <el-menu-item index="/">
+          <el-menu-item index="/loginHistory">
             <el-icon> <DataLine /> </el-icon>登录日志
           </el-menu-item>
-          <el-menu-item index="/">
+          <el-menu-item index="/registerHistory">
             <el-icon> <DataLine /> </el-icon>注册日志
           </el-menu-item>
-          <el-menu-item index="/addsong">
+          <el-menu-item index="/playHistory">
             <el-icon> <DataLine /> </el-icon>播放日志
           </el-menu-item>
         </el-menu-item-group>

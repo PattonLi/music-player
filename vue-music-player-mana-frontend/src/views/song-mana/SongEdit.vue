@@ -32,7 +32,8 @@
       <el-table-column prop="style" label="歌曲分类" width="120"> </el-table-column>
       <el-table-column fixed="right" label="Operations" width="120">
       <template #default>
-        <el-button link type="warning" size="default" @click="handleModi">修改</el-button>
+        <el-icon><Edit /></el-icon>
+        <el-button link type="warning" circle @click="handleModi">修改</el-button>
       </template>
     </el-table-column>
     </el-table>

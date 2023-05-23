@@ -50,13 +50,33 @@ const router = createRouter({
       component: () => import('@/views/user-mana/AdminEdit.vue'),
       name: 'adminEdit'
     },
+    //用户收藏管理
+    {
+      path: '/userLikeEdit',
+      component: () => import('@/views/user-mana/UserLikeEdit.vue'),
+      name: 'userLikeEdit'
+    },
 
     //日志相关
     //登录日志
-    
+    {
+      path: '/loginHistory',
+      component: () => import('@/views/log-mana/LogInRegisterHistory.vue'),
+      name: 'loginHistory'
+    },
     //注册日志
-
+    {
+      path: '/registerHistory',
+      component: () => import('@/views/log-mana/LogInRegisterHistory.vue'),
+      name: 'registerHistory'
+    },
     //播放日志
+    {
+      path: '/playHistory',
+      component: () => import('@/views/log-mana/PlayHistory.vue'),
+      name: 'playHistory'
+    },
+
   ]
 })
 
