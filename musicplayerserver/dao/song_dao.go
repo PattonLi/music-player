@@ -24,3 +24,7 @@ func (s *Songdao) GetSongInfo(id string) string {
 		return true
 	}
 }*/
+
+func NewSongDao() *Songdao {
+	return &Songdao{}
+}

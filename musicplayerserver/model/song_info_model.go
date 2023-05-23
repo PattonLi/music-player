@@ -12,6 +12,7 @@ type SongInfo struct {
 	Lyric     string
 }
 
+// 获取表名，gorm创建表时会自己获取这个表名
 func (s *SongInfo) TableName() string {
 	return "song"
 }

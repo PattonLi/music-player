@@ -6,25 +6,26 @@ import (
 )
 
 type SongService struct {
-	songservice *dao.Songdao
+	songdao *dao.Songdao
 }
 
 // 构造函数
 func (*SongService) NewSongService() *SongService {
 	s := dao.Songdao{}
 	sv := SongService{
-		songservice: &s,
+		songdao: &s,
 	}
 	return &sv
 }
 
-// 获取歌曲信息
+// 获取歌曲歌词
 func (s *SongService) GetSong(id string) string {
-	lyric := s.songservice.GetSongInfo(id)
+	lyric := s.songdao.GetSongInfo(id)
 	if lyric != "" {
-		fmt.Println("成功获取歌曲的信息！")
+		fmt.Println("成功获取歌曲的歌词！")
 	} else {
-		fmt.Println("获取歌曲信息失败！")
+		fmt.Println("获取歌曲歌词失败！")
 	}
 	return lyric
+
 }

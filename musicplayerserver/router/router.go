@@ -9,14 +9,14 @@ import (
 
 func Posts(r *gin.Engine) {
 	r.POST("/register", func(c *gin.Context) {
-		user := controller.AddUserHandler(c)
+		user := controller.NewUserController().AddUserHandler(c)
 		c.JSON(http.StatusOK, user)
 	})
 }
 
 func Gets(r *gin.Engine) {
 	r.GET("/lyric", func(c *gin.Context) {
-		lyric := controller.GetSongHandler(c)
+		lyric := controller.NewSongController().GetSongHandler(c)
 		c.String(http.StatusOK, lyric)
 	})
 

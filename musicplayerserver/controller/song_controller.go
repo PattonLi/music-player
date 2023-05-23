@@ -6,14 +6,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var songservice = service.SongService{}
-
-func SongControllerInit() {
-	songservice.NewSongService()
+type SongController struct {
+	songservice *service.SongService
 }
 
-func GetSongHandler(c *gin.Context) string {
+func NewSongController() *SongController {
+	ss := service.SongService{}
+	return &SongController{
+		songservice: &ss,
+	}
+}
+
+func (sc *SongController) GetSongHandler(c *gin.Context) string {
 	id := c.Query("id")
-	lyric := songservice.GetSong(id)
+	lyric := sc.songservice.GetSong(id)
 	return lyric
 }
