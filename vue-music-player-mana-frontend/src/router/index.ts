@@ -75,8 +75,7 @@ const router = createRouter({
       path: '/playHistory',
       component: () => import('@/views/log-mana/PlayHistory.vue'),
       name: 'playHistory'
-    },
-
+    }
   ]
 })
 

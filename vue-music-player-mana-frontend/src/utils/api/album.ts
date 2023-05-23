@@ -15,5 +15,4 @@ const getAlbumInfo = async (currentPage: number, pageSize: number) => {
   }
 }
 
-
-export { getAlbumInfo}
+export { getAlbumInfo }

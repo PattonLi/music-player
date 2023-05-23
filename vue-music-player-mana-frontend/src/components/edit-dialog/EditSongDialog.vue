@@ -1,9 +1,9 @@
 <template>
   <!--更新信息对话框-->
-  <el-dialog 
-  :model-value=songManaStore.$state.isVisible 
-  :title="title"
-  @close="songManaStore.$state.isVisible=false"
+  <el-dialog
+    :model-value="songManaStore.$state.isVisible"
+    :title="title"
+    @close="songManaStore.$state.isVisible = false"
   >
     <!--提交表单-->
     <el-form :model="ruleForm" ref="ruleFormRef" :rules="rules" status-icon>
@@ -46,13 +46,13 @@ import { addSong, modiSong } from '@/utils/api/song'
 import type { FormRules, FormInstance } from 'element-plus'
 
 const songManaStore = useSongManaStore()
-const title = computed(()=>{
-  if( state.app == 'add') return '添加歌曲'
+const title = computed(() => {
+  if (state.app == 'add') return '添加歌曲'
   else return '修改歌曲'
 })
 const state = reactive({
-  app:'',
-  formLabelWidth : '120px',
+  app: '',
+  formLabelWidth: '120px'
 })
 //表单相关
 const ruleFormRef = ref<FormInstance>()

@@ -31,11 +31,11 @@
       <el-table-column prop="time" label="发行时间" width="120"> </el-table-column>
       <el-table-column prop="style" label="歌曲分类" width="120"> </el-table-column>
       <el-table-column fixed="right" label="Operations" width="120">
-      <template #default>
-        <el-icon><Edit /></el-icon>
-        <el-button link type="warning" circle @click="handleModi">修改</el-button>
-      </template>
-    </el-table-column>
+        <template #default>
+          <el-icon><Edit /></el-icon>
+          <el-button link type="warning" circle @click="handleModi">修改</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <!--分页按钮-->
@@ -56,7 +56,7 @@
 import { getSongInfo } from '@/utils/api/song'
 import type { SongInfo } from '@/model/SongInfo'
 import EditSongDialog from '@/components/edit-dialog/EditSongDialog.vue'
-import {useSongManaStore} from '@/stores/songMana'
+import { useSongManaStore } from '@/stores/songMana'
 
 const songManaStore = useSongManaStore()
 const state = reactive({
@@ -77,11 +77,11 @@ onMounted(() => {
 
 //添加歌曲
 const handleAdd = () => {
-  songManaStore.SetSongDialog('添加歌曲',true)  
+  songManaStore.SetSongDialog('添加歌曲', true)
 }
 //修改歌曲
 const handleModi = () => {
-  songManaStore.SetSongDialog('修改歌曲',true)
+  songManaStore.SetSongDialog('修改歌曲', true)
 }
 const handleDelete = () => {}
 const handleSelectionChange = () => {}
