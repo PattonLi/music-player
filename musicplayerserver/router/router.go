@@ -79,7 +79,7 @@ func authMiddleware(c *gin.Context) {
 func Posts(r *gin.Engine) {
 
 	r.POST("/register", func(c *gin.Context) {
-		err := controller.NewUserController.AddUserHandler(c)
+		err := controller.NewUserController().AddUserHandler(c)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		} else {
@@ -88,7 +88,7 @@ func Posts(r *gin.Engine) {
 	})
 
 	r.POST("/login", func(c *gin.Context) {
-		username, userID, err := controller.UserLoginHandler(c)
+		username, userID, err := controller.NewUserController().UserLoginHandler(c)
 		tokenString := ""
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error(), "token": tokenString, "userid": userID})
@@ -103,7 +103,7 @@ func Posts(r *gin.Engine) {
 	})
 
 	r.POST("/admin/login", func(c *gin.Context) {
-		adminname, adminID, err := controller.AdminLoginHandler(c)
+		adminname, adminID, err := controller.NewUserController().AdminLoginHandler(c)
 		tokenString := ""
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error(), "token": tokenString, "adminid": adminID})
@@ -130,7 +130,7 @@ func Gets(r *gin.Engine) {
 	authorized := r.Group("/")
 	authorized.Use(authMiddleware)
 	authorized.GET("/userInfo", func(c *gin.Context) {
-		user, err := controller.UserInfoHandler(c)
+		user, err := controller.NewUserController().UserInfoHandler(c)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, user)
 		} else {
@@ -139,7 +139,7 @@ func Gets(r *gin.Engine) {
 
 	})
 	authorized.GET("/admin/profile", func(c *gin.Context) {
-		adminuser, err := controller.AdminProfileHandler(c)
+		adminuser, err := controller.NewUserController().AdminProfileHandler(c)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, adminuser)
 		} else {
