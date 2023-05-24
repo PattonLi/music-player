@@ -22,5 +22,6 @@ func main() {
 	*/
 	r := gin.Default()
 	router.Posts(r)
+	router.Gets(r)
 	r.Run()
 }
