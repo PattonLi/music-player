@@ -79,7 +79,7 @@ func authMiddleware(c *gin.Context) {
 func Posts(r *gin.Engine) {
 
 	r.POST("/register", func(c *gin.Context) {
-		err := controller.AddUserHandler(c)
+		err := controller.NewUserController.AddUserHandler(c)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		} else {
@@ -116,9 +116,17 @@ func Posts(r *gin.Engine) {
 			}
 		}
 	})
+
+	r.POST("/song/url", func(c *gin.Context) {
+		url := controller.NewSongController().GetSongURLHandler(c)
+		c.JSON(http.StatusOK, url)
+	})
 }
 
 func Gets(r *gin.Engine) {
+	r.GET("/gettest", func(c *gin.Context) {
+		c.JSON(http.StatusOK, "This is a test.")
+	})
 	authorized := r.Group("/")
 	authorized.Use(authMiddleware)
 	authorized.GET("/userInfo", func(c *gin.Context) {

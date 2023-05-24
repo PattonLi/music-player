@@ -1,85 +1,72 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import MyHeader from '@/views/layout/MyHeader.vue'
+import MyFotter from '@/views/layout/MyFotter.vue'
+import MyMenu from '@/views/layout/MyMenu.vue'
+import { useRouter } from 'vue-router'
+import { pathMap } from '@/router/pathMap'
+import { useAuthStore } from './stores/auth'
+
+//登录相关逻辑
+const router = useRouter()
+const authStore = useAuthStore()
+
+//若未登录则跳转登录
+router.beforeEach((to, from, next) => {
+  if (to.path == '/login') {
+    // 如果路径是 /login 则正常执行
+    next()
+  } else {
+    //判断是否已登录
+    if (authStore.getAuthStatus.isLogin == true) {
+      console.log('已登录！')
+      next()
+    } else {
+      //没有则跳至登录页面
+      console.log('未登录！')
+      next({ path: '/login' })
+    }
+  }
+  //设置网页名称
+  document.title = pathMap[to.name as keyof typeof pathMap]
+})
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div id="app">
+    <div class="layout">
+      <el-container v-if="authStore.getAuthStatus.isLogin" class="container">
+        <MyMenu></MyMenu>
+        <!--main container-->
+        <el-container class="content">
+          <el-header>
+            <MyHeader></MyHeader>
+          </el-header>
+          <el-main class="main">
+            <RouterView></RouterView>
+          </el-main>
+          <el-footer>
+            <MyFotter></MyFotter>
+          </el-footer>
+        </el-container>
+      </el-container>
+      <el-container v-else>
+        <RouterView></RouterView>
+      </el-container>
     </div>
-  </header>
-
-  <RouterView />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<style>
+.content {
+  display: flex;
+  flex-direction: column;
   max-height: 100vh;
+  overflow: auto;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.main {
+  height: 100vh;
+  overflow: auto;
+  padding: 10;
 }
 </style>

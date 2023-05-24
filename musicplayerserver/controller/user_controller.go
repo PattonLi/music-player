@@ -10,14 +10,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var userservice = service.UserService{}
+type UserController struct {
+	userservice *service.UserService
+}
 
-func UserControllerInit() {
-	userservice.NewUserService()
+func NewUserController() *UserController {
+	uss := service.NewUserService()
+	return &UserController{
+		userservice: uss,
+	}
 }
 
 // 用户注册
-func AddUserHandler(c *gin.Context) error {
+func (usc *UserController) AddUserHandler(c *gin.Context) error {
 	username := c.PostForm("username")
 	gender := c.PostForm("gender")
 	age := c.PostForm("age")
@@ -33,19 +38,19 @@ func AddUserHandler(c *gin.Context) error {
 		Nickname: nickname,
 		Admin:    "false",
 	}
-	err := userservice.UserRegister(&user)
+	err := usc.userservice.UserRegister(&user)
 	return err
 }
 
 // 用户登录
-func UserLoginHandler(c *gin.Context) (string, uint, error) {
+func (usc *UserController) UserLoginHandler(c *gin.Context) (string, uint, error) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 	user := model.UserInfo{
 		Username: username,
 		Password: password,
 	}
-	userID, admin, err := userservice.UserLogin(&user)
+	userID, admin, err := usc.userservice.UserLogin(&user)
 	if err == nil {
 		if admin == "true" { //向用户隐藏管理员账户
 			err = errors.New("用户名不存在或密码错误！")
@@ -55,7 +60,7 @@ func UserLoginHandler(c *gin.Context) (string, uint, error) {
 }
 
 // 获取用户信息
-func UserInfoHandler(c *gin.Context) (*model.UserInfo, error) {
+func (usc *UserController) UserInfoHandler(c *gin.Context) (*model.UserInfo, error) {
 	value, ok := c.Get("admin")
 	var user *model.UserInfo
 	user = nil
@@ -75,19 +80,19 @@ func UserInfoHandler(c *gin.Context) (*model.UserInfo, error) {
 	}
 	userID64, _ := strconv.ParseUint(c.Query("userid"), 10, 32)
 	userID := uint(userID64)
-	user, err = userservice.UserInfo(userID)
+	user, err = usc.userservice.UserInfo(userID)
 	return user, err
 }
 
 // 管理员登录
-func AdminLoginHandler(c *gin.Context) (string, uint, error) {
+func (usc *UserController) AdminLoginHandler(c *gin.Context) (string, uint, error) {
 	adminname := c.PostForm("adminname")
 	password := c.PostForm("password")
 	adminuser := model.UserInfo{
 		Username: adminname,
 		Password: password,
 	}
-	adminID, admin, err := userservice.UserLogin(&adminuser)
+	adminID, admin, err := usc.userservice.UserLogin(&adminuser)
 	if err == nil {
 		if admin == "false" {
 			err = errors.New("非管理员账户！")
@@ -96,7 +101,7 @@ func AdminLoginHandler(c *gin.Context) (string, uint, error) {
 	return adminname, adminID, err
 }
 
-func AdminProfileHandler(c *gin.Context) (*model.UserInfo, error) {
+func (usc *UserController) AdminProfileHandler(c *gin.Context) (*model.UserInfo, error) {
 	value, ok := c.Get("admin")
 	var adminuser *model.UserInfo
 	adminuser = nil
@@ -117,6 +122,6 @@ func AdminProfileHandler(c *gin.Context) (*model.UserInfo, error) {
 	fmt.Print(c.Query("adminid"))
 	adminID64, _ := strconv.ParseUint(c.Query("adminid"), 10, 32)
 	adminID := uint(adminID64)
-	adminuser, err = userservice.UserInfo(adminID)
+	adminuser, err = usc.userservice.UserInfo(adminID)
 	return adminuser, err
 }

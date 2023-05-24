@@ -11,13 +11,11 @@ type UserService struct {
 	userdao *dao.UserDao
 }
 
-// 构造函数
-func (*UserService) NewUserService() *UserService {
-	usd := dao.UserDao{}
-	us := UserService{
-		userdao: &usd,
+func NewUserService() *UserService {
+	usd := dao.NewUserDao()
+	return &UserService{
+		userdao: usd,
 	}
-	return &us
 }
 
 // 用户注册

@@ -9,13 +9,17 @@ import (
 type UserDao struct {
 }
 
+func NewUserDao() *UserDao {
+	return &UserDao{}
+}
+
 // 创建表，在第一次运行创建就行了，后面不用管他
 func (*UserDao) CreateUserTable() {
 	err := DB.AutoMigrate(&model.UserInfo{})
 	if err != nil {
-		fmt.Println("Create Table failed: ", err)
+		fmt.Println("Create User Table failed: ", err)
 	} else {
-		fmt.Println("Successfully create Table.")
+		fmt.Println("Successfully create User Table.")
 	}
 }
 
@@ -33,9 +37,9 @@ func (*UserDao) GetUserInfo(userID uint) (*model.UserInfo, error) {
 func (*UserDao) AddUser(user *model.UserInfo) bool {
 	result := DB.Create(user)
 	if result.Error != nil {
-		panic("Insert error")
+		panic("Insert user error")
 	} else {
-		fmt.Println("Successfully insert.")
+		fmt.Println("Successfully insert user.")
 		return true
 	}
 }
