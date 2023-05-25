@@ -9,16 +9,18 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AppFooter: typeof import('./src/components/layout/footer/AppFooter.vue')['default']
+    AppHeader: typeof import('./src/components/layout/header/AppHeader.vue')['default']
+    AppMenu: typeof import('./src/components/layout/sideBar/AppMenu.vue')['default']
+    AppMenuList: typeof import('./src/components/layout/sideBar/AppMenuList.vue')['default']
+    AppPlayList: typeof import('./src/components/layout/playList/AppPlayList.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElFooter: typeof import('element-plus/es')['ElFooter']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElMain: typeof import('element-plus/es')['ElMain']
-    ElMenu: typeof import('element-plus/es')['ElMenu']
-    ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
-    ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
-    HelloPage: typeof import('./src/components/layout/HelloPage.vue')['default']
-    LeftMenu: typeof import('./src/components/layout/menu/LeftMenu.vue')['default']
+    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
+    IconPark: typeof import('./src/components/common/IconPark.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
