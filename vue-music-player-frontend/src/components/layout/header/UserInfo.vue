@@ -27,7 +27,6 @@ import { Lock, Phone } from '@icon-park/vue-next'
 import { useAuthStore } from '@/stores/auth'
 import { storeToRefs } from 'pinia'
 
-
 const phone = ref('')
 const password = ref('')
 const { login, checkLogin } = useAuthStore()

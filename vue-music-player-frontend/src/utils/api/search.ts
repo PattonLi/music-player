@@ -11,6 +11,6 @@ export async function apiSearchSuggest(keywords: string) {
 }
 
 export async function apiSearchHotDetail() {
-  const {data} = await myAxios.get<{ data: SearchHotDetail[] }>('search/hot/detail')
+  const { data } = await myAxios.get<{ data: SearchHotDetail[] }>('search/hot/detail')
   return data
 }

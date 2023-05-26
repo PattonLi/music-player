@@ -24,12 +24,12 @@ export const useSearchStore = defineStore('search', {
 })
 
 export interface SearchHotDetail {
-	searchWord: string;
-	score: number;
-	content: string;
-	source: number;
-	iconType: number;
-	iconUrl?: string;
-	url: string;
-	alg: string;
+  searchWord: string
+  score: number
+  content: string
+  source: number
+  iconType: number
+  iconUrl?: string
+  url: string
+  alg: string
 }

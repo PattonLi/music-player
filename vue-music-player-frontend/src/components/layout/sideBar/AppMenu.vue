@@ -1,11 +1,11 @@
 <template>
   <div class="bg-main bg-opacity-70 h-screen flex flex-col">
-    <AppMenuList />
+    <MenuList />
   </div>
 </template>
 
 <script setup lang="ts">
-import AppMenuList from './AppMenuList.vue'
+import MenuList from './MenuList.vue'
 </script>
 
 <style scoped></style>
