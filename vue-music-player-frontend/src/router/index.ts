@@ -9,7 +9,7 @@ const router = createRouter({
     {
       path: '/',
       name: Pages.home,
-      component: () => import('@/App.vue'),
+      component: () => import('@/views/appRoot/AppRoot.vue'),
       redirect: { name: Pages.discover },
       children: [
         {
