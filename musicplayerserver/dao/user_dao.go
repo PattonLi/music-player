@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"errors"
 	"fmt"
 	"music-player/musicplayerserver/model"
 )
@@ -23,10 +24,13 @@ func (*UserDao) CreateUserTable() {
 }
 
 // 查询用户信息
-func (*UserDao) GetUserInfo(id string) *model.UserInfo {
+func (*UserDao) GetUserInfo(userID uint) (*model.UserInfo, error) {
 	user := model.UserInfo{}
-	DB.First(&user, id)
-	return &user
+	err := DB.First(&user, "id = ?", userID).Error
+	if err != nil {
+		err = errors.New("查找不到用户信息！")
+	}
+	return &user, err
 }
 
 // 添加用户
@@ -38,4 +42,38 @@ func (*UserDao) AddUser(user *model.UserInfo) bool {
 		fmt.Println("Successfully insert user.")
 		return true
 	}
+}
+
+// 更新用户
+func (*UserDao) UpdateUser(user *model.UserInfo) bool {
+	result := DB.Save(user)
+	if result.Error != nil {
+		panic("Update error")
+	} else {
+		fmt.Println("Successfully update.")
+		return true
+	}
+}
+
+// 用户验证
+func (*UserDao) UserCheck(u *model.UserInfo) (uint, string, error) {
+	username := u.Username
+	password := u.Password
+	user := model.UserInfo{}
+	err := DB.First(&user, "username = ? AND password = ?", username, password).Error
+	if err != nil {
+		err = errors.New("用户名不存在或密码错误！")
+	}
+	return user.ID, user.Admin, err
+}
+
+// 用户名验证
+func (*UserDao) UsernameCheck(u *model.UserInfo) (uint, string, error) {
+	username := u.Username
+	user := model.UserInfo{}
+	err := DB.First(&user, "username = ?", username).Error
+	if err != nil {
+		err = errors.New("用户名不存在！")
+	}
+	return user.ID, user.Admin, err
 }
