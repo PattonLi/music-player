@@ -6,6 +6,8 @@
     // 解决el-message无法引入的问题
     "moduleResolution": "node",
     "types": ["element-plus/global"],
+    //node timer
+    "types": ["node"],
     "ignoreDeprecations": "5.0",
     "composite": true,
     "baseUrl": ".",

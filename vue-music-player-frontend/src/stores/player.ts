@@ -37,7 +37,7 @@ export const usePlayerStore = defineStore({
     nextSong(state): Song {
       const { thisIndex, playListCount } = this
       if (thisIndex === playListCount - 1) {
-        return state.playList.first()
+        return state.playList[0]
       } else {
         const nextIndex: number = thisIndex + 1
         return state.playList[nextIndex]
@@ -194,13 +194,13 @@ export const usePlayerStore = defineStore({
       localStorage.setItem('PLAYER-VOLUME', n.toString())
     },
     //修改播放时间
-    onSliderChange(val: number) {
+    onSliderChange(val: any) {
       this.currentTime = val
       this.sliderInput = false
       this.audio.currentTime = val
     },
     //播放时间拖动中
-    onSliderInput(val: number) {
+    onSliderInput(val: any) {
       this.sliderInput = true
     },
     //定时器
