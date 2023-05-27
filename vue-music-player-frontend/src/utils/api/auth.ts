@@ -1,10 +1,9 @@
 import myAxios from './myAxios'
-import type { UserProfile } from '@/models/user'
+import type { UserProfile, registerUser } from '@/models/user'
 
 export async function apiLogin(phone: string, password: string) {
   return await myAxios.get<{
     code: number
-    cookie: string
     token: string
   }>('login/cellphone', { phone: phone, password: password })
 }
@@ -16,4 +15,11 @@ export async function apiLoginStatus() {
       profile: UserProfile
     }
   }>('login/status')
+}
+
+export async function apiRegister(ruleForm: registerUser) {
+  return await myAxios.get<{
+    code: number
+    token: string
+  }>('login/cellphone', ruleForm)
 }

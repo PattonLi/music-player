@@ -37,3 +37,11 @@ export interface UserProfile {
   avatarDetail?: any
   anchor: boolean
 }
+
+export interface registerUser {
+  username: string
+  nickname: string
+  phone: string
+  email: string
+  password: string
+}

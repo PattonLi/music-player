@@ -42,15 +42,22 @@
   @apply dark:text-slate-200;
 }
 
+//文本悬停样式
+.hover-text {
+  //文本颜色，鼠标可点击
+  @apply hover:text-emerald-400 cursor-pointer;
+}
+
 .text-dc {
   @apply text-slate-400;
   @apply dark:text-slate-400;
 }
 
+//按钮样式
 .button {
-  @apply flex bg-emerald-600 rounded-full justify-center items-center h-8 text-sm transition-all;
+  @apply flex bg-emerald-700 rounded-full justify-center items-center h-8 text-sm transition-all;
   @apply text-white;
-  @apply hover:bg-emerald-700;
+  @apply hover:bg-emerald-500;
 }
 
 .button-outline {
