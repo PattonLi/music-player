@@ -12,7 +12,7 @@ export const usePlayerStore = defineStore({
   state: () => ({
     audio: new Audio(),
     loopType: 0, //循环模式 0 单曲循环 1 列表循环 2随机播放
-    volume: localStorage.getItem(KEYS.volume)?.toInt() || 60, //音量
+    // volume: localStorage.getItem(KEYS.volume)?.toInt() || 60, //音量
     playList: [] as Song[], //播放列表,
     showPlayList: false,
     id: 0,

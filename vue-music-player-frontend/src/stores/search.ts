@@ -1,14 +1,18 @@
 import { defineStore } from 'pinia'
-import { apiSearchSuggest } from '@/utils/api/search'
-import type { SearchSuggest } from '@/models/search'
+import { apiSearchSuggest, apiSearchHotDetail } from '@/utils/api/search'
+import type { SearchHotDetail, SearchSuggest } from '@/models/search'
 
 //搜索结果状态
 export const useSearchStore = defineStore('search', {
   state: () => {
     return {
       showSearchView: false,
+      //搜索关键词
       searchKeyword: '',
-      suggestData: {} as SearchSuggest
+      //
+      suggestData: {} as SearchSuggest,
+      //热搜结果
+      searchHotData: [] as SearchHotDetail[]
     }
   },
   getters: {
@@ -17,19 +21,11 @@ export const useSearchStore = defineStore('search', {
     }
   },
   actions: {
-    async suggest() {
+    async updateSuggest() {
       this.suggestData = await apiSearchSuggest(this.searchKeyword)
+    },
+    async updateSearchHot() {
+      this.searchHotData = await apiSearchHotDetail()
     }
   }
 })
-
-export interface SearchHotDetail {
-  searchWord: string
-  score: number
-  content: string
-  source: number
-  iconType: number
-  iconUrl?: string
-  url: string
-  alg: string
-}

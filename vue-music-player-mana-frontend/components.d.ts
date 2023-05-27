@@ -42,6 +42,9 @@ declare module '@vue/runtime-core' {
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTimeline: typeof import('element-plus/es')['ElTimeline']
     ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
+    MyFotter: typeof import('./src/components/layout/MyFotter.vue')['default']
+    MyHeader: typeof import('./src/components/layout/MyHeader.vue')['default']
+    MyMenu: typeof import('./src/components/layout/MyMenu.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
