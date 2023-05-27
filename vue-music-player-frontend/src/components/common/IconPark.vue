@@ -5,9 +5,6 @@
     :size="size"
     :spin="spin"
     :fill="fill"
-    :strokeLinecap="strokeLinecap"
-    :strokeLinejoin="strokeLinejoin"
-    :strokeWidth="strokeWidth"
   />
 </template>
 
@@ -20,8 +17,5 @@ defineProps<{
   size?: number | string
   spin?: boolean
   fill?: string | string[]
-  strokeLinecap?: 'butt' | 'round' | 'square'
-  strokeLinejoin?: 'miter' | 'round' | 'bevel'
-  strokeWidth?: number
 }>()
 </script>

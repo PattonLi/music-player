@@ -1,7 +1,12 @@
 <template>
+  <!-- 图标 -->
+  <div class="mx-12 pt-4">
+    <IconPark :icon=Performance theme="outline" size="75" />
+  </div>
   <!--菜单栏拖动条-->
   <ElScrollbar>
-    <div class="mt-10 pl-6 pr-6 space-y-1.5" v-for="(menuItem, key) in menus" :key="key">
+    <!-- 边距样式 -->
+    <div class="mt-8 pl-8 pr-6 space-y-2" v-for="(menuItem, key) in menus" :key="key">
       <!-- 菜单栏 -->
       <div class="menu-title text-main">{{ menuItem.name }}</div>
       <!-- 菜单 -->
@@ -15,7 +20,7 @@
         <!-- 图标 -->
         <IconPark :icon="menu.icon" size="18" :theme="menu.theme" />
         <!-- 菜单名称 -->
-        <span class="ml-1">{{ menu.name }}</span>
+        <span class="ml-2">{{ menu.name }}</span>
       </div>
     </div>
   </ElScrollbar>
@@ -25,20 +30,22 @@
 import { useMenu } from '@/components/layout/sideBar/useMenu'
 //图标组件
 import IconPark from '@/components/common/IconPark.vue'
+import { Performance } from "@icon-park/vue-next";
 
 const { menus, currentKey, click } = useMenu()
 </script>
 
 <style lang="scss" scoped>
 .menu-title {
-  @apply text-xs pl-4 pr-4 pb-2;
+  @apply text-sm pl-4 pr-4 pb-2 text-gray-500;
 }
 
 .menu-item {
   @apply text-sm pl-4 pr-4 pt-1.5 pb-1.5 rounded cursor-pointer transition-colors flex items-center;
 }
 
+// 当选中菜单时 TODO
 .active {
-  @apply bg-gradient-to-r from-teal-400 to-emerald-400 text-slate-50 cursor-default;
+  @apply text-green-400 cursor-default;
 }
 </style>

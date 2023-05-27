@@ -1,5 +1,6 @@
 <template>
-  <div class="bg-main bg-opacity-70 h-screen flex flex-col">
+  <!-- 主背景样式 -->
+  <div class="bg-main h-screen flex flex-col">
     <MenuList />
   </div>
 </template>

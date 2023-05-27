@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-between drag h-14">
+  <div class="flex items-center justify-between h-16">
     <!-- 导航栏相关 -->
     <div class="flex items-center pl-5">
       <!-- 左导航栏 -->
