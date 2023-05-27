@@ -1,11 +1,4 @@
 <template>
-  <div>
-    <el-switch
-    v-model="isDarkMode"
-    class="ml-2"
-    style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-    />
-  </div>
   <div class="flex items-center cursor-pointer hover-text">
     <ElAvatar size="small" round class="bg-gray-200" :src="profile?.avatarUrl ?? ''"></ElAvatar>
     <span class="text-xs ml-1.5" v-if="isLogin">{{ profile.nickname }}</span>
@@ -33,16 +26,6 @@
 import { Lock, Phone } from '@icon-park/vue-next'
 import { useAuthStore } from '@/stores/auth'
 import { storeToRefs } from 'pinia'
-
-//夜间模式
-const isDarkMode = ref(false)
-watch(isDarkMode, (newValue, oldValue) => {
-  if(newValue){
-    document.documentElement.classList.add('dark')
-  }else{
-    document.documentElement.classList.remove('dark')
-  }
-})
 
 const phone = ref('')
 const password = ref('')

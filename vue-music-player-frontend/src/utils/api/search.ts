@@ -1,16 +1,17 @@
-import type { SearchHotDetail } from '@/stores/search'
+import type { SearchHotDetail } from '@/models/search'
 import myAxios from './myAxios'
 import type { SearchSuggest } from '@/models/search'
 
 //获取搜索结果
 export async function apiSearchSuggest(keywords: string) {
-  const { result } = await myAxios.get<{ result: SearchSuggest }>('search/suggest', {
+  const data = await myAxios.get<SearchSuggest>('search/suggest', {
     keywords: keywords
   })
-  return result
+  return data
 }
 
+//热搜结果
 export async function apiSearchHotDetail() {
-  const { data } = await myAxios.get<{ data: SearchHotDetail[] }>('search/hot/detail')
+  const data = await myAxios.get<SearchHotDetail[]>('search/hot')
   return data
 }

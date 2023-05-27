@@ -15,6 +15,7 @@ declare module '@vue/runtime-core' {
     AppMenuList: typeof import('./src/components/layout/sideBar/AppMenuList.vue')['default']
     AppPlayList: typeof import('./src/components/layout/playList/AppPlayList.vue')['default']
     AppPlayListItem: typeof import('./src/components/layout/playList/AppPlayListItem.vue')['default']
+    DarkMode: typeof import('./src/components/layout/header/DarkMode.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElDialog: typeof import('element-plus/es')['ElDialog']

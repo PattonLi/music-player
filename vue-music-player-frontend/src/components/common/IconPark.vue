@@ -5,6 +5,7 @@
     :size="size"
     :spin="spin"
     :fill="fill"
+    :strokeWidth="strokeWidth"
   />
 </template>
 
@@ -17,5 +18,6 @@ defineProps<{
   size?: number | string
   spin?: boolean
   fill?: string | string[]
+  strokeWidth?: number
 }>()
 </script>

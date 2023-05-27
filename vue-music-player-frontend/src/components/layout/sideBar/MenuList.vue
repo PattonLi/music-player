@@ -1,7 +1,7 @@
 <template>
   <!-- 图标 -->
-  <div class="mx-12 pt-4">
-    <IconPark :icon=Performance theme="outline" size="75" />
+  <div class="mx-14 pt-4">
+    <img style="width: 80px; height: 80px" src="@/assets/images/music-logo.svg" />
   </div>
   <!--菜单栏拖动条-->
   <ElScrollbar>
@@ -30,7 +30,6 @@
 import { useMenu } from '@/components/layout/sideBar/useMenu'
 //图标组件
 import IconPark from '@/components/common/IconPark.vue'
-import { Performance } from "@icon-park/vue-next";
 
 const { menus, currentKey, click } = useMenu()
 </script>

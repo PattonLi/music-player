@@ -89,15 +89,13 @@ export function useMenu() {
   ]
 
   const router = useRouter()
-  const currentKey = ref("")
-  
+  const currentKey = ref('')
+
   //全局钩子
-  watch(router.currentRoute.value,()=>{
+  watch(router.currentRoute.value, () => {
     currentKey.value = router.currentRoute.value.name as string
-    console.log('asdadads');
-    
+    console.log('asdadads')
   })
-  
 
   const click = async (menu: IMenu) => {
     //跳转

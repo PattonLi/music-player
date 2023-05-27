@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import MyHeader from '@/views/layout/MyHeader.vue'
-import MyFotter from '@/views/layout/MyFotter.vue'
-import MyMenu from '@/views/layout/MyMenu.vue'
+import MyHeader from '@/components/layout/MyHeader.vue'
+import MyFotter from '@/components/layout/MyFotter.vue'
+import MyMenu from '@/components/layout/MyMenu.vue'
 import { useRouter } from 'vue-router'
 import { pathMap } from '@/router/pathMap'
 import { useAuthStore } from './stores/auth'
