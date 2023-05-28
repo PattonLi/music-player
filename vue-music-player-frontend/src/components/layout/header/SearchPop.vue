@@ -1,0 +1,77 @@
+<template>
+  <!-- 弹出显示区域 -->
+  <el-popover
+    popper-style="max-width:auto;padding:0;"
+    v-model:visible="showSearchView"
+    width="250px"
+  >
+    <!-- 输入框 -->
+    <template #reference>
+      <ElInput
+        placeholder="搜索音乐、歌手、专辑"
+        :prefix-icon="Search"
+        clearable
+        @input="searchInput"
+        v-model="searchKeyword"
+        @focus="showSearchView = true"
+        @focusout="showSearchView = false"
+      />
+
+      <!-- 搜索结果显示 -->
+    </template>
+    <div class="h-80">
+      <el-scrollbar>
+        <div class="pb-2.5">
+          <!-- 显示热搜或搜索结果 -->
+          <div v-if="showHot">
+            <div class="pt-2 pb-1.5 px-2.5">热门搜索</div>
+            <div>
+              <!-- 热门搜索 -->
+              <div
+                v-for="(item, index) in searchHotData"
+                :key="index"
+                class="py-2.5 px-2.5 hover-text cursor-pointer flex justify-between items-center text-xs"
+                @click="hotClick(item.searchWord)"
+              >
+                <!-- 内容显示 -->
+                <div>
+                  <span class="mr-1">{{ index + 1 }}.</span>
+                  <span>{{ item.searchWord }}</span>
+                </div>
+                <div class="text-red-300 text-xs">{{ item.type }}</div>
+              </div>
+            </div>
+          </div>
+          <!-- 搜索结果 -->
+          <SearchSuggest v-else />
+        </div>
+      </el-scrollbar>
+    </div>
+  </el-popover>
+</template>
+
+<script setup lang="ts">
+import { Search } from '@icon-park/vue-next'
+import { storeToRefs } from 'pinia'
+import { useSearchStore } from '@/stores/search'
+import { debounce } from 'lodash'
+import SearchSuggest from '@/components/layout/header/SearchSuggest.vue'
+
+onMounted(async () => {
+  updateSearchHot()
+})
+
+// 搜索框输入
+const searchInput = debounce((value: string | number) => updateSuggest(), 500, { maxWait: 1000 })
+
+const { showSearchView, searchKeyword, showHot, searchHotData } = storeToRefs(useSearchStore())
+const { updateSuggest, updateSearchHot } = useSearchStore()
+
+//热搜点击
+const hotClick = (text: string) => {
+  searchKeyword.value = text
+  updateSuggest()
+  showSearchView.value = true
+}
+</script>
+<style lang="scss"></style>

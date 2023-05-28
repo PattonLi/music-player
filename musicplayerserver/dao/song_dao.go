@@ -7,10 +7,10 @@ import (
 type Songdao struct {
 }
 
-// 查询歌曲信息
-func (s *Songdao) GetSongInfo(id string) string {
+// 查询歌曲歌词
+func (s *Songdao) GetSongInfo(name string) string {
 	song := model.SongInfo{}
-	DB.Find(&song, id)
+	DB.Where("name = ?", name).Find(&song)
 	return song.Lyric
 }
 

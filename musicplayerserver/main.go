@@ -39,8 +39,7 @@ func main() {
 	}
 	r.Use(cors.New(corsConfig))
 	//
-	//router.Posts(r)
-	router.Gets(r)
+	router.Posts(r)
 	r.Run()
 
 }

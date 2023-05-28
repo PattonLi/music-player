@@ -17,8 +17,8 @@ func NewSongController() *SongController {
 	}
 }
 
-func (sc *SongController) GetSongHandler(c *gin.Context) string {
-	id := c.Query("id")
-	lyric := sc.songservice.GetSong(id)
+func (sc *SongController) GetSongLyricHandler(c *gin.Context) string {
+	name := c.PostForm("name")
+	lyric := sc.songservice.GetSong(name)
 	return lyric
 }

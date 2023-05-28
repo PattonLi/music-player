@@ -19,8 +19,8 @@ func (*SongService) NewSongService() *SongService {
 }
 
 // 获取歌曲歌词
-func (s *SongService) GetSong(id string) string {
-	lyric := s.songdao.GetSongInfo(id)
+func (s *SongService) GetSong(name string) string {
+	lyric := s.songdao.GetSongInfo(name)
 	if lyric != "" {
 		fmt.Println("成功获取歌曲的歌词！")
 	} else {

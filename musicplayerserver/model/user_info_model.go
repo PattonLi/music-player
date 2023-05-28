@@ -11,6 +11,8 @@ type UserInfo struct {
 	Age        string `json:"age" gorm:"column:age"`
 	Email      string `json:"email" gorm:"column:email"`
 	Password   string `json:"password" gorm:"column:password"`
+	Nickname   string `json:"nickname" gorm:"column:nickname"`
+	Admin      string `json:"admin" gorm:"column:admin"`
 }
 
 // 获取表名，gorm创建表时会自己获取这个表名

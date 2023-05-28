@@ -1,8 +1,13 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "auto-imports.d.ts"],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
+    // 解决el-message无法引入的问题
+    "moduleResolution": "node",
+    "types": ["element-plus/global"],
+    //node timer
+    "types": ["node"],
     "ignoreDeprecations": "5.0",
     "composite": true,
     "baseUrl": ".",
