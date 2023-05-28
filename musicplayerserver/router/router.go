@@ -116,34 +116,15 @@ func Posts(r *gin.Engine) {
 			}
 		}
 	})
-
-	r.POST("/song/url", func(c *gin.Context) {
-		url := controller.NewSongController().GetSongURLHandler(c)
-		c.JSON(http.StatusOK, url)
+	r.POST("/song/lyric", func(c *gin.Context) {
+		lyric := controller.NewSongController().GetSongLyricHandler(c)
+		c.JSON(http.StatusOK, lyric)
 	})
 }
 
-func Gets(r *gin.Engine) {
-	r.GET("/gettest", func(c *gin.Context) {
-		c.JSON(http.StatusOK, "This is a test.")
+/*func Gets(r *gin.Engine) {
+	r.GET("/lyric", func(c *gin.Context) {
+		lyric := controller.NewSongController().GetSongHandler(c)
+		c.String(http.StatusOK, lyric)
 	})
-	authorized := r.Group("/")
-	authorized.Use(authMiddleware)
-	authorized.GET("/userInfo", func(c *gin.Context) {
-		user, err := controller.NewUserController().UserInfoHandler(c)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, user)
-		} else {
-			c.JSON(http.StatusOK, user)
-		}
-
-	})
-	authorized.GET("/admin/profile", func(c *gin.Context) {
-		adminuser, err := controller.NewUserController().AdminProfileHandler(c)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, adminuser)
-		} else {
-			c.JSON(http.StatusOK, adminuser)
-		}
-	})
-}
+}*/

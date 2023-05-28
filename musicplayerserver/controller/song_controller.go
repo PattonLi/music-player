@@ -11,14 +11,14 @@ type SongController struct {
 }
 
 func NewSongController() *SongController {
-	ss := service.NewSongService()
+	ss := service.SongService{}
 	return &SongController{
-		songservice: ss,
+		songservice: &ss,
 	}
 }
 
-func (sc *SongController) GetSongURLHandler(c *gin.Context) string {
-	songname := c.PostForm("songname")
-	url := sc.songservice.GetSongURL(songname)
-	return url
+func (sc *SongController) GetSongLyricHandler(c *gin.Context) string {
+	name := c.PostForm("name")
+	lyric := sc.songservice.GetSong(name)
+	return lyric
 }
