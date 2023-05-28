@@ -10,6 +10,7 @@ type SongInfo struct {
 	Singer_id int
 	Url       string
 	Lyric     string
+	Singer    string
 }
 
 // 获取表名，gorm创建表时会自己获取这个表名

@@ -116,15 +116,24 @@ func Posts(r *gin.Engine) {
 			}
 		}
 	})
+
 	r.POST("/song/lyric", func(c *gin.Context) {
 		lyric := controller.NewSongController().GetSongLyricHandler(c)
-		c.JSON(http.StatusOK, lyric)
+		c.JSON(http.StatusOK, gin.H{"lyric": lyric})
 	})
-}
 
-/*func Gets(r *gin.Engine) {
-	r.GET("/lyric", func(c *gin.Context) {
-		lyric := controller.NewSongController().GetSongHandler(c)
-		c.String(http.StatusOK, lyric)
+	r.POST("/song/detail", func(c *gin.Context) {
+		songname, singer, err := controller.NewSongController().GetSongDetailHandler(c)
+		tokenString := ""
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error(), "token": tokenString, "songname": songname})
+		} else {
+			tokenString, err = createToken(songname, "true")
+			if err != nil {
+				c.JSON(http.StatusOK, gin.H{"message": err.Error(), "token": tokenString, "songname": songname, "singer": singer})
+			}
+			c.JSON(http.StatusOK, gin.H{"message": "获取成功", "token": tokenString, "songname": songname, "singer": singer})
+		}
 	})
-}*/
+
+}
