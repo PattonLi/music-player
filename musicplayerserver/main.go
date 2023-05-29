@@ -40,6 +40,6 @@ func main() {
 	r.Use(cors.New(corsConfig))
 	//
 	router.Posts(r)
-	r.Run()
+	r.Run("127.0.0.1:4000")
 
 }

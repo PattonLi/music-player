@@ -72,8 +72,5 @@ func (*UserDao) UsernameCheck(u *model.UserInfo) (uint, string, error) {
 	username := u.Username
 	user := model.UserInfo{}
 	err := DB.First(&user, "username = ?", username).Error
-	if err != nil {
-		err = errors.New("用户名不存在！")
-	}
 	return user.ID, user.Admin, err
 }
