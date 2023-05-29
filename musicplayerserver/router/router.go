@@ -117,23 +117,34 @@ func Posts(r *gin.Engine) {
 		}
 	})
 
-	r.POST("/song/lyric", func(c *gin.Context) {
-		lyric := controller.NewSongController().GetSongLyricHandler(c)
-		c.JSON(http.StatusOK, gin.H{"lyric": lyric})
-	})
-
-	r.POST("/song/detail", func(c *gin.Context) {
-		songname, singer, err := controller.NewSongController().GetSongDetailHandler(c)
-		tokenString := ""
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error(), "token": tokenString, "songname": songname})
+	r.POST("/admin/addsong", func(c *gin.Context) {
+		result := controller.NewSongController().AddSongHandler(c)
+		if result {
+			c.JSON(http.StatusOK, gin.H{"message": "成功添加歌曲"})
 		} else {
-			tokenString, err = createToken(songname, "true")
-			if err != nil {
-				c.JSON(http.StatusOK, gin.H{"message": err.Error(), "token": tokenString, "songname": songname, "singer": singer})
-			}
-			c.JSON(http.StatusOK, gin.H{"message": "获取成功", "token": tokenString, "songname": songname, "singer": singer})
+			c.JSON(http.StatusBadRequest, gin.H{"message": "添加歌曲失败"})
 		}
 	})
 
+}
+
+func GETs(r *gin.Engine) {
+	r.GET("/song/lyric", func(c *gin.Context) {
+		lyric, err := controller.NewSongController().GetSongLyricHandler(c)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"message": "没有此歌曲"})
+		} else {
+			c.JSON(http.StatusOK, gin.H{"message": "获取歌词成功", "lyric": lyric})
+		}
+	})
+
+	r.GET("/song/detail", func(c *gin.Context) {
+		songname, singer, err := controller.NewSongController().GetSongDetailHandler(c)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"message": "没有此歌曲"})
+		} else {
+
+			c.JSON(http.StatusOK, gin.H{"message": "获取信息成功", "songname": songname, "singer": singer})
+		}
+	})
 }
