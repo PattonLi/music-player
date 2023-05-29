@@ -38,7 +38,6 @@ func main() {
 		MaxAge: 6 * time.Hour,
 	}
 	r.Use(cors.New(corsConfig))
-	//
 	router.Posts(r)
 	r.Run("127.0.0.1:4000")
 

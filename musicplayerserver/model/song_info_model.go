@@ -7,7 +7,7 @@ import (
 type SongInfo struct {
 	gorm.Model
 	Name      string
-	Singer_id int
+	Singer_id string
 	Url       string
 	Lyric     string
 	Singer    string

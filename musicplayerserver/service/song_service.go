@@ -1,8 +1,8 @@
 package service
 
 import (
-	"fmt"
 	"music-player/musicplayerserver/dao"
+	"music-player/musicplayerserver/model"
 )
 
 type SongService struct {
@@ -19,14 +19,9 @@ func (*SongService) NewSongService() *SongService {
 }
 
 // 获取歌曲歌词
-func (s *SongService) GetSongLyric(name string) string {
-	lyric := s.songdao.GetSongLr(name)
-	if lyric != "" {
-		fmt.Println("成功获取歌曲的歌词！")
-	} else {
-		fmt.Println("获取歌曲歌词失败！")
-	}
-	return lyric
+func (s *SongService) GetSongLyric(id string) (string, error) {
+	lyric, err := s.songdao.GetSongLr(id)
+	return lyric, err
 
 }
 
@@ -34,4 +29,10 @@ func (s *SongService) GetSongLyric(name string) string {
 func (s *SongService) GetSongDetail(id string) (string, string, error) {
 	songname, singer, err := s.songdao.GetSongInfo(id)
 	return songname, singer, err
+}
+
+// 添加歌曲
+func (s *SongService) AddSong(song model.SongInfo) bool {
+	result := s.songdao.AddSong(&song)
+	return result
 }
