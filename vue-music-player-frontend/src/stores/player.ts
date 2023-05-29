@@ -1,177 +1,144 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { useDetail, useSongUrl } from '@/utils/api/song'
+import { apiGetSong } from '@/utils/api/song'
 import type { Song } from '@/models/song'
-import type { SongUrl } from '@/models/song_url'
 
-const KEYS = {
-  volume: 'PLAYER-VOLUME'
-}
-
-export const usePlayerStore = defineStore({
-  id: 'player',
+export const usePlayerStore = defineStore('player', {
   state: () => ({
     audio: new Audio(),
-    loopType: 0, //循环模式 0 单曲循环 1 列表循环 2随机播放
-    // volume: localStorage.getItem(KEYS.volume)?.toInt() || 60, //音量
+
     playList: [] as Song[], //播放列表,
+    song: {} as Song, //正在播放歌曲
+
     showPlayList: false,
-    id: 0,
-    url: '',
-    songUrl: {} as SongUrl,
-    song: {} as Song,
-    isPlaying: false, //是否播放中
-    isPause: false, //是否暂停
-    sliderInput: false, //是否正在拖动进度条
+    loopType: 0, //0 单曲循环 1 列表循环 2列表随机播放
+    volume: 60, //音量
+    isPlaying: false, //是否正在播放
     ended: false, //是否播放结束
     muted: false, //是否静音
     currentTime: 0, //当前播放时间
     duration: 0 //总播放时长
   }),
   getters: {
-    playListCount: (state) => {
+    //播放列表歌曲数量
+    getPlayListCount: (state) => {
       return state.playList.length
     },
-    thisIndex: (state) => {
-      return state.playList.findIndex((song) => song.id === state.id)
+    //正在播放歌曲在播放列表中index
+    getPlayListIndex: (state) => {
+      return state.playList.findIndex((song) => song.id === state.song.id)
     },
-    nextSong(state): Song {
-      const { thisIndex, playListCount } = this
-      if (thisIndex === playListCount - 1) {
-        return state.playList[0]
+    //获取下一首歌曲
+    getNextSong(state): Song {
+      if (this.getPlayListIndex === this.getPlayListCount - 1) {
+        return state.playList[0] //回到播放列表头部
       } else {
-        const nextIndex: number = thisIndex + 1
+        //正常情况
+        const nextIndex: number = this.getPlayListIndex + 1
         return state.playList[nextIndex]
       }
     },
+    //获取前一首歌曲
     prevSong(state): Song {
-      const { thisIndex } = this
-      if (thisIndex === 0) {
-        return state.playList.last()
+      if (this.getPlayListIndex === 0) {
+        return state.playList.last() //回到播放列表尾部
       } else {
-        const prevIndex: number = thisIndex - 1
+        //正常情况
+        const prevIndex: number = this.getPlayListIndex - 1
         return state.playList[prevIndex]
       }
     }
   },
   actions: {
-    init() {
-      this.audio.volume = this.volume / 100
-    },
     //播放列表里面添加音乐
     pushPlayList(replace: boolean, ...list: Song[]) {
+      //替换播放列表
       if (replace) {
         this.playList = list
         return
       }
+      //不替换播放列表
       list.forEach((song) => {
+        //播放列表中没有该歌曲
         if (this.playList.filter((s) => s.id == song.id).length <= 0) {
           this.playList.push(song)
         }
       })
     },
+    //清空播放列表
     clearPlayList() {
-      this.songUrl = {} as SongUrl
-      this.url = ''
-      this.id = 0
       this.song = {} as Song
+      this.playList = [] as Song[]
       this.isPlaying = false
-      this.isPause = false
-      this.sliderInput = false
       this.ended = false
       this.muted = false
       this.currentTime = 0
-      this.playList = [] as Song[]
       this.showPlayList = false
-      this.audio.load()
+      this.audio.load() //Resets the audio
       setTimeout(() => {
         this.duration = 0
       }, 500)
     },
+    //开始播放
     async play(id: number) {
-      if (id == this.id) return
+      if (id == this.song.id) return
       this.isPlaying = false
-      const data = await useSongUrl(id)
-      this.audio.src = data.url
+      //获取歌曲信息
+      this.song = await apiGetSong(this.song.id)
+      this.audio.src = this.song.url
       this.audio
         .play()
         .then((res) => {
+          //播放成功
           this.isPlaying = true
-          this.songUrl = data
-          this.url = data.url
-          this.id = id
-          this.songDetail()
+          this.pushPlayList(false, this.song)
         })
         .catch((res) => {
+          //播放失败
           console.log(res)
         })
-    },
-    //播放结束
-    playEnd() {
-      console.log('播放结束')
-      switch (this.loopType) {
-        case 0:
-          this.rePlay()
-          break
-        case 1:
-          this.next()
-          break
-        case 2:
-          this.randomPlay()
-          break
-      }
-    },
-    async songDetail() {
-      this.song = await useDetail(this.id)
-
-      this.pushPlayList(false, this.song)
     },
     //重新播放
     rePlay() {
       setTimeout(() => {
         this.currentTime = 0
         this.audio.play()
-      }, 1500)
+      }, 1000)
     },
     //下一曲
-    next() {
-      if (this.loopType === 2) {
-        this.randomPlay()
-      } else {
-        this.play(this.nextSong.id)
+    nextPlay() {
+      switch (this.loopType) {
+        //单曲循环
+        case 0:
+          this.rePlay()
+          break
+        //列表
+        case 1:
+          this.play(this.getNextSong.id)
+          break
+        //随机
+        case 2:
+          this.play(this.playList.sample().id)
+          break
       }
     },
     //上一曲
     prev() {
       this.play(this.prevSong.id)
     },
-    //随机播放
-    randomPlay() {
-      this.play(this.playList.sample().id)
-    },
     //播放、暂停
     togglePlay() {
+      //没有歌曲在播放
       if (!this.song.id) return
       this.isPlaying = !this.isPlaying
+      //开始播放
       if (!this.isPlaying) {
-        this.audio.pause()
-        this.isPause = true
-      } else {
         this.audio.play()
-        this.isPause = false
+      } //暂停播放
+      else {
+        this.audio.pause()
       }
     },
-    setPlay() {
-      if (!this.song.id) return
-      this.isPlaying = true
-      this.audio.play()
-      this.isPause = false
-    },
-    setPause() {
-      if (!this.song.id) return
-      this.isPlaying = false
-      this.audio.pause()
-      this.isPause = true
-    },
+
     //切换循环类型
     toggleLoop() {
       if (this.loopType == 2) {
@@ -186,26 +153,23 @@ export const usePlayerStore = defineStore({
       this.audio.muted = this.muted
     },
     //音量设置
-    setVolume(n: number) {
+    setVolume(n: any) {
+      //范围约束
       n = n > 100 ? 100 : n
       n = n < 0 ? 0 : n
       this.volume = n
       this.audio.volume = n / 100
-      localStorage.setItem('PLAYER-VOLUME', n.toString())
     },
-    //修改播放时间
+    //修改进度条
     onSliderChange(val: any) {
+      //待做转换成时间格式
       this.currentTime = val
-      this.sliderInput = false
-      this.audio.currentTime = val
+      // this.audio.currentTime = val
     },
-    //播放时间拖动中
-    onSliderInput(val: any) {
-      this.sliderInput = true
-    },
-    //定时器
+    //定时器更新信息
     interval() {
-      if (this.isPlaying && !this.sliderInput) {
+      //如果在播放
+      if (this.isPlaying) {
         this.currentTime = parseInt(this.audio.currentTime.toString())
         this.duration = parseInt(this.audio.duration.toString())
         this.ended = this.audio.ended
@@ -215,20 +179,19 @@ export const usePlayerStore = defineStore({
 })
 
 export const userPlayerInit = () => {
-  let timer: NodeJS.Timer
-  const { init, interval, playEnd } = usePlayerStore()
-
+  let timer: any
+  const { setVolume, interval, nextPlay } = usePlayerStore()
   const { ended } = storeToRefs(usePlayerStore())
 
   //监听播放结束
   watch(ended, (ended) => {
     if (!ended) return
-    playEnd()
+    nextPlay()
   })
 
   //启动定时器
   onMounted(() => {
-    init()
+    setVolume(60)
     console.log('启动定时器')
     timer = setInterval(interval, 1000)
   })

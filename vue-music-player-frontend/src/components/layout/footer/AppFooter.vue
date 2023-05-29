@@ -1,13 +1,19 @@
 <template>
+  <!-- 垂直布局，伸展 -->
   <div class="flex flex-col items-stretch h-20">
+    <!-- 进度条 -->
     <PlayerSlider />
-    <div class="flex grow px-5 items-center">
+    <!-- 功能信息区 -->
+    <div class="flex grow px-4 items-center mb-1">
+      <!-- 歌曲信息显示 -->
       <div class="flex-1">
         <PlayerSong />
       </div>
+      <!-- 播放按钮 -->
       <div class="flex-1">
         <PlayerController />
       </div>
+      <!-- 播放信息显示 -->
       <div class="flex-1">
         <PlayerAction />
       </div>

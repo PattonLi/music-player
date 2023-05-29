@@ -1,26 +1,39 @@
 <template>
-  <div class="flex items-center justify-center gap-x-3">
+  <div class="flex items-center justify-center gap-x-4">
+    <!-- 播放模式按钮 -->
     <IconPark
       :icon="loopType === 0 ? PlayOnce : loopType === 1 ? LoopOnce : ShuffleOne"
-      size="20"
+      size="22"
       :stroke-width="3"
       class="hover-text"
       @click="toggleLoop"
     />
-    <IconPark :icon="GoStart" size="28" theme="filled" class="hover-text" @click="prev" />
+    <!-- 上一曲按钮 -->
+    <IconPark :icon="GoStart" size="30" theme="filled" class="hover-text" @click="prev" />
+    <!-- 播放暂停按钮 -->
     <IconPark
-      :icon="isPause ? PauseOne : Play"
+      :icon="isPlaying ? Play:PauseOne"
       size="45"
       theme="filled"
-      class="hover-text text-emerald-400"
+      class="hover-text text-emerald-500"
       @click="togglePlay"
     />
-    <IconPark :icon="GoEnd" size="28" class="hover-text" @click="next" />
-    <el-popover placement="top" width="50px">
+    <!-- 下一曲按钮 -->
+    <IconPark :icon="GoEnd" size="30" class="hover-text" @click="next" />
+    <!-- 声音调整按钮 -->
+    <el-popover placement="top" width="45px">
       <template #reference>
-        <IconPark :icon="VolumeSmall" size="20" :stroke-width="3" class="hover-text" />
+        <!-- 声音按钮 -->
+        <IconPark
+          :icon="muted ? VolumeMute : VolumeSmall"
+          size="22"
+          :stroke-width="3"
+          @click="toggleMuted"
+          class="hover-text "
+        />
       </template>
-      <PlayerVolumeSlider />
+      <!-- 拖动栏 -->
+      <PlayerVolumeSlider/>
     </el-popover>
   </div>
 </template>
@@ -34,17 +47,20 @@ import {
   PlayOnce,
   GoEnd,
   GoStart,
-  VolumeSmall
+  VolumeSmall,
+  VolumeMute
 } from '@icon-park/vue-next'
 import IconPark from '@/components/common/IconPark.vue'
 import PlayerVolumeSlider from '@/components/layout/footer/PlayerVolumeSlider.vue'
 import { usePlayerStore } from '@/stores/player'
+import { storeToRefs } from 'pinia'
 
-const { toggleLoop, loopType, next, prev, togglePlay, isPause } = toRefs(usePlayerStore())
+const { loopType, muted,isPlaying } = storeToRefs(usePlayerStore())
+const { toggleLoop, nextPlay: next, prev, togglePlay, toggleMuted } = usePlayerStore()
 </script>
 
 <style lang="scss">
-.controller-icon {
-  @apply hover:text-emerald-400 cursor-pointer transition-colors;
+.el-popover.el-popper {
+  min-width: auto;
 }
 </style>
