@@ -117,33 +117,34 @@ func Posts(r *gin.Engine) {
 		}
 	})
 
-	r.POST("/song/url", func(c *gin.Context) {
-		url := controller.NewSongController().GetSongURLHandler(c)
-		c.JSON(http.StatusOK, url)
+	r.POST("/admin/addsong", func(c *gin.Context) {
+		result := controller.NewSongController().AddSongHandler(c)
+		if result {
+			c.JSON(http.StatusOK, gin.H{"message": "成功添加歌曲"})
+		} else {
+			c.JSON(http.StatusBadRequest, gin.H{"message": "添加歌曲失败"})
+		}
 	})
+
 }
 
-func Gets(r *gin.Engine) {
-	r.GET("/gettest", func(c *gin.Context) {
-		c.JSON(http.StatusOK, "This is a test.")
-	})
-	authorized := r.Group("/")
-	authorized.Use(authMiddleware)
-	authorized.GET("/userInfo", func(c *gin.Context) {
-		user, err := controller.NewUserController().UserInfoHandler(c)
+func GETs(r *gin.Engine) {
+	r.GET("/song/lyric", func(c *gin.Context) {
+		lyric, err := controller.NewSongController().GetSongLyricHandler(c)
 		if err != nil {
-			c.JSON(http.StatusBadRequest, user)
+			c.JSON(http.StatusBadRequest, gin.H{"message": "没有此歌曲"})
 		} else {
-			c.JSON(http.StatusOK, user)
+			c.JSON(http.StatusOK, gin.H{"message": "获取歌词成功", "lyric": lyric})
 		}
-
 	})
-	authorized.GET("/admin/profile", func(c *gin.Context) {
-		adminuser, err := controller.NewUserController().AdminProfileHandler(c)
+
+	r.GET("/song/detail", func(c *gin.Context) {
+		songname, singer, err := controller.NewSongController().GetSongDetailHandler(c)
 		if err != nil {
-			c.JSON(http.StatusBadRequest, adminuser)
+			c.JSON(http.StatusBadRequest, gin.H{"message": "没有此歌曲"})
 		} else {
-			c.JSON(http.StatusOK, adminuser)
+
+			c.JSON(http.StatusOK, gin.H{"message": "获取信息成功", "songname": songname, "singer": singer})
 		}
 	})
 }
