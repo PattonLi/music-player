@@ -6,7 +6,7 @@
   <!--菜单栏拖动条-->
   <ElScrollbar>
     <!-- 边距样式 -->
-    <div class="mt-8 pl-8 pr-6 space-y-2" v-for="(menuItem, key) in menus" :key="key">
+    <div class="mt-8 pl-9 pr-6 space-y-2" v-for="(menuItem, key) in menus" :key="key">
       <!-- 菜单栏 -->
       <div class="menu-title text-main">{{ menuItem.name }}</div>
       <!-- 菜单 -->

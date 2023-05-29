@@ -153,7 +153,7 @@ export const usePlayerStore = defineStore('player', {
       this.audio.muted = this.muted
     },
     //音量设置
-    setVolume(n: number) {
+    setVolume(n: any) {
       //范围约束
       n = n > 100 ? 100 : n
       n = n < 0 ? 0 : n

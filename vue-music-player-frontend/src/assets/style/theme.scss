@@ -4,7 +4,7 @@
 .bg-main {
   //背景色
   @apply bg-gray-50;
-  @apply dark:bg-black;
+  @apply dark:bg-neutral-950;
 }
 
 //悬浮背景基本样式
@@ -13,7 +13,7 @@
   @apply dark:hover:bg-slate-700;
 }
 
-//适配夜间模式背景
+//暗色背景
 .bg-dc {
   @apply bg-gray-100;
   @apply dark:bg-stone-800;

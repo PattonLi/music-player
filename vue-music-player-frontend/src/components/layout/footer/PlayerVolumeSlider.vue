@@ -22,7 +22,12 @@
 <script setup lang="ts">
 import { usePlayerStore } from '@/stores/player'
 
-const { volume, muted, toggleMuted, setVolume } = toRefs(usePlayerStore())
+const { volume, muted, setVolume } = toRefs(usePlayerStore())
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.el-popover.el-popper {
+  @apply bg-gray-100;
+  @apply dark:bg-stone-800;
+}
+</style>
