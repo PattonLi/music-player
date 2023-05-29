@@ -1,5 +1,6 @@
 <template>
   <div class="player-volume flex flex-col items-center pt-2">
+    <!-- 拖动条 -->
     <div>
       <el-slider
         vertical
@@ -13,28 +14,15 @@
         @input="setVolume"
       />
     </div>
-    <div class="text-sm mt-3">{{ volume }}</div>
-    <div class="mt-2">
-      <IconPark
-        :icon="muted ? VolumeMute : VolumeSmall"
-        size="16"
-        theme="filled"
-        class="hover-text"
-        @click="toggleMuted"
-      />
-    </div>
+    <!-- 音量数字 -->
+    <div class="text-sm mt-2">{{ volume }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { VolumeMute, VolumeSmall } from '@icon-park/vue-next'
 import { usePlayerStore } from '@/stores/player'
-import IconPark from '@/components/common/IconPark.vue'
 
 const { volume, muted, toggleMuted, setVolume } = toRefs(usePlayerStore())
 </script>
-<style lang="scss">
-.el-popover.el-popper {
-  min-width: auto;
-}
-</style>
+
+<style lang="scss"></style>

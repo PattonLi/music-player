@@ -11,10 +11,15 @@
       />
 
       <el-checkbox v-model="saveLoginStatus" class="mt-10 ml-1">记住我</el-checkbox>
-      <button @click="loginSubmit" class="button w-full mt-0 py-5" style="border-radius: 5px">
+      <el-button
+        @click="loginSubmit"
+        type="primary"
+        class="w-full mt-0 py-5"
+        style="border-radius: 5px"
+      >
         登录
-      </button>
-      <el-button link class="mt-2" @click="register">还没有账号？这里注册！</el-button>
+      </el-button>
+      <el-button link class="mt-3" @click="register">还没有账号？这里注册！</el-button>
     </div>
   </el-dialog>
 </template>

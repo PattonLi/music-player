@@ -1,30 +1,26 @@
 <template>
-  <el-drawer
-    v-model="showPlayList"
-    direction="rtl"
-    :with-header="false"
-    size="320px"
-    custom-class="play-list"
-  >
+  <!-- 抽屉组件 -->
+  <el-drawer v-model="showPlayList" :with-header="false" size="340px" class="play-list">
     <div class="h-screen flex flex-col">
       <div class="p-2.5 flex-shrink-0">
-        <div class="text-xl">播放列表</div>
-        <div class="text-xs mt-1 flex justify-between items-center">
+        <div class="text-2xl">播放列表</div>
+        <div class="text-sm mt-2 flex justify-between items-center">
           <div>共 {{ playListCount }} 首歌曲</div>
           <div class="text-dc flex items-center hover-text" @click="clearPlayList">
             <IconPark :icon="Delete" />
-            <span class="ml-0.5">清空</span>
+            <span class="ml-1">清空</span>
           </div>
         </div>
       </div>
+      <!-- 隐藏未加载 -->
       <div class="flex-1 overflow-hidden">
         <el-scrollbar>
           <PlayListItem
-            v-for="song in playList"
-            :key="song.id"
-            :song="song"
-            :active="song.id === id"
-            @dblclick="play(song.id)"
+            v-for="item in playList"
+            :key="item.id"
+            :song="item"
+            :active="item.id === song.id"
+            @dblclick="play(item.id)"
           />
         </el-scrollbar>
       </div>
@@ -39,13 +35,13 @@ import { usePlayerStore } from '@/stores/player'
 import IconPark from '@/components/common/IconPark.vue'
 import PlayListItem from '@/components/layout/playList/PlayListItem.vue'
 
-const { showPlayList, playListCount, playList, id } = storeToRefs(usePlayerStore())
-const { play, clearPlayList } = usePlayerStore()
+const { showPlayList, getPlayListCount: playListCount, playList } = storeToRefs(usePlayerStore())
+const { play, clearPlayList, song } = usePlayerStore()
 </script>
 <style lang="scss">
 .play-list {
   .el-drawer__body {
-    padding: 0;
+    padding: 0px;
   }
 }
 </style>

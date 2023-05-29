@@ -44,4 +44,5 @@ export interface registerUser {
   phone: string
   email: string
   password: string
+  repassword: string
 }

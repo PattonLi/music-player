@@ -13,7 +13,7 @@
   @apply dark:hover:bg-slate-700;
 }
 
-//
+//适配夜间模式背景
 .bg-dc {
   @apply bg-gray-100;
   @apply dark:bg-stone-800;
@@ -24,6 +24,7 @@
   @apply dark:bg-[#1e1e1f];
 }
 
+//悬浮背景样式
 .hover-bg-view {
   @apply hover:bg-stone-100;
   @apply dark:hover:bg-stone-800;
@@ -48,16 +49,17 @@
   @apply hover:text-emerald-400 cursor-pointer;
 }
 
+//暗色文本
 .text-dc {
   @apply text-slate-400;
   @apply dark:text-slate-400;
 }
 
-//按钮样式
+//按钮
 .button {
-  @apply flex bg-emerald-700 rounded-full justify-center items-center h-8 text-sm transition-all;
-  @apply text-white;
-  @apply hover:bg-emerald-500;
+  @apply flex bg-[#e6e6e6] rounded justify-center items-center h-8 text-sm transition-all cursor-pointer;
+  @apply dark:bg-[#303031] dark:text-white;
+  @apply hover:text-emerald-500;
 }
 
 .button-outline {
@@ -67,10 +69,4 @@
 
 .button-sm {
   @apply h-7 text-xs;
-}
-
-.button-dc {
-  @apply flex bg-[#e6e6e6] rounded justify-center items-center h-8 text-sm transition-all cursor-pointer;
-  @apply dark:bg-[#303031] dark:text-white;
-  @apply hover:text-emerald-500;
 }
