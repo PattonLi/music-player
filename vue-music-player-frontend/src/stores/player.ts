@@ -25,7 +25,7 @@ export const usePlayerStore = defineStore('player', {
     },
     //正在播放歌曲在播放列表中index
     getPlayListIndex: (state) => {
-      return state.playList.findIndex((song) => song.id === state.song.id)
+      return state.playList.findIndex((song) => song.songId === state.song.songId)
     },
     //获取下一首歌曲
     getNextSong(state): Song {
@@ -59,7 +59,7 @@ export const usePlayerStore = defineStore('player', {
       //不替换播放列表
       list.forEach((song) => {
         //播放列表中没有该歌曲
-        if (this.playList.filter((s) => s.id == song.id).length <= 0) {
+        if (this.playList.filter((s) => s.songId == song.songId).length <= 0) {
           this.playList.push(song)
         }
       })
@@ -80,11 +80,11 @@ export const usePlayerStore = defineStore('player', {
     },
     //开始播放
     async play(id: number) {
-      if (id == this.song.id) return
+      if (id == this.song.songId) return
       this.isPlaying = false
       //获取歌曲信息
-      this.song = await apiGetSong(this.song.id)
-      this.audio.src = this.song.url
+      this.song = await apiGetSong(this.song.songId)
+      this.audio.src = this.song.url as string
       this.audio
         .play()
         .then((res) => {
@@ -113,22 +113,22 @@ export const usePlayerStore = defineStore('player', {
           break
         //列表
         case 1:
-          this.play(this.getNextSong.id)
+          this.play(this.getNextSong.songId)
           break
         //随机
         case 2:
-          this.play(this.playList.sample().id)
+          this.play(this.playList.sample().songId)
           break
       }
     },
     //上一曲
     prev() {
-      this.play(this.prevSong.id)
+      this.play(this.prevSong.songId)
     },
     //播放、暂停
     togglePlay() {
       //没有歌曲在播放
-      if (!this.song.id) return
+      if (!this.song.songId) return
       this.isPlaying = !this.isPlaying
       //开始播放
       if (!this.isPlaying) {

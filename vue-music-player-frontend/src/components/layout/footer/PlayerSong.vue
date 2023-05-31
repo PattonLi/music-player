@@ -1,13 +1,13 @@
 <template>
   <div class="flex player-song">
     <!-- 歌曲封面 -->
-    <img alt="" class="w-11 h-11 rounded" :src="song.al?.picUrl || albumLogo" />
+    <img alt="" class="w-11 h-11 rounded" :src="song.picUrl || 'https://web-music-player.oss-cn-guangzhou.aliyuncs.com/albumLogo.png'" />
     <div class="ml-3 text-sm flex flex-col justify-between">
       <!-- 歌曲信息 -->
       <div class="w-52 2xl:w-96 cursor-pointer truncate">
         <div class="flex">
           <span>{{ song.name || '云音乐' }}</span>
-          <span class="ml-2 text-dc">- {{ song.ar?.first().name || `unknow artist` }}</span>
+          <span class="ml-2 text-dc">- {{ song.name || `unknow artist` }}</span>
         </div>
       </div>
       <!-- 功能区 -->
