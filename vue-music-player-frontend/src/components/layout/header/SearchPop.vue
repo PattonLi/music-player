@@ -15,6 +15,7 @@
         v-model="searchKeyword"
         @focus="showSearchView = true"
         @focusout="showSearchView = false"
+        class="hover-bg-view"
       />
 
       <!-- 搜索结果显示 -->

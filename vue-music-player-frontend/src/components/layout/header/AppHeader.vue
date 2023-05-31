@@ -46,15 +46,17 @@ const iconSize = 22
 
 const router = useRouter()
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 //搜索框
 .search {
   @apply text-sm bg-slate-100 dark:bg-stone-900;
   :deep(.el-input__inner) {
-    @apply text-sm;
+    @apply text-sm rounded-3xl;
+  }
+  :deep(.el-input__wrapper) {
+    @apply bg-slate-50 dark:bg-slate-950;
   }
 }
-
 .icon-button {
   @apply p-2 cursor-pointer;
   @apply hover:text-emerald-400;

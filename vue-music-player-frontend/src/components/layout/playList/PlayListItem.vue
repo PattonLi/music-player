@@ -4,11 +4,7 @@
     :class="{ active: active }"
   >
     <!-- 歌曲封面 -->
-    <el-image
-      lazy
-      :src="song.picUrl"
-      class="aspect-square w-10 flex-shrink-0"
-    />
+    <el-image lazy :src="song.picUrl" class="aspect-square w-10 flex-shrink-0" />
     <!-- 歌曲信息 -->
     <div class="ml-2 text-xs h-10 flex flex-1 w-1">
       <div class="flex flex-1 flex-col justify-between truncate">

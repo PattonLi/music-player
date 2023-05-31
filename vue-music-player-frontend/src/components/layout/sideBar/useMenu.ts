@@ -50,7 +50,7 @@ export function useMenu() {
         },
         {
           name: '电台',
-          key: 'dj',
+          key: 'radio',
           icon: Fm,
           theme: 'outline'
         }
@@ -88,21 +88,22 @@ export function useMenu() {
     }
   ]
 
+  const route = useRoute()
+  const currentKey = ref(route.meta.menu)
   const router = useRouter()
-  const currentKey = ref('')
 
-  //全局钩子
-  watch(router.currentRoute.value, () => {
-    currentKey.value = router.currentRoute.value.name as string
-    console.log('asdadads')
-  })
+  //监视路由元数据
+  watch(
+    () => route.meta.menu,
+    (menu) => {
+      currentKey.value = menu
+    }
+  )
 
   const click = async (menu: IMenu) => {
-    //跳转
     await router.push({ name: menu.key, replace: true })
   }
 
-  //返回菜单栏数据
   return {
     menus,
     click,
