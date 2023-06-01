@@ -20,7 +20,7 @@
 
 //检测用户系统是否启用了暗色主题。其中的CSS规则将应用于匹配的元素
 html.dark {
-  --el-color-primary: #067c51 !important;
+  --el-color-primary: #059669 !important;
   --el-color-primary-light-9: #57534e !important;
   --el-border-color-base: #57534e !important;
   --el-text-color-regular: #e2e8f0 !important;
@@ -29,7 +29,7 @@ html.dark {
   --el-color-white: #1e1e1f !important;
   --el-border-color-lighter: #474648 !important;
   --el-border-color-light: #474648 !important;
-  --el-popover-bg-color: #474648 !important;
+  --el-popover-bg-color: #292524 !important;
 }
 
 //全局样式

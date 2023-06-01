@@ -1,7 +1,7 @@
 <template>
   <div class="text-xl py-3 mt-2 flex items-center">
     <div>{{ title }}</div>
-    <IconPark :icon="CollectionRecords" size="24" :stroke-width="2.8" class="ml-1"/>
+    <IconPark :icon="CollectionRecords" size="24" :stroke-width="2.8" class="ml-1" />
   </div>
 </template>
 
