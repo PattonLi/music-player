@@ -48,6 +48,15 @@ const router = createRouter({
           path: 'albumDetail',
           name: 'albumDetail',
           component: () => import('@/views/album/AppAlbumDetail.vue')
+        },
+        {
+          //音乐库组件
+          path: 'library',
+          name: 'library',
+          meta: {
+            menu: 'library'
+          },
+          component: () => import('@/views/library/AppMusicLibrary.vue')
         }
       ]
     }

@@ -8,8 +8,8 @@ import App from './App.vue'
 import router from './router'
 
 //引入tailwind
-import '@/assets/style/base.scss'
 import '@/assets/style/theme.scss'
+import '@/assets/style/base.scss'
 
 const app = createApp(App)
 

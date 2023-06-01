@@ -38,7 +38,7 @@ export function useMenu() {
         },
         {
           name: '音乐馆',
-          key: 'music',
+          key: 'library',
           icon: Music,
           theme: 'outline'
         },
