@@ -3,12 +3,12 @@ import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
 
 // todo 设置baseurl
-// axios.defaults.baseURL = 'http://baidu.com'
+axios.defaults.baseURL = 'https://mock.apifox.cn/m1/2794549-0-default'
 // 请求头，headers 信息
 // axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 
 // 默认 post 请求，使用 application/json 形式
-// axios.defaults.headers.post['Content-Type'] = 'application/json'
+axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 //发送interceptor
 //token设置
