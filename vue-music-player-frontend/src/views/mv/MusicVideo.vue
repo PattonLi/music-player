@@ -1,11 +1,7 @@
 <template>
-  <el-button @click="alert">asdasdas</el-button>
+  <el-button @click="router.push({name:'album',query:{id:'1'}})">专辑1</el-button>
 </template>
 
 <script setup lang="ts">
-import { AlertSuccess } from '@/utils/alert/AlertPop'
-const alert = () => {
-  AlertSuccess('success')
-}
 const router = useRouter()
 </script>

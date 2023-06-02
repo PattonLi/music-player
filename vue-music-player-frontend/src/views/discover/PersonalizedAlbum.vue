@@ -6,7 +6,7 @@
       <div
         v-for="(item, index) in _.sampleSize(personalizedAlbums, 20)"
         :key="index"
-        @click="router.push({ name: 'info/album', query: { id: item.albumId } })"
+        @click="router.push({ name: 'album', query: { id: item.albumId } })"
       >
         <!-- 封面组件 -->
         <MyCover

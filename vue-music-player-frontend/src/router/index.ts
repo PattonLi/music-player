@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 //import struct page
-import { Pages } from '@/router/Pages'
+import { Pages } from '@/router/pages'
 //import components
 
 const router = createRouter({
@@ -40,16 +40,6 @@ const router = createRouter({
           component: () => import('@/views/mv/MusicVideo.vue')
         },
         {
-          path: 'artistDetail',
-          name: 'artistDetail',
-          component: () => import('@/views/artist/AppArtistDetail.vue')
-        },
-        {
-          path: 'albumDetail',
-          name: 'albumDetail',
-          component: () => import('@/views/album/AppAlbumDetail.vue')
-        },
-        {
           //音乐库组件
           path: 'library',
           name: 'library',
@@ -57,6 +47,33 @@ const router = createRouter({
             menu: 'library'
           },
           component: () => import('@/views/library/AppMusicLibrary.vue')
+        },
+
+
+
+
+
+
+        /* 非菜单组件 -------------------------------*/
+        {
+          //音乐库组件
+          path: 'info',
+          name: 'info',
+          component: () => import('@/views/info/AppInfo.vue'),
+          children:[
+            {
+              //专辑详情页
+              path: 'artist',
+              name: 'artist',
+              component: () => import('@/views/info/artist/AppArtistDetail.vue')
+            },
+            {
+              //歌手详情页
+              path: 'album',
+              name: 'album',
+              component: () => import('@/views/info/album/AppAlbumDetail.vue')
+            }
+          ]
         }
       ]
     }

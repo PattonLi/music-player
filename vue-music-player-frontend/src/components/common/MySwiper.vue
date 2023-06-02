@@ -2,7 +2,7 @@
   <!-- 歌曲循环推荐 -->
   <Swiper
     class="inSwiper"
-    slides-per-group-auto
+    slidesPerGroup:1
     slides-per-view="auto"
     :navigation="true"
     :pagination="true"
@@ -13,7 +13,7 @@
       delay: 3000,
       disableOnInteraction: false
     }"
-    speed:200
+    speed:1500
   >
     <!-- slider -->
     <SwiperSlide v-for="(item, index) in swipers" :key="index">
