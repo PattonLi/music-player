@@ -1,12 +1,12 @@
 <template>
   <div>
     <MyTitle title="专辑推荐" />
-    <div class="mb-4 grid grid-flow-row gap-x-20 grid-cols-3 2xl:grid-cols-5 gap-y-9">
+    <div class="mb-10 grid grid-flow-row gap-x-20 grid-cols-3 2xl:grid-cols-5 gap-y-9">
       <!-- 循环 -->
       <div
-        v-for="(item, index) in _.sampleSize(personalizedAlbums, 15)"
+        v-for="(item, index) in _.sampleSize(personalizedAlbums, 20)"
         :key="index"
-        @click="router.push({ name: 'library/album', query: { id: item.albumId } })"
+        @click="router.push({ name: 'info/album', query: { id: item.albumId } })"
       >
         <!-- 封面组件 -->
         <MyCover

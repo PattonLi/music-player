@@ -19,7 +19,7 @@
         @click="router.forward()"
       />
       <!-- 搜索框 -->
-      <div class="ml-3">
+      <div class="ml-8">
         <SearchPop />
       </div>
     </div>
@@ -42,7 +42,7 @@ import UserInfo from '@/components/layout/header/UserInfo.vue'
 import SearchPop from '@/components/layout/header/SearchPop.vue'
 import DarkMode from '@/components/layout/header/DarkMode.vue'
 
-const iconSize = 22
+const iconSize = 28
 
 const router = useRouter()
 </script>

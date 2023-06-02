@@ -1,46 +1,96 @@
 <template>
   <!-- 歌曲循环推荐 -->
-  <Swiper slides-per-group-auto slides-per-view="auto" :navigation="true" :grab-cursor="true">
+  <Swiper
+    class="inSwiper"
+    slides-per-group-auto
+    slides-per-view="auto"
+    :navigation="true"
+    :pagination="true"
+    :grab-cursor="true"
+    :loop="true"
+    :modules="modules"
+    :autoplay="{
+      delay: 3000,
+      disableOnInteraction: false
+    }"
+    speed:200
+  >
+    <!-- slider -->
     <SwiperSlide v-for="(item, index) in swipers" :key="index">
-      <img :src="item.pic_url" class="banner-image" @click="onClick(item)" />
+      <img :src="item.picUrl" class="swiper-image" @click="onClick(item)" />
+      <div class="text-center">
+        <span>{{ item.typeTitle }}</span>
+      </div>
+      
     </SwiperSlide>
   </Swiper>
 </template>
 
 <script setup lang="ts">
-//swiper引入
-import { Swiper, SwiperSlide } from 'swiper/vue'
+// Import Swiper styles
 import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation, Pagination, Autoplay } from 'swiper'
 import { usePlayerStore } from '@/stores/player'
 import { useSwiperStore } from '@/stores/swiper'
 import type { Swiper as MySwiper } from '@/models/swiper'
 
 const { swipers } = toRefs(useSwiperStore())
 const { updateSwipers } = useSwiperStore()
+const modules = [Navigation, Pagination, Autoplay]
 
 onMounted(async () => {
   await updateSwipers()
 })
 const { play } = usePlayerStore()
+const router = useRouter()
 
 const onClick = (swiper: MySwiper) => {
   //为歌曲则播放
-  if (swiper.targetType === 1) {
+  if (swiper.targetType == 1) {
     play(swiper.targetId)
   }
-}
-</script>
-
-<style lang="scss" scoped>
-.swiper {
-  @apply -mx-2.5;
-  .swiper-slide {
-    @apply w-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 px-2.5;
+  //为专辑则跳转
+  else if(swiper.targetType == 2){
+    router.push({ name: 'info/album', query: { id: swiper.targetId } })
+  }
+  //为歌手则跳转
+  else if(swiper.targetType == 3){
+    router.push({ name: 'info/artist', query: { id: swiper.targetId } })
   }
 }
 
-.banner-image {
-  @apply rounded-lg cursor-pointer transition-all object-cover;
-  @apply hover:shadow hover:opacity-80;
+</script>
+
+<style lang="scss">
+.inSwiper{
+
+  @apply -mx-7 ;
+
+  .swiper-button-next{
+    @apply pb-16 text-emerald-500;
+  }
+  .swiper-button-prev{
+    @apply pb-16 text-emerald-500;
+  }
+  .swiper-pagination-bullet-active{
+    @apply bg-emerald-500;
+  }
+  .swiper-wrapper {
+    
+    transition-timing-function: ease-in-out;
+
+    .swiper-slide {
+      @apply w-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 px-11 pb-12;
+
+      .swiper-image {
+        @apply rounded-2xl cursor-pointer transition-all object-cover;
+        @apply hover:shadow hover:opacity-50;
+      }
+    }
+  }
 }
 </style>

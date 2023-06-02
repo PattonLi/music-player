@@ -1,7 +1,7 @@
 <template>
   <div class="pl-7 pr-9">
     <h1 class="text-3xl font-bold pt-8 pb-4">推荐</h1>
-    <MySwiper :per-page="3" />
+    <MySwiper />
     <PersonalizedSong />
     <PersonalizedAlbum />
     <PersonalizedArtist />

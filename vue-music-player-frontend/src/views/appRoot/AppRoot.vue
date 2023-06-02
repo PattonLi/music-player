@@ -11,7 +11,7 @@
     <!-- 纵向排布 -->
     <div class="flex-1 flex flex-col">
       <!-- 导航栏 -->
-      <div class="h-16">
+      <div class="h-12">
         <AppHeader />
       </div>
       <!-- 内容部分 -->

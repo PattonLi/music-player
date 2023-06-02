@@ -1,5 +1,5 @@
 export interface Swiper {
-  pic_url: string
+  picUrl: string
   //目标id
   targetId: number
   //目标类型

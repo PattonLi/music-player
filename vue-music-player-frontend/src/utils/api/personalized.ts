@@ -6,28 +6,22 @@ export async function apiGetPersonalizeSongs() {
   const result = await myAxios.get<{
     code: number
     songs: PersonalizedSong[]
-    artists: null
-    albums: null
-  }>('discover', { type: 1 })
+  }>('discover/song')
   return result
 }
 
 export async function apiGetPersonalizeAlbums() {
   const result = await myAxios.get<{
     code: number
-    songs: null
-    artists: null
     albums: PersonalizedAlbum[]
-  }>('discover', { type: 2 })
+  }>('discover/album')
   return result
 }
 
 export async function apiGetPersonalizeArtists() {
   const result = await myAxios.get<{
     code: number
-    songs: null
     artists: PersonalizedArtist[]
-    albums: null
-  }>('discover', { type: 3 })
+  }>('discover/artist')
   return result
 }

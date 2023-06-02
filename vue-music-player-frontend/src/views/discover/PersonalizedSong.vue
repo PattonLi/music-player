@@ -1,9 +1,9 @@
 <template>
   <MyTitle title="推荐新歌曲" />
-  <div class="mb-4 grid grid-flow-row gap-x-5 cursor-pointer grid-cols-2 2xl:grid-cols-4 gap-y-6">
+  <div class="mb-10 grid grid-flow-row gap-x-5 cursor-pointer grid-cols-2 2xl:grid-cols-4 gap-y-6">
     <!-- 循环 -->
     <div
-      v-for="(item, index) in _.sampleSize(personalizedSongs, 12)"
+      v-for="(item, index) in _.sampleSize(personalizedSongs, 16)"
       :key="index"
       class="hover-bg-view transition-all flex items-center"
       @click="play(item.songId)"

@@ -5,10 +5,10 @@
   >
     <!-- 循环 -->
     <div
-      v-for="(item, index) in _.sampleSize(personalizedArtists, 12)"
+      v-for="(item, index) in _.sampleSize(personalizedArtists, 16)"
       :key="index"
       class="transition-all flex items-center"
-      @click="router.push({ name: 'library/artist', query: { id: item.artistId } })"
+      @click="router.push({ name: 'info/artist', query: { id: item.artistId } })"
     >
       <!-- 第一列图片 -->
       <img
