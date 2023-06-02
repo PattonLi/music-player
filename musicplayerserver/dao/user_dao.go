@@ -23,10 +23,10 @@ func (*UserDao) CreateUserTable() {
 	}
 }
 
-// 查询用户信息
-func (*UserDao) GetUserInfo(userID uint) (*model.UserInfo, error) {
+// 根据用户名查询用户信息
+func (*UserDao) GetUserInfo(username string) (*model.UserInfo, error) {
 	user := model.UserInfo{}
-	err := DB.First(&user, "id = ?", userID).Error
+	err := DB.First(&user, "username = ?", username).Error
 	if err != nil {
 		err = errors.New("查找不到用户信息！")
 	}
@@ -35,13 +35,8 @@ func (*UserDao) GetUserInfo(userID uint) (*model.UserInfo, error) {
 
 // 添加用户
 func (*UserDao) AddUser(user *model.UserInfo) bool {
-	result := DB.Create(user)
-	if result.Error != nil {
-		panic("Insert user error")
-	} else {
-		fmt.Println("Successfully insert user.")
-		return true
-	}
+	DB.Create(user)
+	return true
 }
 
 // 更新用户
@@ -73,4 +68,18 @@ func (*UserDao) UsernameCheck(u *model.UserInfo) (uint, string, error) {
 	user := model.UserInfo{}
 	err := DB.First(&user, "username = ?", username).Error
 	return user.ID, user.Admin, err
+}
+
+// 返回所有普通用户信息
+func (*UserDao) GetAllUserInfo() []model.UserInfo {
+	var userlist []model.UserInfo
+	DB.Find(&userlist, "admin = ?", "false")
+	return userlist
+}
+
+// 返回所有管理员信息
+func (*UserDao) GetAllAdminInfo() []model.UserInfo {
+	var adminlist []model.UserInfo
+	DB.Find(&adminlist, "admin = ?", "true")
+	return adminlist
 }

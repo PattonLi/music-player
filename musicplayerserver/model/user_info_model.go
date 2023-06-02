@@ -13,6 +13,7 @@ type UserInfo struct {
 	Password   string `json:"password" gorm:"column:password"`
 	Nickname   string `json:"nickname" gorm:"column:nickname"`
 	Admin      string `json:"admin" gorm:"column:admin"`
+	Phone      string `json:"phone" gorm:"column:phone"`
 }
 
 // 获取表名，gorm创建表时会自己获取这个表名

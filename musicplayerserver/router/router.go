@@ -2,6 +2,7 @@ package router
 
 import (
 	"errors"
+	"fmt"
 	"music-player/musicplayerserver/controller"
 	"net/http"
 	"strings"
@@ -78,15 +79,44 @@ func authMiddleware(c *gin.Context) {
 
 func Posts(r *gin.Engine) {
 
-	r.POST("/register", func(c *gin.Context) {
-		err := controller.NewUserController().AddUserHandler(c)
+	//鉴权路由，需要鉴权的post api将r改为authorized
+	authorized := r.Group("/")
+	authorized.Use(authMiddleware)
+	//添加用户
+	r.POST("/User/addInfo", func(c *gin.Context) {
+		user, err := controller.NewUserController().AddUserHandler(c)
+		var code int
 		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+			fmt.Print(err.Error())
+			code = 300
 		} else {
-			c.JSON(http.StatusOK, gin.H{"message": "注册成功！"})
+			code = 200
 		}
+		c.JSON(http.StatusOK, gin.H{
+			"code": code,
+			"data": []gin.H{
+				{
+					"user_id":    user.ID,
+					"created_at": user.CreatedAt,
+					"updated_at": user.UpdatedAt,
+					"deleted_at": user.DeletedAt,
+					"username":   user.Username,
+					"gender":     user.Gender,
+					"age":        user.Age,
+					"email":      user.Email,
+					"password":   user.Password,
+					"nickname":   user.Nickname,
+					"phone":      user.Phone,
+				}},
+		})
 	})
 
+	//修改用户信息
+	r.POST("/User/modifyInfo", func(c *gin.Context) {
+
+	})
+
+	//手机号登录（未实现）
 	r.POST("/login", func(c *gin.Context) {
 		username, userID, err := controller.NewUserController().UserLoginHandler(c)
 		tokenString := ""
@@ -102,6 +132,7 @@ func Posts(r *gin.Engine) {
 		}
 	})
 
+	//管理员登录（未修改）
 	r.POST("/admin/login", func(c *gin.Context) {
 		adminname, adminID, err := controller.NewUserController().AdminLoginHandler(c)
 		tokenString := ""
@@ -117,6 +148,7 @@ func Posts(r *gin.Engine) {
 		}
 	})
 
+	//添加歌曲
 	r.POST("/admin/addsong", func(c *gin.Context) {
 		result := controller.NewSongController().AddSongHandler(c)
 		if result {
@@ -129,6 +161,46 @@ func Posts(r *gin.Engine) {
 }
 
 func GETs(r *gin.Engine) {
+	//鉴权路由，需要鉴权的post api将r改为authorized
+	authorized := r.Group("/")
+	authorized.Use(authMiddleware)
+
+	//获得所有用户信息
+	r.GET("/User/allInfo", func(c *gin.Context) {
+		users := controller.NewUserController().AllUserInfoHandler()
+		c.JSON(http.StatusOK, gin.H{
+			"code": 200,
+			"data": []gin.H{
+				{
+					"users": users,
+				},
+			},
+		})
+	})
+
+	//获得特定用户信息
+	r.GET("/User/theInfo", func(c *gin.Context) {
+
+	})
+
+	//删除用户信息
+	r.GET("/User/deleteInfo", func(c *gin.Context) {
+
+	})
+
+	//获得所有管理员信息
+	r.GET("/adminUser/allInfo", func(c *gin.Context) {
+		adminusers := controller.NewUserController().AllAdminInfoHandler()
+		c.JSON(http.StatusOK, gin.H{
+			"code": 200,
+			"data": []gin.H{
+				{
+					"adminusers": adminusers,
+				},
+			},
+		})
+	})
+
 	r.GET("/song/lyric", func(c *gin.Context) {
 		lyric, err := controller.NewSongController().GetSongLyricHandler(c)
 		if err != nil {

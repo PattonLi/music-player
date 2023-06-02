@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"music-player/musicplayerserver/model"
 	"music-player/musicplayerserver/service"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,24 +21,11 @@ func NewUserController() *UserController {
 }
 
 // 用户注册
-func (usc *UserController) AddUserHandler(c *gin.Context) error {
-	username := c.PostForm("username")
-	gender := c.PostForm("gender")
-	age := c.PostForm("age")
-	email := c.PostForm("email")
-	password := c.PostForm("password")
-	nickname := c.PostForm("nickname")
-	user := model.UserInfo{
-		Username: username,
-		Gender:   gender,
-		Age:      age,
-		Email:    email,
-		Password: password,
-		Nickname: nickname,
-		Admin:    "false",
-	}
+func (usc *UserController) AddUserHandler(c *gin.Context) (*model.UserInfo, error) {
+	user := model.UserInfo{}
+	c.BindJSON(&user)
 	err := usc.userservice.UserRegister(&user)
-	return err
+	return &user, err
 }
 
 // 用户登录
@@ -59,12 +45,12 @@ func (usc *UserController) UserLoginHandler(c *gin.Context) (string, uint, error
 	return username, userID, err
 }
 
-// 获取用户信息
+// 获取单个用户信息
 func (usc *UserController) UserInfoHandler(c *gin.Context) (*model.UserInfo, error) {
-	value, ok := c.Get("admin")
 	var user *model.UserInfo
 	user = nil
 	var err error
+	/*value, ok := c.Get("admin")
 	admin, ok2 := value.(string)
 	if !ok {
 		err = errors.New("获取不到admin验证信息！")
@@ -77,11 +63,33 @@ func (usc *UserController) UserInfoHandler(c *gin.Context) (*model.UserInfo, err
 	if admin == "ture" {
 		err = errors.New("无此用户信息！")
 		return user, err
-	}
-	userID64, _ := strconv.ParseUint(c.Query("userid"), 10, 32)
-	userID := uint(userID64)
-	user, err = usc.userservice.UserInfo(userID)
+	}*/
+	username := c.Query("username")
+	user, err = usc.userservice.UserInfo(username)
 	return user, err
+}
+
+//获取所有用户信息
+func (usc *UserController) AllUserInfoHandler() []gin.H{
+	userlist := usc.userservice.AllUserInfo()
+	users := make([]gin.H,0)
+	for _, user := range userlist{
+		userinfo := gin.H{
+			"user_id":    user.ID,
+			"created_at": user.CreatedAt,
+			"updated_at": user.UpdatedAt,
+			"deleted_at": user.DeletedAt,
+			"username":   user.Username,
+			"gender":     user.Gender,
+			"age":        user.Age,
+			"email":      user.Email,
+			"password":   user.Password,
+			"nickname":   user.Nickname,
+			"phone":      user.Phone,
+		}
+		users = append(users,userinfo)
+	}
+	return users
 }
 
 // 管理员登录
@@ -101,6 +109,7 @@ func (usc *UserController) AdminLoginHandler(c *gin.Context) (string, uint, erro
 	return adminname, adminID, err
 }
 
+//获取特定管理员信息
 func (usc *UserController) AdminProfileHandler(c *gin.Context) (*model.UserInfo, error) {
 	value, ok := c.Get("admin")
 	var adminuser *model.UserInfo
@@ -120,8 +129,22 @@ func (usc *UserController) AdminProfileHandler(c *gin.Context) (*model.UserInfo,
 		return adminuser, err
 	}
 	fmt.Print(c.Query("adminid"))
-	adminID64, _ := strconv.ParseUint(c.Query("adminid"), 10, 32)
-	adminID := uint(adminID64)
-	adminuser, err = usc.userservice.UserInfo(adminID)
+	adminname := c.Query("adminname")
+	adminuser, err = usc.userservice.UserInfo(adminname)
 	return adminuser, err
+}
+
+//获取所有管理员信息
+func (usc *UserController) AllAdminInfoHandler() []gin.H{
+	adminlist := usc.userservice.AllAdminInfo()
+	adminusers := make([]gin.H,0)
+	for _, adminuser := range adminlist{
+		userinfo := gin.H{
+			"user_id":    adminuser.ID,
+			"username":   adminuser.Username,
+			"password":   adminuser.Password,
+		}
+		adminusers = append(adminusers,userinfo)
+	}
+	return adminusers
 }
