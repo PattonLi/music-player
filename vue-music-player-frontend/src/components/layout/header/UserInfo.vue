@@ -1,7 +1,7 @@
 <template>
   <!-- 头像 -->
   <div class="flex items-center cursor-pointer hover-text">
-    <ElAvatar size="default" round class="bg-gray-200" :src="profile?.avatarUrl ?? ''">
+    <ElAvatar size="default" round class="bg-gray-200" :src="profile?.photoUrl">
       <!-- 加载失败时展示 -->
       <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
     </ElAvatar>

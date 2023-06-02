@@ -6,7 +6,7 @@
   <!--菜单栏拖动条-->
   <ElScrollbar>
     <!-- 边距样式 -->
-    <div class="mt-8 pl-9 pr-6 space-y-2" v-for="(menuItem, key) in menus" :key="key">
+    <div class="mt-8 pl-8 pr-6 space-y-2" v-for="(menuItem, key) in menus" :key="key">
       <!-- 菜单栏 -->
       <div class="menu-title text-main">{{ menuItem.name }}</div>
       <!-- 菜单 -->
@@ -36,15 +36,15 @@ const { menus, currentKey, click } = useMenu()
 
 <style lang="scss" scoped>
 .menu-title {
-  @apply text-sm pl-4 pr-4 pb-2 text-gray-500;
+  @apply text-sm pl-5 pr-4 pb-2 text-gray-500;
 }
 
 .menu-item {
-  @apply text-sm pl-4 pr-4 pt-1.5 pb-1.5 rounded cursor-pointer transition-colors flex items-center;
+  @apply text-sm pl-5 pr-3 pt-2 pb-2 rounded cursor-pointer transition-colors flex items-center;
 }
 
 // 当选中菜单时 TODO
 .active {
-  @apply text-green-400 cursor-default;
+  @apply bg-gradient-to-r from-teal-500 to-emerald-300 text-slate-50 cursor-default;
 }
 </style>

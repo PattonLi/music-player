@@ -12,7 +12,7 @@
     <IconPark :icon="GoStart" size="30" theme="filled" class="hover-text" @click="prev" />
     <!-- 播放暂停按钮 -->
     <IconPark
-      :icon="isPlaying ? Play:PauseOne"
+      :icon="isPlaying ? Play : PauseOne"
       size="45"
       theme="filled"
       class="hover-text text-emerald-500"
@@ -29,11 +29,11 @@
           size="22"
           :stroke-width="3"
           @click="toggleMuted"
-          class="hover-text "
+          class="hover-text"
         />
       </template>
       <!-- 拖动栏 -->
-      <PlayerVolumeSlider/>
+      <PlayerVolumeSlider />
     </el-popover>
   </div>
 </template>
@@ -55,7 +55,7 @@ import PlayerVolumeSlider from '@/components/layout/footer/PlayerVolumeSlider.vu
 import { usePlayerStore } from '@/stores/player'
 import { storeToRefs } from 'pinia'
 
-const { loopType, muted,isPlaying } = storeToRefs(usePlayerStore())
+const { loopType, muted, isPlaying } = storeToRefs(usePlayerStore())
 const { toggleLoop, nextPlay: next, prev, togglePlay, toggleMuted } = usePlayerStore()
 </script>
 

@@ -5,7 +5,7 @@
     title="新用户注册"
     append-to-body
     @close="clearForm"
-    destroy-on-close="tr"
+    :destroy-on-close="true"
     width="420px"
   >
     <!--提交表单-->
@@ -53,6 +53,7 @@ import type { registerUser } from '@/models/user'
 //表单相关
 const ruleFormRef = ref<FormInstance>()
 const { ruleForm, showRegister } = storeToRefs(useAuthStore())
+const { register } = useAuthStore()
 
 //验证二次密码
 const validateRepassword = (rule: any, value: any, callback: any) => {
@@ -80,7 +81,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid: any, fields: any) => {
     if (valid) {
-      console.log()
+      register(ruleForm.value)
     }
   })
 }
