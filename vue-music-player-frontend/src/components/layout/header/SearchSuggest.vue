@@ -1,17 +1,17 @@
 <template>
   <div v-if="suggestData">
     <!-- 主体 -->
-    <div v-for="(order, index) in suggestData.order" :key="index">
+    <div v-for="(types, index) in {0:'songs',1:'artists',2:'albums',3:'users'}" :key="index">
       <!-- 推荐搜索条目是什么类型 -->
-      <div class="pt-2 pb-1.5 px-2.5">{{ getTitle(order) }}</div>
+      <div class="pt-2 pb-1.5 px-2.5">{{ getTitle(types) }}</div>
 
       <!-- 歌曲条目 -->
-      <div v-if="order === 'songs'">
+      <div v-if="types == 'songs'">
         <div
           v-for="item in suggestData.songs"
-          :key="item.id"
+          :key="item.songId"
           class="suggestItem hover-bg-main"
-          @click="play(item.id)"
+          @click="play(item.songId)"
         >
           <!-- 歌曲名 -->
           <span class="text-emerald-500">{{ item.name }}</span>
@@ -20,30 +20,32 @@
       </div>
 
       <!-- 专辑条目 -->
-      <div v-if="order === 'albums'">
+      <div v-if="types == 'albums'">
         <div
           v-for="item in suggestData.albums"
-          :key="item.id"
+          :key="item.albumId"
           class="suggestItem hover-bg-main"
-          @click="jump('album', item.id)"
+          @click="jump('album', item.albumId)"
         >
-          <span class="text-emerald-500">{{ item.name }}</span>
-          <span class="pl-1"> - {{ item.name }}</span>
+          <span class="text-emerald-500">{{ item.album }}</span>
+          <span class="pl-1"> - {{ item.artist }}</span>
         </div>
       </div>
 
-      <div v-if="order === 'artists'">
+      <!-- 歌手条目 -->
+      <div v-if="types == 'artists'">
         <div
           v-for="item in suggestData.artists"
-          :key="item.id"
+          :key="item.artistId"
           class="suggestItem hover-bg-main"
-          @click="jump('artist', item.id)"
+          @click="jump('artist', item.artistId)"
         >
-          <span class="text-emerald-500">{{ item.name }}</span>
-          <span class="text-emerald-500 ml-2">{{ item.name }}</span>
+          <span class="text-emerald-500">{{ item.artistId }}</span>
+          <span class="text-emerald-500 ml-2">{{ item.songSize }}</span>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { apiSearchSuggest, apiSearchHotDetail } from '@/utils/api/search'
-import type { SearchHotDetail, SearchSuggest } from '@/models/search'
+import type { SearchHotDetail, SearchResults } from '@/models/search'
+import { AlertError } from '@/utils/alert/AlertPop'
 
 //搜索结果状态
 export const useSearchStore = defineStore('search', {
@@ -9,8 +10,8 @@ export const useSearchStore = defineStore('search', {
       showSearchView: false,
       //搜索关键词
       searchKeyword: '',
-      //
-      suggestData: {} as SearchSuggest,
+      //搜索信息
+      suggestData: {} as SearchResults,
       //热搜结果
       searchHotData: [] as SearchHotDetail[]
     }
@@ -22,10 +23,25 @@ export const useSearchStore = defineStore('search', {
   },
   actions: {
     async updateSuggest() {
-      this.suggestData = await apiSearchSuggest(this.searchKeyword)
+      const res = await apiSearchSuggest(this.searchKeyword)
+      if(res.code==200){
+        this.suggestData = {
+          albums:res.albums,
+          artists:res.artists,
+          songs:res.songs,
+          users:res.users
+        } 
+      }else{
+        AlertError('获取热搜失败')
+      }
     },
     async updateSearchHot() {
-      this.searchHotData = await apiSearchHotDetail()
+      const res = await apiSearchHotDetail()
+      if(res.code==200){
+        this.searchHotData = res.searchHot
+      }else{
+        AlertError('获取搜索失败')
+      }
     }
   }
 })

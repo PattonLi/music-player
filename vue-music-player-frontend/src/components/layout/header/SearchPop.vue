@@ -3,7 +3,7 @@
   <el-popover
     popper-style="max-width:auto;padding:0;"
     v-model:visible="showSearchView"
-    width="250px"
+    width="260px"
   >
     <!-- 输入框 -->
     <template #reference>
@@ -15,6 +15,7 @@
         v-model="searchKeyword"
         @focus="showSearchView = true"
         @focusout="showSearchView = false"
+        class="custom-input"
       />
 
       <!-- 搜索结果显示 -->
@@ -61,17 +62,24 @@ onMounted(async () => {
   updateSearchHot()
 })
 
-// 搜索框输入
+// 搜索框输入更新搜索结果
 const searchInput = debounce((value: string | number) => updateSuggest(), 500, { maxWait: 1000 })
 
 const { showSearchView, searchKeyword, showHot, searchHotData } = storeToRefs(useSearchStore())
 const { updateSuggest, updateSearchHot } = useSearchStore()
 
-//热搜点击
+//热搜点击更新搜索结果
 const hotClick = (text: string) => {
   searchKeyword.value = text
   updateSuggest()
   showSearchView.value = true
 }
 </script>
-<style lang="scss"></style>
+
+<style lang="scss">
+.custom-input {
+  .el-input__wrapper {
+    @apply rounded-2xl text-sm bg-slate-100 dark:bg-stone-900 dark:ring-gray-700 dark:ring-2;
+  }
+}
+</style>

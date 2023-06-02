@@ -8,6 +8,7 @@ import router from './router'
 
 //TODO:记得删除
 //mock js 配置
+
 /*
 import '../mock/index'
 import '../mock/user.js'

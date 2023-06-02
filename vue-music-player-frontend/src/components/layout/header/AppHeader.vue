@@ -19,7 +19,7 @@
         @click="router.forward()"
       />
       <!-- 搜索框 -->
-      <div class="search ml-3">
+      <div class="ml-3">
         <SearchPop />
       </div>
     </div>
@@ -46,14 +46,8 @@ const iconSize = 22
 
 const router = useRouter()
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 //搜索框
-.search {
-  @apply text-sm bg-slate-100 dark:bg-stone-900;
-  :deep(.el-input__inner) {
-    @apply text-sm;
-  }
-}
 
 .icon-button {
   @apply p-2 cursor-pointer;

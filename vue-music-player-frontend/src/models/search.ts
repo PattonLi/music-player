@@ -4,35 +4,40 @@ export interface SearchHotDetail {
   type: string //歌手、专辑、歌曲
 }
 
-//搜索推荐信息
-export interface SearchSuggest {
-  albums: SearchSuggestAlbums[]
-  artists: SearchSuggestArtists[]
-  songs: SearchSuggestSongs[]
-  order: string[]
+export interface SearchResults{
+  albums: SearchAlbums[]
+  artists: SearchArtists[]
+  songs: SearchSongs[]
+  users:SearchUsers[]
 }
 
-export interface SearchSuggestAlbums {
-  id: number
-  name: string
+//搜索推荐信息
+export interface SearchAlbums {
+  albumId: number
+  album: string
+  picUrl:string
   artist: string
   publishTime: number
-  songSize: number
-  mark: number
+  Size: number
 }
-export interface SearchSuggestArtists {
-  id: number
-  name: string
+export interface SearchArtists {
+  artistId: number
+  artist: string
   picUrl: string
-  albumSize: number
-  img1: number
+  songSize:number
+  albumSize:number
 }
 
-export interface SearchSuggestSongs {
-  id: number
+export interface SearchSongs {
+  songId: number
   name: string
   artist: string
   album: string
   duration: number
-  mark: number
+}
+
+export interface SearchUsers{
+  nickname:string
+  userId:number
+  picUrl:string
 }
