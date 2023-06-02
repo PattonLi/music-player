@@ -42,7 +42,7 @@ export const usePlayerStore = defineStore('player', {
     //获取前一首歌曲
     prevSong(state): Song {
       if (this.getPlayListIndex === 0) {
-        return state.playList[this.playList.length-1] //回到播放列表尾部
+        return state.playList[this.playList.length - 1] //回到播放列表尾部
       } else {
         //正常情况
         const prevIndex: number = this.getPlayListIndex - 1
@@ -86,9 +86,9 @@ export const usePlayerStore = defineStore('player', {
       this.isPlaying = false
       //获取歌曲信息
       const res = await apiGetSong(this.song.songId)
-      if(res.code==200){
+      if (res.code == 200) {
         this.song = res.song
-      }else{
+      } else {
         AlertError("获取歌曲失败(id='this.song.songId')")
       }
       this.audio.src = this.song.url as string
