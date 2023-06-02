@@ -36,6 +36,7 @@ declare module '@vue/runtime-core' {
     ElText: typeof import('element-plus/es')['ElText']
     IconPark: typeof import('./src/components/common/IconPark.vue')['default']
     MenuList: typeof import('./src/components/layout/sideBar/MenuList.vue')['default']
+    MyCover: typeof import('./src/components/common/MyCover.vue')['default']
     MySwiper: typeof import('./src/components/common/MySwiper.vue')['default']
     MyTitle: typeof import('./src/components/common/MyTitle.vue')['default']
     PlayerAction: typeof import('./src/components/layout/footer/PlayerAction.vue')['default']

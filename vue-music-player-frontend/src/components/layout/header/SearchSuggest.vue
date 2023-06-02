@@ -1,7 +1,7 @@
 <template>
   <div v-if="suggestData">
     <!-- 主体 -->
-    <div v-for="(types, index) in {0:'songs',1:'artists',2:'albums',3:'users'}" :key="index">
+    <div v-for="(types, index) in { 0: 'songs', 1: 'artists', 2: 'albums' }" :key="index">
       <!-- 推荐搜索条目是什么类型 -->
       <div class="pt-2 pb-1.5 px-2.5">{{ getTitle(types) }}</div>
 
@@ -45,7 +45,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 

@@ -1,14 +1,20 @@
-import type { SearchAlbums, SearchArtists, SearchHotDetail, SearchSongs, SearchUsers } from '@/models/search'
+import type {
+  SearchAlbums,
+  SearchArtists,
+  SearchHotDetail,
+  SearchSongs,
+  SearchUsers
+} from '@/models/search'
 import myAxios from './myAxios'
 
 //动态获取搜索结果
 export async function apiSearchSuggest(keywords: string) {
   const data = await myAxios.get<{
-    code:number
+    code: number
     albums: SearchAlbums[]
     artists: SearchArtists[]
     songs: SearchSongs[]
-    users:SearchUsers[]
+    users: SearchUsers[]
   }>('search/suggest', {
     keywords: keywords
   })
@@ -18,8 +24,8 @@ export async function apiSearchSuggest(keywords: string) {
 //获取热搜结果
 export async function apiSearchHotDetail() {
   const data = await myAxios.get<{
-    code:number
-    searchHot:SearchHotDetail[]
+    code: number
+    searchHot: SearchHotDetail[]
   }>('search/hot')
   return data
 }

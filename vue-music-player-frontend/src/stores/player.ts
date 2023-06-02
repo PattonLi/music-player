@@ -1,6 +1,8 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { apiGetSong } from '@/utils/api/song'
 import type { Song } from '@/models/song'
+import { AlertError } from '@/utils/alert/AlertPop'
+import _ from 'lodash'
 
 export const usePlayerStore = defineStore('player', {
   state: () => ({
@@ -30,7 +32,7 @@ export const usePlayerStore = defineStore('player', {
     //获取下一首歌曲
     getNextSong(state): Song {
       if (this.getPlayListIndex === this.getPlayListCount - 1) {
-        return state.playList[0] //回到播放列表头部
+        return _.first(state.playList)! //回到播放列表头部
       } else {
         //正常情况
         const nextIndex: number = this.getPlayListIndex + 1
@@ -40,7 +42,7 @@ export const usePlayerStore = defineStore('player', {
     //获取前一首歌曲
     prevSong(state): Song {
       if (this.getPlayListIndex === 0) {
-        return state.playList.last() //回到播放列表尾部
+        return state.playList[this.playList.length-1] //回到播放列表尾部
       } else {
         //正常情况
         const prevIndex: number = this.getPlayListIndex - 1
@@ -83,7 +85,12 @@ export const usePlayerStore = defineStore('player', {
       if (id == this.song.songId) return
       this.isPlaying = false
       //获取歌曲信息
-      this.song = await apiGetSong(this.song.songId)
+      const res = await apiGetSong(this.song.songId)
+      if(res.code==200){
+        this.song = res.song
+      }else{
+        AlertError("获取歌曲失败(id='this.song.songId')")
+      }
       this.audio.src = this.song.url as string
       this.audio
         .play()
@@ -117,7 +124,7 @@ export const usePlayerStore = defineStore('player', {
           break
         //随机
         case 2:
-          this.play(this.playList.sample().songId)
+          this.play(_.sample(this.playList)!.songId)
           break
       }
     },
