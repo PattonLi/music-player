@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"music-player/musicplayerserver/model"
 	"math"
+	"gorm.io/gorm"
 )
 
 type UserDao struct {
@@ -26,59 +27,64 @@ func (*UserDao) CreateUserTable() {
 
 
 
-// 根据用户名查询用户信息
-func (*UserDao) GetUserInfoByUsername(username string) ([]model.UserInfo, error) {
+// 根据用户名或昵称查询用户信息
+func (*UserDao) GetUserInfoByName(name string) ([]model.UserInfo, error) {
 	var user []model.UserInfo
-	err := DB.Find(&user, "username LIKE ?", username).Error
-	if err != nil {
+	err := DB.Find(&user, "username LIKE ? OR nickname LIKE ?", "%"+name+"%", "%"+name+"%").Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("查找不到用户信息！")
 	}
 	return user, err
 }
 
-// 根据用户昵称查询用户信息
-func (*UserDao) GetUserInfoByNickname(nickname string) ([]model.UserInfo, error){
-	var user []model.UserInfo
-	err := DB.Find(&user, "nickname LIKE ?", nickname).Error
-	if err != nil {
-		err = errors.New("查找不到用户信息！")
-	}
-	return user, err
-}
 
 // 添加用户
-func (*UserDao) AddUser(user *model.UserInfo) bool {
+func (*UserDao) AddUser(user *model.UserInfo) (int) {
 	DB.Create(user)
-	return true
+	newuser := model.UserInfo{}
+	DB.Take(&newuser, "phone = ?",user.Phone)
+	fmt.Println(newuser.ID)
+	return newuser.ID
 }
 
-// 修改用户
+// 修改用户信息
 func (*UserDao) ModifyUser(user *model.UserInfo) error {
 	result := DB.Save(user)
 	var err error = nil
 	if result.Error != nil {
-		err = errors.New("修改失败!")
+		err = errors.New("修改失败！")
 	}
 	return err
 }
 
-// 用户验证
-func (*UserDao) UserCheck(u *model.UserInfo) (uint,error) {
-	username := u.Username
+//删除用户信息
+func (*UserDao) DeleteUser(userID int) error {
+	err := DB.Delete(&model.UserInfo{}, userID).Error
+	return err
+}
+
+// 用户登录验证
+func (*UserDao) UserLoginCheck(u *model.UserInfo) (int,error) {
+	phone := u.Phone
 	password := u.Password
 	user := model.UserInfo{}
-	err := DB.First(&user, "username = ? AND password = ?", username, password).Error
-	if err != nil {
+	err := DB.First(&user, "phone = ? AND password = ?", phone, password).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("用户名不存在或密码错误！")
 	}
 	return user.ID, err
 }
 
-// 用户名验证
-func (*UserDao) UsernameCheck(u *model.UserInfo) (uint, error) {
-	username := u.Username
+// 手机号验证
+func (*UserDao) UserPhoneCheck(u *model.UserInfo) (int, error) {
+	phone := u.Phone
 	user := model.UserInfo{}
-	err := DB.First(&user, "username = ?", username).Error
+	err := DB.Take(&user, "phone = ?", phone).Error
+	if errors.Is(err, gorm.ErrRecordNotFound){
+		err = errors.New("查找不到记录！")
+	} else {
+		err = nil
+	}
 	return user.ID, err
 }
 
@@ -90,6 +96,13 @@ func (*UserDao) GetAllUserInfo(page int, pagesize int) ([]model.UserInfo,int64) 
 	DB.Offset(offset).Limit(pagesize).Find(&userlist).Offset(-1).Limit(-1).Count(&totalrecord)
 	totalPage := int64(math.Ceil(float64(totalrecord)/float64(pagesize)))
 	return userlist,totalPage
+}
+
+//根据ID获取单个用户信息
+func (*UserDao) GetUserProfile (userID int) (*model.UserInfo, error) {
+	user := model.UserInfo{}
+	err := DB.Take(&user, "user_id = ?",userID).Error
+	return &user, err
 }
 
 
