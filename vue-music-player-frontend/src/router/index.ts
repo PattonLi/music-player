@@ -28,7 +28,7 @@ const router = createRouter({
           meta: {
             menu: 'radio'
           },
-          component: () => import('@/views/radio/RadioStation.vue')
+          component: () => import('@/views/radio/BaseRadio.vue')
         },
         {
           //音乐视频组件
@@ -37,7 +37,7 @@ const router = createRouter({
           meta: {
             menu: 'video'
           },
-          component: () => import('@/views/mv/MusicVideo.vue')
+          component: () => import('@/views/mv/BaseMusicVideo.vue')
         },
         {
           //音乐库组件
@@ -49,29 +49,24 @@ const router = createRouter({
           component: () => import('@/views/library/AppMusicLibrary.vue')
         },
 
-
-
-
-
-
         /* 非菜单组件 -------------------------------*/
         {
           //音乐库组件
-          path: 'info',
-          name: 'info',
-          component: () => import('@/views/info/AppInfo.vue'),
-          children:[
-            {
-              //专辑详情页
-              path: 'artist',
-              name: 'artist',
-              component: () => import('@/views/info/artist/AppArtistDetail.vue')
-            },
+          path: 'detail',
+          name: 'detail',
+          component: () => import('@/views/detail/AppInfo.vue'),
+          children: [
             {
               //歌手详情页
+              path: 'artist',
+              name: 'artist',
+              component: () => import('@/views/detail/artist/AppArtistDetail.vue')
+            },
+            {
+              //专辑详情页
               path: 'album',
               name: 'album',
-              component: () => import('@/views/info/album/AppAlbumDetail.vue')
+              component: () => import('@/views/detail/album/AppAlbumDetail.vue')
             }
           ]
         }

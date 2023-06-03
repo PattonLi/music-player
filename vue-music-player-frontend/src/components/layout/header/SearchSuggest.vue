@@ -52,7 +52,7 @@
 import { storeToRefs } from 'pinia'
 import { useSearchStore } from '@/stores/search'
 import { usePlayerStore } from '@/stores/player'
-import { routerPush } from '@/utils/navigator/router'
+import { routerPushByNameId } from '@/utils/navigator/router'
 
 const { suggestData, showSearchView } = storeToRefs(useSearchStore())
 const { play } = usePlayerStore()
@@ -73,7 +73,7 @@ const getTitle = (name: string) => {
 
 //跳转
 const jump = (name: string, id: number) => {
-  routerPush(name, id)
+  routerPushByNameId(name, id)
   showSearchView.value = false
 }
 </script>

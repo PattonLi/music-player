@@ -42,15 +42,3 @@ body {
   //系统启用暗色主题时，会应用这些样式，对应@media
   @apply dark:bg-[#1e1e1f] dark:text-slate-100;
 }
-
-/* 自定义基本样式 */
-
-//全局el组件样式
-.el-tabs__nav-wrap::after {
-  height: 0 !important;
-}
-
-//标签组件外边距
-.el-tabs__header {
-  @apply m-0;
-}

@@ -1,3 +1,4 @@
+//一些路由表
 export const Pages = {
   home: 'home',
   discover: 'discover',
@@ -11,5 +12,9 @@ export const Pages = {
   mvDetail: 'mvDetail',
   album: 'album',
   video: 'video',
-  dj: 'dj'
+  radio: 'radio'
+}
+
+export const PagesAuth = {
+  userCenter: 'userCenter'
 }

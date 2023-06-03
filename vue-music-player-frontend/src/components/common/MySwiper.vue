@@ -1,6 +1,7 @@
 <template>
   <!-- 歌曲循环推荐 -->
   <Swiper
+    v-if="isShowSwiper"
     class="inSwiper"
     slidesPerGroup:1
     slides-per-view="auto"
@@ -10,7 +11,7 @@
     :loop="true"
     :modules="modules"
     :autoplay="{
-      delay: 3000,
+      delay: 2500,
       disableOnInteraction: false
     }"
     speed:1500
@@ -21,7 +22,6 @@
       <div class="text-center">
         <span>{{ item.typeTitle }}</span>
       </div>
-      
     </SwiperSlide>
   </Swiper>
 </template>
@@ -37,13 +37,16 @@ import { Navigation, Pagination, Autoplay } from 'swiper'
 import { usePlayerStore } from '@/stores/player'
 import { useSwiperStore } from '@/stores/swiper'
 import type { Swiper as MySwiper } from '@/models/swiper'
+import { tr } from 'element-plus/es/locale'
 
 const { swipers } = toRefs(useSwiperStore())
 const { updateSwipers } = useSwiperStore()
 const modules = [Navigation, Pagination, Autoplay]
+const isShowSwiper = ref(false)
 
 onMounted(async () => {
   await updateSwipers()
+  isShowSwiper.value = true
 })
 const { play } = usePlayerStore()
 const router = useRouter()
@@ -54,33 +57,32 @@ const onClick = (swiper: MySwiper) => {
     play(swiper.targetId)
   }
   //为专辑则跳转
-  else if(swiper.targetType == 2){
+  else if (swiper.targetType == 2) {
     router.push({ name: 'info/album', query: { id: swiper.targetId } })
   }
   //为歌手则跳转
-  else if(swiper.targetType == 3){
+  else if (swiper.targetType == 3) {
     router.push({ name: 'info/artist', query: { id: swiper.targetId } })
   }
 }
 
+onUnmounted(() => {})
 </script>
 
 <style lang="scss">
-.inSwiper{
+.inSwiper {
+  @apply -mx-7;
 
-  @apply -mx-7 ;
-
-  .swiper-button-next{
+  .swiper-button-next {
     @apply pb-16 text-emerald-500;
   }
-  .swiper-button-prev{
+  .swiper-button-prev {
     @apply pb-16 text-emerald-500;
   }
-  .swiper-pagination-bullet-active{
+  .swiper-pagination-bullet-active {
     @apply bg-emerald-500;
   }
   .swiper-wrapper {
-    
     transition-timing-function: ease-in-out;
 
     .swiper-slide {
