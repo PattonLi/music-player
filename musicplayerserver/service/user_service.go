@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"music-player/musicplayerserver/dao"
 	"music-player/musicplayerserver/model"
 )
@@ -18,41 +17,50 @@ func NewUserService() *UserService {
 	}
 }
 
+
+
+
+// 特定名称用户信息获取
+func (us *UserService) UserInfo(name string) ([]model.UserInfo, error) {
+	user1, err1 := us.userdao.GetUserInfoByUsername(name)
+	user2, err2 := us.userdao.GetUserInfoByNickname(name)
+	var err error = nil
+	var userlist []model.UserInfo
+	if(err1 != nil && err2 != nil){
+		err = err2
+	} else {
+		userlist = append(user1,user2...)
+	}
+	return userlist, err
+}
+
+// 特定页所有普通用户信息获取
+func (us *UserService) AllUserInfo(page int, pagesize int) ([]model.UserInfo, int64) {
+	userlist,totalPage := us.userdao.GetAllUserInfo(page,pagesize)
+	return userlist, totalPage
+}
+
+// 用户信息修改
+func (us *UserService) ModifyUserInfo(user *model.UserInfo) {
+	
+}
+
+// 用户登录
+func (us *UserService) UserLogin(user *model.UserInfo) (uint, error) {
+	//userID, admin, err := us.userdao.UserCheck(user)
+	var err error = nil
+	return 1, err
+}
+
 // 用户注册
 func (us *UserService) UserRegister(user *model.UserInfo) error {
-	_, _, err := us.userdao.UsernameCheck(user)
+	_, err := us.userdao.UsernameCheck(user)
 	if err != nil {
-		ok := us.userdao.AddUser(user)
-		if ok {
-			fmt.Println("Successful Register")
-		} else {
-			fmt.Println("Register Failed")
-		}
+		us.userdao.AddUser(user)
+		//user, _ = us.userdao.GetUserInfo(user.Username)
 		err = nil
 	} else {
 		err = errors.New("用户名已被注册！")
 	}
 	return err
-}
-
-// 用户登录
-func (us *UserService) UserLogin(user *model.UserInfo) (uint, string, error) {
-	userID, admin, err := us.userdao.UserCheck(user)
-	return userID, admin, err
-}
-
-// 用户信息获取
-func (us *UserService) UserInfo(userID uint) (*model.UserInfo, error) {
-	user, err := us.userdao.GetUserInfo(userID)
-	return user, err
-}
-
-// 用户登出
-func (us *UserService) UserLogout() {
-
-}
-
-// 用户信息修改
-func (us *UserService) UserEdit() {
-
 }
