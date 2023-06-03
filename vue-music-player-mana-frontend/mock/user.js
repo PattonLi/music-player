@@ -46,5 +46,5 @@ Mock.mock('/user/info', 'post', {
       password: 'Home',
     }
   ]
-})
+)
 

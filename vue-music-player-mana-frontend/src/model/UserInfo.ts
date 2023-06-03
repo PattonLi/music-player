@@ -4,11 +4,13 @@ export interface UserInfo {
 }
 
 export interface CustomerInfo {
-  date: string,
-  name: string,
-  nickname: string,
-  gender: string,
-  age: string,
-  email: string,
-  password: string
+  userId: number;
+  username: string;
+  gender: string;
+  age: number;
+  email: string;
+  password: string;
+  nickname: string;
+  phone: string;
+  picUrl: string
 }
