@@ -1,17 +1,25 @@
-import type { SearchHotDetail } from '@/models/search'
+import type { SearchAlbums, SearchArtists, SearchHotDetail, SearchSongs, SearchUsers } from '@/models/search'
 import myAxios from './myAxios'
-import type { SearchSuggest } from '@/models/search'
 
-//获取搜索结果
+//动态获取搜索结果
 export async function apiSearchSuggest(keywords: string) {
-  const data = await myAxios.get<SearchSuggest>('search/suggest', {
+  const data = await myAxios.get<{
+    code:number
+    albums: SearchAlbums[]
+    artists: SearchArtists[]
+    songs: SearchSongs[]
+    users:SearchUsers[]
+  }>('search/suggest', {
     keywords: keywords
   })
   return data
 }
 
-//热搜结果
+//获取热搜结果
 export async function apiSearchHotDetail() {
-  const data = await myAxios.get<SearchHotDetail[]>('search/hot')
+  const data = await myAxios.get<{
+    code:number
+    searchHot:SearchHotDetail[]
+  }>('search/hot')
   return data
 }

@@ -1,19 +1,23 @@
-import axios from 'axios'
+import axios, { AxiosError, type AxiosResponse } from 'axios'
 
 import { useAuthStore } from '@/stores/auth'
+import { storeToRefs } from 'pinia'
+import { AlertAxiosError } from '../alert/AlertPop'
 
 // 设置baseurl
-axios.defaults.baseURL = 'http://localhost:4000'
+axios.defaults.baseURL = 'https://mock.apifox.cn/m1/2794549-0-default'
+// axios.defaults.baseURL = 'http://localhost:4000'
 // 请求头，headers 信息
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 // 默认 post 请求，使用 application/json 形式
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
-//发送interceptor
-
+//发送interceptor,设置token
 axios.interceptors.request.use((config) => {
-  const authStore = useAuthStore()
-
+  const { token, isLogin } = storeToRefs(useAuthStore())
+  if (isLogin) {
+    config.headers.Authorization = token.value
+  }
   //todo token设置
   return config
 })
@@ -22,15 +26,16 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(
   (res) => {
     // 2xx 范围内的状态码都会触发该函数。
-
     //打印每次成功接受的数据
-    console.log('axios success' + res)
+    console.log('axios success   ' + res.config.url)
+    console.log(res)
     return res
   },
-  function (error) {
+  function (error: AxiosResponse) {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
     console.log(error)
+    AlertAxiosError('访问' + error.config.url! + '发送参数' + error.config.params)
     return Promise.reject(error)
   }
 )
@@ -61,7 +66,7 @@ const myAxios: MyAxios = {
   post(url, params) {
     return new Promise((resolve, reject) => {
       axios
-        .post(url, { params })
+        .post(url, JSON.stringify(params))
         .then((res) => {
           resolve(res.data)
         })
@@ -74,7 +79,7 @@ const myAxios: MyAxios = {
   put(url, params) {
     return new Promise((resolve, reject) => {
       axios
-        .put(url, params)
+        .put(url, JSON.stringify(params))
         .then((res) => {
           resolve(res.data)
         })

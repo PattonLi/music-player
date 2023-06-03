@@ -39,6 +39,8 @@ declare global {
     numberFormat(this: number): string | number
   }
 }
+
+/* 接口具体实现 */
 Array.prototype.first = function <T>(this: T[]): T {
   return first<T>(this) as T
 }
