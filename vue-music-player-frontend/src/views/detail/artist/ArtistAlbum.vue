@@ -1,83 +1,98 @@
 <template>
-  <div class="mt-5">
-    <!--  -->
-    <div class="grid grid-flow-row grid-cols-3 lg:grid-cols-5 gap-5 2xl:grid-cols-8">
+  <div class="mt-5 mx-6">
+    <!-- 网格 -->
+    <div class="grid grid-flow-row gap-6 grid-cols-4 2xl:grid-cols-6">
       <!-- 循环 -->
       <div
         v-for="(item, index) in list"
         :key="index"
-        :class="{ 'item-1': index === 0 }"
-        @click="routerPushByNameId(Pages.albumDetail,item.albumId)"
+        @click="routerPushByNameId(Pages.albumDetail, item.albumId)"
       >
         <!-- 封面 -->
-        <MyCover :name="item.album" :pic-url="item.picUrl" :play-count="item.size" />
-        <!-- 信息 -->
-        <div class="mt-2 text-xs truncate">{{ item.album }}</div>
-        <div class="mt-1 text-xs text-slate-400 truncate">{{ toDate(item.publishTime) }}</div>
+        <MyCover
+          :name="item.album"
+          :pic-url="item.picUrl"
+          :play-count="item.size"
+          :showPlayCount="true"
+        />
+        <!-- 专辑名、发行时间 -->
+        <div class="mt-1 ml-1 text-sm text-main truncate">{{ item.album }}</div>
+        <div class="text-sm ml-1 text-dc truncate">{{ item.publishTime || '未知' }}</div>
       </div>
     </div>
+
+    <!-- 加载按钮,还有页就显示 -->
     <div class="flex justify-center py-5" v-if="list.length > 0 && !pageData.noMore">
       <el-button
         :loading="pageData.loading"
-        type="text"
-        class="text-center w-full"
-        @click="loadMore"
-        >加载更多</el-button
-      >
+        link
+        size="large"
+        class="text-center"
+        @click="pageGet()"
+        >加载更多
+      </el-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useArtistAlbum } from '@/utils/api/album'
+import { apiArtistAlbums } from '@/utils/api/album'
 import type { Album } from '@/models/album'
-import { toDate } from '@/utils/number/number'
 import MyCover from '@/components/common/MyCover.vue'
-import { routerPushByNameId } from '@/utils/navigator/router';
-import { Pages } from '@/router/pages';
+import { routerPushByNameId } from '@/utils/navigator/router'
+import { Pages } from '@/router/pages'
+import { AlertError } from '@/utils/alert/AlertPop'
 
-const router = useRouter()
-
-const props = defineProps<{ id: number }>()
+const props = defineProps<{
+  id: number
+}>()
 const list = ref<Album[]>([])
 
 const pageData = reactive({
-  limit: 40,
-  page: 1,
+  page: 0,
+  pageSize: 18,
+  pageTotal: 1,
+
+  //是否显示加载动画
   loading: false,
   noMore: false
 })
 
-const offset = computed(() => {
-  if (pageData.page === 1) return 0
-  return list.value.length + pageData.limit
-})
-
-const getData = async () => {
-  try {
-    pageData.loading = true
-    const { hotAlbums } = await useArtistAlbum(props.id, pageData.limit, offset.value)
-    if (pageData.page === 1) {
-      list.value = hotAlbums
-    } else {
-      list.value.push(...hotAlbums)
-    }
-    if (hotAlbums.length < pageData.limit) {
+//分页查询
+const pageGet = async () => {
+  pageData.loading = true
+  const res = await apiArtistAlbums(props.id, pageData.pageSize, pageData.page + 1)
+  if (res.code == 200) {
+    //判断是否已经没有页数了
+    if (pageData.page >= pageData.pageTotal) {
+      //所有数据已经取完
       pageData.noMore = true
+      return
     }
-  } catch (e) {
-    pageData.page--
+    if (pageData.page == 0) {
+      //初始时设置数据
+      list.value = res.albums
+    } else {
+      //否则push
+      list.value.push(...res.albums)
+    }
+    //当前位置页数加1
+    pageData.page++
+    //更新pageSize
+    pageData.pageTotal = res.pageTotal
+  } else {
+    AlertError('抱歉，该歌手暂时无专辑！')
   }
+  //加载动画
   pageData.loading = false
 }
 
-const loadMore = () => {
-  pageData.page++
-  getData()
-}
-
 onMounted(async () => {
-  await getData()
+  await pageGet()
 })
 </script>
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.el-button--large {
+  @apply text-green-400;
+}
+</style>

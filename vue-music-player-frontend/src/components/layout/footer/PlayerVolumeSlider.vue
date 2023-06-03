@@ -1,5 +1,5 @@
 <template>
-  <div class="player-volume flex flex-col items-center pt-2">
+  <div class="flex flex-col items-center pt-2">
     <!-- 拖动条 -->
     <div>
       <el-slider
@@ -15,7 +15,7 @@
       />
     </div>
     <!-- 音量数字 -->
-    <div class="text-sm mt-2">{{ volume }}</div>
+    <div class="text-sm mt-2 flex-shrink-0 w-6 ml-1.5">{{ volume }}</div>
   </div>
 </template>
 

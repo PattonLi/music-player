@@ -1,6 +1,6 @@
 <template>
   <!-- 主体界面 -->
-  <div class="artist-detail p-6" v-if="artistDetail">
+  <div class="artist-detail px-7 pt-3" v-if="artistDetail">
     <!-- 歌手信息栏 -->
     <ArtistInfo :artist-detail="artistDetail" />
 

@@ -59,11 +59,11 @@ const onClick = (swiper: MySwiper) => {
   }
   //为专辑则跳转
   else if (swiper.targetType == 2) {
-    routerPushByNameId(Pages.albumDetail,swiper.targetId)
+    routerPushByNameId(Pages.albumDetail, swiper.targetId)
   }
   //为歌手则跳转
   else if (swiper.targetType == 3) {
-    routerPushByNameId(Pages.artistDetail,swiper.targetId)
+    routerPushByNameId(Pages.artistDetail, swiper.targetId)
   }
 }
 

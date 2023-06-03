@@ -1,5 +1,3 @@
-import dayjs from 'dayjs'
-
 //转换为歌曲长度 xx:xx
 export function numberToDuration(during: number) {
   //分钟数
@@ -11,9 +9,4 @@ export function numberToDuration(during: number) {
   const min = m < 10 ? `0${m}` : m
   const sec = s < 10 ? `0${s}` : s
   return min + ':' + sec
-}
-
-//返回日期格式
-export function toDate(this: number, format: string = 'YYYY-MM-DD'): string {
-  return dayjs(this).format(format)
 }

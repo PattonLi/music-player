@@ -16,7 +16,7 @@
   </div>
   <!-- 发布按钮 -->
   <div class="flex justify-end mr-7">
-    <button class="button-outline w-16 h-8 ">发布</button>
+    <button class="button-outline w-16 h-8">发布</button>
   </div>
   <!-- 评论标题 -->
   <div class="text-xl text-main mt-0.5 mt-2 flex items-center">
@@ -39,13 +39,13 @@ defineProps<{
 </script>
 
 <style lang="scss">
-.myInput{
-    @apply mt-0.5;
-    .el-textarea__inner {
+.myInput {
+  @apply mt-0.5;
+  .el-textarea__inner {
     @apply rounded-xl text-base bg-slate-50 dark:bg-zinc-900 dark:ring-gray-700 dark:ring-2;
-    }
-    .el-input__count{
+  }
+  .el-input__count {
     @apply dark:bg-zinc-900;
-    }
+  }
 }
 </style>

@@ -5,6 +5,6 @@ export async function apiGetSong(songId: number) {
   const data = await myAxios.get<{
     code: number
     song: Song
-  }>("detail/song", { songId: songId })
+  }>('detail/song', { songId: songId })
   return data
 }

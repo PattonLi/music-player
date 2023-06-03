@@ -6,8 +6,8 @@
     <div class="w-20">时长</div>
   </div>
   <!-- 歌曲条目 -->
-  <div v-for="(item,index) in songList" :key="index">
-    <SongItem :prop-song="item" :order="index+1"/>
+  <div v-for="(item, index) in songList" :key="index">
+    <SongItem :prop-song="item" :order="index + 1" />
   </div>
 </template>
 

@@ -53,7 +53,7 @@ import { storeToRefs } from 'pinia'
 import { useSearchStore } from '@/stores/search'
 import { usePlayerStore } from '@/stores/player'
 import { routerPushByNameId } from '@/utils/navigator/router'
-import { Pages } from '@/router/pages';
+import { Pages } from '@/router/pages'
 const { suggestData, showSearchView } = storeToRefs(useSearchStore())
 const { play } = usePlayerStore()
 

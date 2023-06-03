@@ -49,7 +49,7 @@ const router = createRouter({
           component: () => import('@/views/library/AppMusicLibrary.vue')
         },
 
-        /* 非菜单组件 -------------------------------*/
+        /*--------------------详情页组件 ------------------*/
         {
           //音乐库组件
           path: 'detail',
@@ -69,7 +69,18 @@ const router = createRouter({
               component: () => import('@/views/detail/album/AppAlbumDetail.vue')
             }
           ]
+        },
+
+
+        /*--------------------播放器组件 ------------------*/
+        {
+          //mv player组件
+          path:'mvPlayer',
+          name:'mvPlayer',
+          component:()=>import('@/views/mv-player/AppMvPlayer.vue')
         }
+
+
       ]
     }
   ]

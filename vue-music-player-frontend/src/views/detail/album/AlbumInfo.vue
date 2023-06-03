@@ -15,7 +15,7 @@
         </div>
         <div class="text-xs text-gray-500">
           <span>发行时间:</span>
-          {{ toDate(album.publishTime) }}
+          {{ album.publishTime }}
           <span class="ml-3">类别:</span>
           {{ album.type }}
         </div>
@@ -45,7 +45,6 @@
 import { Like, More, PlayOne } from '@icon-park/vue-next'
 import IconPark from '@/components/common/IconPark.vue'
 import type { Album } from '@/models/album'
-import { toDate } from '@/utils/number/number'
 
 defineProps<{
   album: Album

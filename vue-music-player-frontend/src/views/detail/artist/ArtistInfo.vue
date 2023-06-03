@@ -29,7 +29,7 @@
       </div>
 
       <!-- 操作栏 -->
-      <div class="mt-3 gap-x-3 flex items-center">
+      <div class="mt-3 gap-x-5 flex items-center">
         <button
           class="w-28 button rounded-full bg-gradient-to-r to-teal-400 from-emerald-300 text-slate-50"
         >

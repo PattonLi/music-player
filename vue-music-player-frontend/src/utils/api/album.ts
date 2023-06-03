@@ -13,9 +13,12 @@ export async function apiAlbumDetail(albumId: number) {
   return data
 }
 
-export async function useArtistAlbum(id: number, limit: number = 10, offset: number = 0) {
-  return await myAxios.get<{
+//分页获取歌手专辑
+export async function apiArtistAlbums(artistId: number, pageSize: number, currentPage: number) {
+  const data = await myAxios.get<{
     code: number
-    hotAlbums: Album[]
-  }>('detail/artist/album', { id: id, limit: limit, offset: offset })
+    pageTotal: number
+    albums: Album[]
+  }>('detail/artist/album', { artistId: artistId, pageSize: pageSize, currentPage: currentPage })
+  return data
 }

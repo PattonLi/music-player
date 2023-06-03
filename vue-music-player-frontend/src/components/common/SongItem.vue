@@ -6,7 +6,6 @@
   >
     <!-- 左部 -->
     <div class="flex-shrink-0 flex-1 flex items-center justify-between pr-5">
-
       <!-- 歌曲编号 -->
       <div class="text-sm ml-0.5">
         <span>{{ _.padStart(order.toString(), 2, '0') }}</span>
@@ -29,7 +28,7 @@
           class="ml-3 text-gray-400 cursor-pointer hover-text"
           size="16"
           :icon="PlayTwo"
-          @click="routerPushByNameId(Pages.mvDetail,_.random(1,10))"
+          @click="routerPushByNameId(Pages.mvDetail, _.random(1, 10))"
         />
       </div>
 
@@ -53,16 +52,16 @@
     <!-- 歌手名 -->
     <div class="text-lg flex-shrink-0 w-1/3 items-center">
       <small
-        class="truncate hover-text"  
-        @click="routerPushByNameId(Pages.artistDetail,propSong.artistId)"
+        class="truncate hover-text"
+        @click="routerPushByNameId(Pages.artistDetail, propSong.artistId)"
       >
         {{ propSong.name }}
       </small>
     </div>
-        
+
     <!-- 歌曲时长 -->
     <div class="w-20 flex-shrink-0 truncate flex items-center text-lg">
-        <small>{{ numberToDuration(propSong.duration) }}</small>
+      <small>{{ numberToDuration(propSong.duration) }}</small>
     </div>
   </div>
 </template>
@@ -74,18 +73,17 @@ import { usePlayerStore } from '@/stores/player'
 import IconPark from '@/components/common/IconPark.vue'
 import type { Song } from '@/models/song'
 import { Pages } from '@/router/pages'
-import {routerPushByNameId} from '@/utils/navigator/router'
+import { routerPushByNameId } from '@/utils/navigator/router'
 import { storeToRefs } from 'pinia'
 import _ from 'lodash'
 
 defineProps<{
   propSong: Song
-  order:number
+  order: number
 }>()
 const { play } = usePlayerStore()
 const { song } = storeToRefs(usePlayerStore())
 const id = song.value.songId
-
 </script>
 
 <style lang="scss" scoped>

@@ -20,14 +20,21 @@ export async function apiArtistDesc(artistId: number) {
   return data
 }
 
-export async function useArtistSongs(
-  id: number,
-  order: string = 'time',
-  limit: number = 10,
-  offset: number = 0
+//分页查询歌手歌曲
+export async function apiArtistSongs(
+  artistId: number,
+  pageSize: number,
+  currentPage: number,
+  order: string
 ) {
   return await myAxios.get<{
     code: number
+    pageTotal: number
     songs: Song[]
-  }>('detail/artist/songs', { artistId: id, order: order, limit: limit, offset: offset })
+  }>('detail/artist/songs', {
+    artistId: artistId,
+    pageSize: pageSize,
+    currentPage: currentPage,
+    order: order
+  })
 }
