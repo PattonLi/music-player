@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     EditSingerDialog: typeof import('./src/components/edit-dialog/EditSingerDialog.vue')['default']
     EditSongDialog: typeof import('./src/components/edit-dialog/EditSongDialog.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
+    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']

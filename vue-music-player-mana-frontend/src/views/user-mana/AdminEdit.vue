@@ -61,10 +61,6 @@
   
   //加载数据
   onMounted(() => {
-    getCustomerInfo().then((data) => {
-      state.tableData = data.data
-      console.log(state.tableData)
-    })
   })
   
   
