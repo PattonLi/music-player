@@ -6,6 +6,7 @@ import (
 
 type UserInfo struct {
 	gorm.Model        // 创建对象时不用填充，gorm会自动填充
+	ID   	   uint   `gorm:"primaryKey;column:user_id"`
 	Username   string `json:"username" gorm:"column:username"`
 	Gender     string `json:"gender" gorm:"column:gender"`
 	Age        string `json:"age" gorm:"column:age"`
