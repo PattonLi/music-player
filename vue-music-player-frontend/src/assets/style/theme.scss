@@ -9,7 +9,7 @@
 
 //悬浮背景基本样式
 .hover-bg-main {
-  @apply hover:bg-gray-200;
+  @apply hover:bg-gray-100;
   @apply dark:hover:bg-slate-700;
 }
 
@@ -62,11 +62,14 @@
   @apply hover:text-emerald-500;
 }
 
+//边框轮廓button
 .button-outline {
   @apply flex rounded-full justify-center items-center h-8 text-sm transition-all border;
-  @apply hover:border-emerald-500 hover:text-emerald-500;
+  @apply hover:border-emerald-400 hover:text-emerald-400;
+  @apply dark:hover:border-emerald-300 dark:hover:text-emerald-300;
 }
 
+//小按钮
 .button-sm {
   @apply h-7 text-xs;
 }

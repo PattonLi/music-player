@@ -1,18 +1,16 @@
-import type { Album } from './album'
-import type { Song } from './song'
-
 export interface Artist {
   artistId: number
   artist: string
   picUrl: string
   songSize: number
   albumSize: number
-  profile: string
+  profile: string //简短介绍
   location: string
 }
 
-export interface ArtistDetail {
-  artist: Artist
-  songs: Song[]
-  albums: Album[]
+export interface ArtistDesc {
+  profile: string //简短介绍
+  basicInfo: string //基本信息
+  timeLine: string //从艺历程
+  award: string //获奖荣誉
 }

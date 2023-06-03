@@ -1,12 +1,12 @@
 <template>
   <div>
     <MyTitle title="专辑推荐" />
-    <div class="mb-10 grid grid-flow-row gap-x-20 grid-cols-3 2xl:grid-cols-5 gap-y-9">
+    <div class="mt-4 mb-10 grid grid-flow-row gap-x-20 grid-cols-3 2xl:grid-cols-5 gap-y-9">
       <!-- 循环 -->
       <div
         v-for="(item, index) in _.sampleSize(personalizedAlbums, 20)"
         :key="index"
-        @click="router.push({ name: 'album', query: { id: item.albumId } })"
+        @click="routerPushByNameId(Pages.albumDetail,item.albumId)"
       >
         <!-- 封面组件 -->
         <MyCover
@@ -29,6 +29,8 @@ import MyTitle from '@/components/common/MyTitle.vue'
 import { useMusicStore } from '@/stores/music'
 import MyCover from '@/components/common/MyCover.vue'
 import _ from 'lodash'
+import { routerPushByNameId } from '@/utils/navigator/router';
+import { Pages } from '@/router/pages';
 const router = useRouter()
 
 const { personalizedAlbums } = toRefs(useMusicStore())

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-between h-16">
+  <div class="flex items-center justify-between h-14">
     <!-- 导航栏相关 -->
     <div class="flex items-center pl-3">
       <!-- 左导航栏 -->

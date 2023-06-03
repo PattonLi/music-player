@@ -37,7 +37,8 @@ import { Navigation, Pagination, Autoplay } from 'swiper'
 import { usePlayerStore } from '@/stores/player'
 import { useSwiperStore } from '@/stores/swiper'
 import type { Swiper as MySwiper } from '@/models/swiper'
-import { tr } from 'element-plus/es/locale'
+import { routerPushByNameId } from '@/utils/navigator/router'
+import { Pages } from '@/router/pages'
 
 const { swipers } = toRefs(useSwiperStore())
 const { updateSwipers } = useSwiperStore()
@@ -58,11 +59,11 @@ const onClick = (swiper: MySwiper) => {
   }
   //为专辑则跳转
   else if (swiper.targetType == 2) {
-    router.push({ name: 'info/album', query: { id: swiper.targetId } })
+    routerPushByNameId(Pages.albumDetail,swiper.targetId)
   }
   //为歌手则跳转
   else if (swiper.targetType == 3) {
-    router.push({ name: 'info/artist', query: { id: swiper.targetId } })
+    routerPushByNameId(Pages.artistDetail,swiper.targetId)
   }
 }
 
@@ -71,13 +72,13 @@ onUnmounted(() => {})
 
 <style lang="scss">
 .inSwiper {
-  @apply -mx-7;
+  @apply -mx-8 pt-5;
 
   .swiper-button-next {
-    @apply pb-16 text-emerald-500;
+    @apply pb-36 text-emerald-500;
   }
   .swiper-button-prev {
-    @apply pb-16 text-emerald-500;
+    @apply pb-36 text-emerald-500;
   }
   .swiper-pagination-bullet-active {
     @apply bg-emerald-500;

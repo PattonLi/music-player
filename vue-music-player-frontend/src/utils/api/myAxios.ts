@@ -35,7 +35,7 @@ axios.interceptors.response.use(
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
     console.log(error)
-    AlertAxiosError('访问:' + error.config.url! + '发送参数:' + error.config.params)
+    AlertAxiosError('访问' + error.config.url! + '发送参数' + error.config.params)
     return Promise.reject(error)
   }
 )

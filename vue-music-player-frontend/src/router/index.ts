@@ -58,14 +58,14 @@ const router = createRouter({
           children: [
             {
               //歌手详情页
-              path: 'artist',
-              name: 'artist',
+              path: 'artistDetail',
+              name: 'artistDetail',
               component: () => import('@/views/detail/artist/AppArtistDetail.vue')
             },
             {
               //专辑详情页
-              path: 'album',
-              name: 'album',
+              path: 'albumDetail',
+              name: 'albumDetail',
               component: () => import('@/views/detail/album/AppAlbumDetail.vue')
             }
           ]

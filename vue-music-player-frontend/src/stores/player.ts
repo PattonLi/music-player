@@ -89,9 +89,9 @@ export const usePlayerStore = defineStore('player', {
       if (res.code == 200) {
         this.song = res.song
       } else {
-        AlertError("获取歌曲失败(id='this.song.songId')")
+        AlertError("获取歌曲失败id="+this.song.songId)
       }
-      this.audio.src = this.song.url as string
+      this.audio.src = this.song.url
       this.audio
         .play()
         .then((res) => {

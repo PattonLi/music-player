@@ -1,27 +1,27 @@
 <template>
   <MyTitle title="推荐歌手" />
   <div
-    class="mt-2 mb-16 grid grid-flow-row gap-x-5 cursor-pointer grid-cols-2 2xl:grid-cols-4 gap-y-9"
+    class="mt-4 mx-6 mb-16 grid grid-flow-row gap-x-20 cursor-pointer grid-cols-3 2xl:grid-cols-5 gap-y-20"
   >
     <!-- 循环 -->
     <div
-      v-for="(item, index) in _.sampleSize(personalizedArtists, 16)"
+      v-for="(item, index) in _.sampleSize(personalizedArtists, 15)"
       :key="index"
-      class="transition-all flex items-center"
+      class="transition-all flex flex-col items-center"
       @click="router.push({ name: 'artist', query: { id: item.artistId } })"
     >
       <!-- 第一列图片 -->
       <img
         :src="item.picUrl"
         alt="歌曲图片"
-        class="w-44 h-44 object-cover rounded-full flex-shrink-0 cover-play-image"
+        class="w-50 h-50 object-cover rounded-full flex-shrink-0 cover-play-image"
       />
       <!-- 第二列文字信息 -->
-      <div class="px-3 truncate flex flex-col">
-        <div class="text-xl truncate">
+      <div class="px-3 pt-1 truncate flex flex-col">
+        <div class="text-xl truncate flex justify-center">
           {{ item.artist }}
         </div>
-        <div class="mt-1 text-xl text-dc truncate">
+        <div class="text-xl text-dc truncate flex justify-center">
           {{ item.location }}
         </div>
       </div>

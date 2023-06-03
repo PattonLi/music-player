@@ -4,79 +4,65 @@
     :class="{ playing: id == propSong.songId }"
     @dblclick="play(propSong.songId)"
   >
-    <!--  -->
+    <!-- 左部 -->
     <div class="flex-shrink-0 flex-1 flex items-center justify-between pr-5">
+
+      <!-- 歌曲编号 -->
+      <div class="text-sm ml-0.5">
+        <span>{{ _.padStart(order.toString(), 2, '0') }}</span>
+      </div>
       <!-- 喜欢按钮 -->
-      <div class="items-center flex flex-1 w-10 flex-shrink-0">
+      <div class="items-center flex flex-1 flex-shrink-0">
         <IconPark
           :icon="Like"
-          size="16"
-          class="text-gray-500 mr-1 cursor-pointer hover:text-red-400"
+          size="20"
+          :stroke-width="3"
+          class="text-gray-400 ml-4 mr-2 cursor-pointer hover:text-red-400"
         />
-        <div class="truncate" style="max-width: 75%">
+        <!-- 歌曲名 -->
+        <div class="truncate text-lg" style="max-width: 40%">
           <small>{{ propSong.name }}</small>
         </div>
+        <!-- 随机返回一个1-10整数 -->
         <IconPark
           v-if="true"
-          class="ml-2 text-orange-400 cursor-pointer"
+          class="ml-3 text-gray-400 cursor-pointer hover-text"
           size="16"
           :icon="PlayTwo"
-          @click="router.push({ name: Pages.mvDetail, query: { id: propSong.mark } })"
+          @click="routerPushByNameId(Pages.mvDetail,_.random(1,10))"
         />
       </div>
 
       <!-- 中间操作栏 -->
       <div class="hidden icon-action flex-shrink-0">
-        <div class="flex items-center gap-x-1.5 text-gray-400 ml-2">
+        <div class="flex items-center gap-x-2 text-gray-400 ml-2">
           <IconPark
             title="播放"
             :icon="PlayOne"
-            size="20"
+            size="24"
             class="hover-text"
             @click="play(propSong.songId)"
           />
-          <IconPark title="添加到" :icon="Add" size="16" class="hover-text" />
-          <IconPark title="下载" :icon="DownTwo" size="16" class="hover-text" />
-          <IconPark title="更多操作" :icon="MoreTwo" size="16" class="hover-text" />
+          <IconPark :icon="Add" size="20" class="hover-text" />
+          <IconPark :icon="DownTwo" size="20" class="hover-text" />
+          <IconPark :icon="MoreTwo" size="20" class="hover-text" />
         </div>
       </div>
     </div>
 
-    <!--  -->
-    <div
-      class="flex-shrink-0"
-      :class="{ 'w-1/4': showAlName, 'w-1/3': !showAlName }"
-      v-if="showArName"
-    >
-      <div class="w-9/12 truncate">
-        <small
-          class="truncate max-w-full hover-text"
-          @click="router.push({ name: 'artistDetail', query: { id: propSong.songId } })"
-          >{{ propSong.name }}</small
-        >
-      </div>
+    <!-- 歌手名 -->
+    <div class="text-lg flex-shrink-0 w-1/3 items-center">
+      <small
+        class="truncate hover-text"  
+        @click="routerPushByNameId(Pages.artistDetail,propSong.artistId)"
+      >
+        {{ propSong.name }}
+      </small>
     </div>
-
-    <!--  -->
-    <div
-      class="flex-shrink-0"
-      :class="{ 'w-1/4': showArName, 'w-1/3': !showArName }"
-      v-if="showAlName"
-    >
-      <div class="w-9/12 truncate">
-        <small
-          class="truncate hover-text"
-          @click="router.push({ name: 'album', query: { id: propSong.songId } })"
-          >{{ propSong.name }}</small
-        >
-      </div>
-    </div>
-
+        
     <!-- 歌曲时长 -->
-    <div class="w-20 flex-shrink-0">
-      <div class="w-20 truncate">
-        <small>{{ numberToDuration(propSong.duration / 1000) }}</small>
-      </div>
+    <div class="w-20 flex-shrink-0 truncate flex items-center text-lg">
+        <small>{{ numberToDuration(propSong.duration) }}</small>
     </div>
   </div>
 </template>
@@ -87,33 +73,32 @@ import { numberToDuration } from '@/utils/number/number'
 import { usePlayerStore } from '@/stores/player'
 import IconPark from '@/components/common/IconPark.vue'
 import type { Song } from '@/models/song'
-import { useRouter } from 'vue-router'
-import { Pages } from '@/router/pages.js'
+import { Pages } from '@/router/pages'
+import {routerPushByNameId} from '@/utils/navigator/router'
 import { storeToRefs } from 'pinia'
 import _ from 'lodash'
 
-const router = useRouter()
-
 defineProps<{
   propSong: Song
-  showArName?: boolean
-  showAlName?: boolean
+  order:number
 }>()
 const { play } = usePlayerStore()
 const { song } = storeToRefs(usePlayerStore())
 const id = song.value.songId
+
 </script>
 
 <style lang="scss" scoped>
+//内联操作图标
 .song-item {
-  @apply py-2.5 pl-0.5;
+  @apply py-2.5 pl-1;
   &:hover {
     .icon-action {
       @apply inline-block;
     }
   }
 }
-
+//在播放时
 .playing {
   @apply bg-emerald-50 dark:bg-stone-800;
 }

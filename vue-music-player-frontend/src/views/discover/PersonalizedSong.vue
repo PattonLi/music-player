@@ -1,6 +1,8 @@
 <template>
   <MyTitle title="推荐新歌曲" />
-  <div class="mb-10 grid grid-flow-row gap-x-5 cursor-pointer grid-cols-2 2xl:grid-cols-4 gap-y-6">
+  <div
+    class="mt-4 mb-10 grid grid-flow-row gap-x-5 cursor-pointer grid-cols-2 2xl:grid-cols-4 gap-y-6"
+  >
     <!-- 循环 -->
     <div
       v-for="(item, index) in _.sampleSize(personalizedSongs, 16)"

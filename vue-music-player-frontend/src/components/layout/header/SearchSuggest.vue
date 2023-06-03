@@ -25,7 +25,7 @@
           v-for="item in suggestData.albums"
           :key="item.albumId"
           class="suggestItem hover-bg-main"
-          @click="jump('album', item.albumId)"
+          @click="jump(Pages.albumDetail, item.albumId)"
         >
           <span class="text-emerald-500">{{ item.album }}</span>
           <span class="pl-1"> - {{ item.artist }}</span>
@@ -38,7 +38,7 @@
           v-for="item in suggestData.artists"
           :key="item.artistId"
           class="suggestItem hover-bg-main"
-          @click="jump('artist', item.artistId)"
+          @click="jump(Pages.artistDetail, item.artistId)"
         >
           <span class="text-emerald-500">{{ item.artistId }}</span>
           <span class="text-emerald-500 ml-2">{{ item.songSize }}</span>
@@ -53,7 +53,7 @@ import { storeToRefs } from 'pinia'
 import { useSearchStore } from '@/stores/search'
 import { usePlayerStore } from '@/stores/player'
 import { routerPushByNameId } from '@/utils/navigator/router'
-
+import { Pages } from '@/router/pages';
 const { suggestData, showSearchView } = storeToRefs(useSearchStore())
 const { play } = usePlayerStore()
 

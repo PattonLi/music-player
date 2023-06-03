@@ -6,7 +6,7 @@
       <div
         v-for="(item, index) in _.sampleSize(personalizedAlbums, 20)"
         :key="index"
-        @click="router.push({ name: 'album', query: { id: item.albumId } })"
+        @click="routerPushByNameId(Pages.mvDetail,_.random(1,10))"
       >
         <!-- 封面组件 -->
         <MyCover
@@ -29,7 +29,8 @@ import MyTitle from '@/components/common/MyTitle.vue'
 import { useMusicStore } from '@/stores/music'
 import MyCover from '@/components/common/MyCover.vue'
 import _ from 'lodash'
-const router = useRouter()
+import { routerPushByNameId } from '@/utils/navigator/router';
+import { Pages } from '@/router/pages';
 
 const { personalizedAlbums } = toRefs(useMusicStore())
 const { UpdatePersonalize } = useMusicStore()

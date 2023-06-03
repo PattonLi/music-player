@@ -1,20 +1,30 @@
 <template>
-  <div class="artist-detail p-5" v-if="artistDetail">
+  <!-- 主体界面 -->
+  <div class="artist-detail p-6" v-if="artistDetail">
+    <!-- 歌手信息栏 -->
     <ArtistInfo :artist-detail="artistDetail" />
 
-    <el-tabs class="mt-3" v-model="tab">
-      <el-tab-pane lazy label="精选" name="choice"> </el-tab-pane>
-      <el-tab-pane lazy :label="`歌曲 ${artistDetail.artist.songSize}`" name="music">
-        <ArtistSong :id="id" />
+    <!-- 分页tab栏 -->
+    <el-tabs v-model="tab" class="mt-3">
+      <!-- 精选歌曲 -->
+      <el-tab-pane lazy label="精选" name="select">
+        <ArtistSelect :id="artistId" />
       </el-tab-pane>
-      <el-tab-pane lazy :label="`专辑 ${artistDetail.artist.albumSize}`" name="album">
-        <ArtistAlbum :id="id" />
+      <!-- 歌曲栏 -->
+      <el-tab-pane lazy :label="`歌曲 ${artistDetail.songSize}`" name="song">
+        <ArtistSong :id="artistId" />
       </el-tab-pane>
-      <el-tab-pane lazy :label="`视频 ${22}`" name="mv">
-        <ArtistMv :id="id" />
+      <!-- 专辑栏 -->
+      <el-tab-pane lazy :label="`专辑 ${artistDetail.albumSize}`" name="album">
+        <ArtistAlbum :id="artistId" />
       </el-tab-pane>
-      <el-tab-pane lazy label="详情" name="desc">
-        <ArtistProfile :id="id" />
+      <!-- 视频栏 -->
+      <el-tab-pane lazy :label="`视频 ${66}`" name="mv">
+        <ArtistMv :id="artistId" />
+      </el-tab-pane>
+      <!-- 详情栏 -->
+      <el-tab-pane lazy label="详情" name="describe">
+        <ArtistDesc :id="artistId" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -22,21 +32,24 @@
 
 <script setup lang="ts">
 import { apiArtistDetail } from '@/utils/api/artist'
-import type { ArtistDetail } from '@/models/artist'
+import type { Artist } from '@/models/artist'
+import ArtistSelect from './ArtistSelect.vue'
 import ArtistInfo from './ArtistInfo.vue'
-import ArtistProfile from './ArtistProfile.vue'
+import ArtistDesc from './ArtistDesc.vue'
 import ArtistSong from './ArtistSong.vue'
 import ArtistAlbum from './ArtistAlbum.vue'
 import ArtistMv from './ArtistMV.vue'
 import { AlertError } from '@/utils/alert/AlertPop'
 
+//路由信息
 const route = useRoute()
-const id = Number(route.query.id)
-const artistDetail = ref<ArtistDetail>()
-const tab = ref('music')
+const artistId = Number(route.query.id)
+const artistDetail = ref<Artist>()
+const tab = ref('select')
 
+//获取歌手详情
 onMounted(async () => {
-  const res = await apiArtistDetail(id)
+  const res = await apiArtistDetail(artistId)
   if (res.code == 200) {
     artistDetail.value = res.artistDetail
   } else {
@@ -52,6 +65,10 @@ onMounted(async () => {
 
   .el-tabs__header {
     @apply m-0;
+
+    .el-tabs__item {
+      @apply text-base;
+    }
   }
 }
 </style>
