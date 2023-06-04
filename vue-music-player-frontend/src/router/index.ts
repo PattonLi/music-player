@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 //import struct page
-import { Pages } from '@/router/Pages'
+import { Pages } from '@/router/pages'
 //import components
 
 const router = createRouter({
@@ -19,7 +19,7 @@ const router = createRouter({
           meta: {
             menu: 'discover'
           },
-          component: () => import('@/views/discover/BaseDiscover.vue')
+          component: () => import('@/views/discover/AppDiscover.vue')
         },
         {
           //电台组件
@@ -28,26 +28,16 @@ const router = createRouter({
           meta: {
             menu: 'radio'
           },
-          component: () => import('@/views/radio/RadioStation.vue')
+          component: () => import('@/views/radio/AppRadio.vue')
         },
         {
           //音乐视频组件
           path: 'video',
-          name: 'video',
+          name: 'mv',
           meta: {
-            menu: 'video'
+            menu: 'mv'
           },
-          component: () => import('@/views/mv/MusicVideo.vue')
-        },
-        {
-          path: 'artistDetail',
-          name: 'artistDetail',
-          component: () => import('@/views/artist/AppArtistDetail.vue')
-        },
-        {
-          path: 'albumDetail',
-          name: 'albumDetail',
-          component: () => import('@/views/album/AppAlbumDetail.vue')
+          component: () => import('@/views/mv/AppMusicVideo.vue')
         },
         {
           //音乐库组件
@@ -57,6 +47,45 @@ const router = createRouter({
             menu: 'library'
           },
           component: () => import('@/views/library/AppMusicLibrary.vue')
+        },
+
+        /*--------------------详情页组件 ------------------*/
+        {
+          //音乐库组件
+          path: 'detail',
+          name: 'detail',
+          component: () => import('@/views/detail/AppInfo.vue'),
+          children: [
+            {
+              //歌手详情页
+              path: 'artistDetail',
+              name: 'artistDetail',
+              component: () => import('@/views/detail/artist/AppArtistDetail.vue')
+            },
+            {
+              //专辑详情页
+              path: 'albumDetail',
+              name: 'albumDetail',
+              component: () => import('@/views/detail/album/AppAlbumDetail.vue')
+            }
+          ]
+        },
+
+        /*--------------------搜索结果组件 ------------------*/
+
+        {
+          //搜索结果页
+          path:'search/result',
+          name:'searchResult',
+          component:()=>import('@/views/search-result/AppSearchResult.vue')
+        },
+
+        /*--------------------播放器组件 ------------------*/
+        {
+          //mv player组件
+          path: 'mvPlayer',
+          name: 'mvPlayer',
+          component: () => import('@/views/mv-player/AppMvPlayer.vue')
         }
       ]
     }

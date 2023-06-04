@@ -1,19 +1,28 @@
 <template>
-  <MyTitle title="推荐新音乐" />
-  <div class="grid grid-flow-row grid-cols-2 2xl:grid-cols-5 gap-y-2.5 gap-x-5 cursor-pointer">
+  <MyTitle title="推荐新歌曲" />
+  <div
+    class="mt-4 mb-10 grid grid-flow-row gap-x-5 cursor-pointer grid-cols-2 2xl:grid-cols-4 gap-y-6"
+  >
+    <!-- 循环 -->
     <div
-      v-for="(item, index) in personalizedSongs"
+      v-for="(item, index) in _.sampleSize(personalizedSongs, 16)"
       :key="index"
       class="hover-bg-view transition-all flex items-center"
-      @click="play(item.id)"
+      @click="play(item.songId)"
     >
-      <img :src="item.picUrl" alt="" class="w-12 h-12 object-cover rounded flex-shrink-0" />
-      <div class="px-2 text-xs flex-auto flex flex-col w-1/3">
-        <div class="text-xs flex-1 truncate">
+      <!-- 第一列图片 -->
+      <img
+        :src="item.picUrl"
+        alt="歌曲图片"
+        class="w-40 h-40 object-cover rounded-2xl flex-shrink-0"
+      />
+      <!-- 第二列文字信息 -->
+      <div class="px-3 flex-auto flex flex-col">
+        <div class="text-bg truncate">
           {{ item.name }}
         </div>
-        <div class="mt-1.5 text-dc">
-          {{ item.song.artists[0].name }}
+        <div class="mt-1.5 text-dc truncate">
+          {{ item.artist }}
         </div>
       </div>
     </div>
@@ -25,13 +34,15 @@ import MyTitle from '@/components/common/MyTitle.vue'
 import { usePlayerStore } from '@/stores/player'
 import { useMusicStore } from '@/stores/music'
 
+import _ from 'lodash'
+
 const { play } = usePlayerStore()
 const { personalizedSongs } = toRefs(useMusicStore())
-const { updatePersonalize } = useMusicStore()
+const { UpdatePersonalize } = useMusicStore()
 
 onMounted(async () => {
-  await updatePersonalize()
+  await UpdatePersonalize(1)
 })
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped></style>

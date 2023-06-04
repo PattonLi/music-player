@@ -27,11 +27,113 @@
 </template>
 
 <script setup lang="ts">
-import { useMenu } from '@/components/layout/sideBar/useMenu'
 //图标组件
 import IconPark from '@/components/common/IconPark.vue'
+import { Pages } from '@/router/pages';
+//引入菜单栏图标
+import {
+  Planet,
+  Music,
+  VideoOne,
+  Fm,
+  Like,
+  Computer,
+  DownloadThree,
+  PlayTwo
+} from '@icon-park/vue-next'
 
-const { menus, currentKey, click } = useMenu()
+//menu接口类型
+interface IMenu {
+  name: string
+  key: string
+  icon: any
+  theme: 'outline' | 'filled' | 'two-tone' | 'multi-color'
+}
+//菜单组类型
+interface IMenus {
+  name: string
+  menus: IMenu[]
+}
+
+//初始化菜单内容
+const menus: IMenus[] = [
+  //菜单栏1
+  {
+    name: '在线音乐',
+    menus: [
+      {
+        name: '推荐',
+        key: Pages.discover,
+        icon: Planet,
+        theme: 'outline'
+      },
+      {
+        name: '音乐馆',
+        key: Pages.library,
+        icon: Music,
+        theme: 'outline'
+      },
+      {
+        name: '视频',
+        key: Pages.mv,
+        icon: VideoOne,
+        theme: 'outline'
+      },
+      {
+        name: '电台',
+        key: Pages.radio,
+        icon: Fm,
+        theme: 'outline'
+      }
+    ]
+  },
+  //菜单栏2
+  {
+    name: '我的音乐',
+    menus: [
+      {
+        name: '我喜欢',
+        key: Pages.like,
+        icon: Like,
+        theme: 'outline'
+      },
+      {
+        name: '本地歌曲',
+        key: Pages.local,
+        icon: Computer,
+        theme: 'outline'
+      },
+      {
+        name: '下载歌曲',
+        key: Pages.download,
+        icon: DownloadThree,
+        theme: 'outline'
+      },
+      {
+        name: '最近播放',
+        key: Pages.recentPlay,
+        icon: PlayTwo,
+        theme: 'outline'
+      }
+    ]
+  }
+]
+
+const route = useRoute()
+const currentKey = ref(route.meta.menu)
+const router = useRouter()
+
+//监视路由元数据
+watch(
+  () => route.meta.menu,
+  (menu) => {
+    currentKey.value = menu
+  }
+)
+
+const click = async (menu: IMenu) => {
+  await router.push({ name: menu.key, replace: true })
+}
 </script>
 
 <style lang="scss" scoped>

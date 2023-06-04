@@ -6,10 +6,13 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import App from './App.vue'
 import router from './router'
+//全局路由钩子
+import './router/interceptor'
 
 //引入tailwind
 import '@/assets/style/theme.scss'
 import '@/assets/style/base.scss'
+import '@/assets/style/element-ui.scss'
 //element message样式
 import 'element-plus/dist/index.css'
 
