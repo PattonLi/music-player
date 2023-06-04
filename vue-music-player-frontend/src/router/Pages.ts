@@ -29,7 +29,7 @@ export const Pages = {
   mvDetail: 'mvDetail',
   /* 播放组件 */
   mvPlayer: 'mvPlayer',
-  player:'player',
+  player: 'player',
   /* 用户中心 */
   userCenter: 'userCenter',
   /* 搜索结果组件 */
