@@ -19,7 +19,7 @@ const router = createRouter({
           meta: {
             menu: 'discover'
           },
-          component: () => import('@/views/discover/BaseDiscover.vue')
+          component: () => import('@/views/discover/AppDiscover.vue')
         },
         {
           //电台组件
@@ -28,16 +28,16 @@ const router = createRouter({
           meta: {
             menu: 'radio'
           },
-          component: () => import('@/views/radio/BaseRadio.vue')
+          component: () => import('@/views/radio/AppRadio.vue')
         },
         {
           //音乐视频组件
           path: 'video',
-          name: 'video',
+          name: 'mv',
           meta: {
-            menu: 'video'
+            menu: 'mv'
           },
-          component: () => import('@/views/mv/BaseMusicVideo.vue')
+          component: () => import('@/views/mv/AppMusicVideo.vue')
         },
         {
           //音乐库组件
@@ -71,16 +71,13 @@ const router = createRouter({
           ]
         },
 
-
         /*--------------------播放器组件 ------------------*/
         {
           //mv player组件
-          path:'mvPlayer',
-          name:'mvPlayer',
-          component:()=>import('@/views/mv-player/AppMvPlayer.vue')
+          path: 'mvPlayer',
+          name: 'mvPlayer',
+          component: () => import('@/views/mv-player/AppMvPlayer.vue')
         }
-
-
       ]
     }
   ]

@@ -41,6 +41,5 @@ onUnmounted(() => {
     togglePlay()
   }, 1000)
 })
-
 </script>
 <style lang="scss"></style>

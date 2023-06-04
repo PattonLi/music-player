@@ -7,6 +7,12 @@ export const Pages = {
   library: 'library', //音乐馆
   mv: 'mv', //视频
   radio: 'radio', //电台
+  like:'like',//我喜欢
+  recentPlay:'recentPlay',//最近播放
+  download:'download',//下载歌曲
+  local:'local',//本地歌曲
+
+
 
 
   picked: 'picked',
@@ -20,7 +26,9 @@ export const Pages = {
   albumDetail: 'albumDetail',
   mvDetail: 'mvDetail',
   /* 播放组件 */
-  mvPlayer:'mvPlayer',
+  mvPlayer: 'mvPlayer',
+  /* 用户中心 */
+  userCenter:'userCenter',
 }
 
 export const PagesAuth = {
