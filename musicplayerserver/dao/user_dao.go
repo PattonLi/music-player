@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"music-player/musicplayerserver/model"
+	"math"
 )
 
 type UserDao struct {
@@ -23,40 +24,46 @@ func (*UserDao) CreateUserTable() {
 	}
 }
 
-// 查询用户信息
-func (*UserDao) GetUserInfo(userID uint) (*model.UserInfo, error) {
-	user := model.UserInfo{}
-	err := DB.First(&user, "id = ?", userID).Error
+
+
+// 根据用户名查询用户信息
+func (*UserDao) GetUserInfoByUsername(username string) ([]model.UserInfo, error) {
+	var user []model.UserInfo
+	err := DB.Find(&user, "username LIKE ?", username).Error
 	if err != nil {
 		err = errors.New("查找不到用户信息！")
 	}
-	return &user, err
+	return user, err
+}
+
+// 根据用户昵称查询用户信息
+func (*UserDao) GetUserInfoByNickname(nickname string) ([]model.UserInfo, error){
+	var user []model.UserInfo
+	err := DB.Find(&user, "nickname LIKE ?", nickname).Error
+	if err != nil {
+		err = errors.New("查找不到用户信息！")
+	}
+	return user, err
 }
 
 // 添加用户
 func (*UserDao) AddUser(user *model.UserInfo) bool {
-	result := DB.Create(user)
-	if result.Error != nil {
-		panic("Insert user error")
-	} else {
-		fmt.Println("Successfully insert user.")
-		return true
-	}
+	DB.Create(user)
+	return true
 }
 
-// 更新用户
-func (*UserDao) UpdateUser(user *model.UserInfo) bool {
+// 修改用户
+func (*UserDao) ModifyUser(user *model.UserInfo) error {
 	result := DB.Save(user)
+	var err error = nil
 	if result.Error != nil {
-		panic("Update error")
-	} else {
-		fmt.Println("Successfully update.")
-		return true
+		err = errors.New("修改失败!")
 	}
+	return err
 }
 
 // 用户验证
-func (*UserDao) UserCheck(u *model.UserInfo) (uint, string, error) {
+func (*UserDao) UserCheck(u *model.UserInfo) (uint,error) {
 	username := u.Username
 	password := u.Password
 	user := model.UserInfo{}
@@ -64,13 +71,25 @@ func (*UserDao) UserCheck(u *model.UserInfo) (uint, string, error) {
 	if err != nil {
 		err = errors.New("用户名不存在或密码错误！")
 	}
-	return user.ID, user.Admin, err
+	return user.ID, err
 }
 
 // 用户名验证
-func (*UserDao) UsernameCheck(u *model.UserInfo) (uint, string, error) {
+func (*UserDao) UsernameCheck(u *model.UserInfo) (uint, error) {
 	username := u.Username
 	user := model.UserInfo{}
 	err := DB.First(&user, "username = ?", username).Error
-	return user.ID, user.Admin, err
+	return user.ID, err
 }
+
+// 返回特定页所有普通用户信息
+func (*UserDao) GetAllUserInfo(page int, pagesize int) ([]model.UserInfo,int64) {
+	var userlist []model.UserInfo
+	var totalrecord int64
+	offset := (page-1)*pagesize
+	DB.Offset(offset).Limit(pagesize).Find(&userlist).Offset(-1).Limit(-1).Count(&totalrecord)
+	totalPage := int64(math.Ceil(float64(totalrecord)/float64(pagesize)))
+	return userlist,totalPage
+}
+
+
