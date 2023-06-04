@@ -30,9 +30,6 @@ func Posts(r *gin.Engine) {
 			"data": []gin.H{
 				{
 					"user_id":    user.ID,
-					"created_at": user.CreatedAt,
-					"updated_at": user.UpdatedAt,
-					"deleted_at": user.DeletedAt,
 					"username":   user.Username,
 					"gender":     user.Gender,
 					"age":        user.Age,
@@ -46,27 +43,40 @@ func Posts(r *gin.Engine) {
 
 	//修改用户信息
 	r.POST("/User/modifyInfo", func(c *gin.Context) {
-
+		err := controller.NewUserController().ModifyUserInfoHandler(c)
+		if err != nil{
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
 	})
 
-	//手机号登录（未实现）
-	r.POST("/login", func(c *gin.Context) {
-		username, userID, err := controller.NewUserController().UserLoginHandler(c)
-		tokenString := ""
+	
+
+	//用户手机号注册
+	r.POST("/register",func(c *gin.Context){
+		userID, token, err := controller.NewUserController().UserRegisterHandler(c)
 		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error(), "token": tokenString, "userid": userID})
+			c.JSON(http.StatusOK,gin.H{
+				"code":300,
+				"userId":nil,
+				"token":nil,
+			})
 		} else {
-			tokenString, err = utils.CreateToken(username, "false")
-			if err != nil {
-				c.JSON(http.StatusBadRequest, gin.H{"message": err.Error(), "token": tokenString, "adminid": userID})
-			} else {
-				c.JSON(http.StatusOK, gin.H{"message": "登录成功！", "token": tokenString, "userid": userID})
-			}
+			c.JSON(http.StatusOK,gin.H{
+				"code":200,
+				"userId":userID,
+				"token":token,
+			})
 		}
 	})
 
 	//管理员登录（未修改）
-	r.POST("/admin/login", func(c *gin.Context) {
+	/*r.POST("/admin/login", func(c *gin.Context) {
 		adminname, adminID, err := controller.NewAdminUserController().AdminLoginHandler(c)
 		tokenString := ""
 		if err != nil {
@@ -79,7 +89,7 @@ func Posts(r *gin.Engine) {
 				c.JSON(http.StatusOK, gin.H{"message": "登录成功！", "token": tokenString, "adminid": adminID})
 			}
 		}
-	})
+	})*/
 
 	//添加歌曲
 	r.POST("/admin/addsong", func(c *gin.Context) {
@@ -102,7 +112,7 @@ func GETs(r *gin.Engine) {
 	r.GET("/User/pageAllInfo", func(c *gin.Context) {
 		users,totalPage := controller.NewUserController().AllUserInfoHandler(c)
 		c.JSON(http.StatusOK, gin.H{
-			"code": "200",
+			"code": 200,
 			"data": users,
 			"totalPage":totalPage,
 			},
@@ -114,13 +124,13 @@ func GETs(r *gin.Engine) {
 		users,err := controller.NewUserController().UserInfoHandler(c)
 		if err != nil{
 			c.JSON(http.StatusOK, gin.H{
-				"code": "300",
-				"data": users,
+				"code": 300,
+				"data": nil,
 				},
 			)
 		} else {
 			c.JSON(http.StatusOK, gin.H{
-				"code": "200",
+				"code": 200,
 				"data": users,
 				},
 			)
@@ -129,7 +139,16 @@ func GETs(r *gin.Engine) {
 
 	//删除用户信息
 	r.GET("/User/deleteInfo", func(c *gin.Context) {
-
+		err := controller.NewUserController().DeleteUserInfoHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
 	})
 
 	//获得所有管理员信息
@@ -143,6 +162,46 @@ func GETs(r *gin.Engine) {
 				},
 			},
 		})
+	})
+
+	//用户手机号登录
+	r.GET("/login/cellphone", func(c *gin.Context) {
+		userID, token, err := controller.NewUserController().UserLoginHandler(c)
+		if err == nil {
+			c.JSON(http.StatusOK,gin.H{
+				"code":200,
+				"userId":userID,
+				"token":token,
+			})
+		} else if err.Error() == "手机号输入错误！"{
+			c.JSON(http.StatusOK,gin.H{
+				"code":300,
+				"userId":nil,
+				"token":nil,
+			})
+		} else if err.Error() == "密码输入错误！"{
+			c.JSON(http.StatusOK,gin.H{
+				"code":301,
+				"userId":nil,
+				"token":nil,
+			})
+		}
+	})
+
+	//获取登录用户信息
+	authorized.GET("/user/profile", func(c *gin.Context){
+		userprofile, err := controller.NewUserController().UserProfileHandler(c)
+		if err != nil{
+			c.JSON(http.StatusOK,gin.H{
+				"code":300,
+				"profile":nil,
+			})
+		} else {
+			c.JSON(http.StatusOK,gin.H{
+				"code":200,
+				"profile":userprofile,
+			})
+		}
 	})
 
 	r.GET("/song/lyric", func(c *gin.Context) {

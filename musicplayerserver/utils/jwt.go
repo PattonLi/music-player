@@ -14,8 +14,7 @@ var jwtKey = []byte("1234567890")
 
 // token载荷
 type Claims struct {
-	Username string `json:"username"`
-	Admin    string `json:"admin"`
+	ID 	 int `json:"id"`
 	jwt.StandardClaims
 }
 
@@ -23,9 +22,9 @@ type Claims struct {
 var expireTime = time.Now().Add(time.Minute * 30)
 
 // 生成token
-func CreateToken(username string, admin string) (string, error) {
+func CreateToken(ID int) (string, error) {
 	claims := &Claims{
-		Username: username,
+		ID: ID,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
 			Issuer:    "test.com",
@@ -69,7 +68,7 @@ func AuthMiddleware(c *gin.Context) {
 	}
 	// 判断Token是否有效
 	if claims, ok := token.Claims.(*Claims); ok && token.Valid {
-		c.Set("username", claims.Username)
+		c.Set("id", claims.ID)
 		c.Next()
 	} else {
 		c.JSON(http.StatusOK, gin.H{
