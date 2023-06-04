@@ -20,6 +20,7 @@ export const Pages = {
   playlistCata: 'playlistCata',
   digitalAlbum: 'digitalAlbum',
   phoneOnly: 'phoneOnly',
+  libRadio:'libRadio',
 
   /* 详情页 */
   artistDetail: 'artistDetail',

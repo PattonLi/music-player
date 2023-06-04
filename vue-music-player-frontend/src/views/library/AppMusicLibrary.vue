@@ -37,7 +37,7 @@ const menus: Menu[] = [
   },
   {
     label: '有声电台',
-    name: Pages.radio
+    name: Pages.libRadio
   },
   {
     label: '排行',

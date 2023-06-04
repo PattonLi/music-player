@@ -58,7 +58,7 @@ const router = createRouter({
             {
               //电台组件
               path: 'radio',
-              name: Pages.radio,
+              name: Pages.libRadio,
               component: () => import('@/views/radio/AppRadio.vue')
             },
             {
