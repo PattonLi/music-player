@@ -15,7 +15,7 @@ router.beforeEach((to, from, next) => {
   //如果访问未定义界面
   if (to.name == undefined || !(to.name in Pages)) {
     AlertRouterWarning('You are visiting a page that is not exsit!')
-    next({ name: 'discover' })
+    next({ name: 'page404' })
   }
   //未登录
   else if (!isLogin) {

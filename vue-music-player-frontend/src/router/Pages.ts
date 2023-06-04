@@ -20,7 +20,7 @@ export const Pages = {
   playlistCata: 'playlistCata',
   digitalAlbum: 'digitalAlbum',
   phoneOnly: 'phoneOnly',
-  libRadio:'libRadio',
+  libRadio: 'libRadio',
 
   /* 详情页 */
   artistDetail: 'artistDetail',
@@ -29,10 +29,16 @@ export const Pages = {
   mvDetail: 'mvDetail',
   /* 播放组件 */
   mvPlayer: 'mvPlayer',
+  player:'player',
   /* 用户中心 */
   userCenter: 'userCenter',
   /* 搜索结果组件 */
-  searchResult:'searchResult'
+  searchResult: 'searchResult',
+  /* 404page */
+  page404: 'page404',
+  contact: 'contact',
+  /* vip pay */
+  vip: 'vip'
 }
 
 export const PagesAuth = {

@@ -132,14 +132,61 @@ const router = createRouter({
           name: Pages.mvPlayer,
           component: () => import('@/views/mv-player/AppMvPlayer.vue')
         },
+        {
+          //music player组件
+          path: 'player',
+          name: Pages.player,
+          component: () => import('@/views/player/AppPlayer.vue')
+        },
         /*--------------------用户中心组件 ------------------*/
         {
-          //mv player组件
           path: 'userCenter',
           name: Pages.userCenter,
           component: () => import('@/views/user-center/AppUserCenter.vue')
         },
+        /*--------------------付款界面------------------*/
+        {
+          path: 'vip/pay',
+          name: Pages.vip,
+          component: () => import('@/views/user-center/VipPay.vue')
+        },
+        /*--------------------我喜欢------------------*/
+        {
+          path: 'like',
+          name: Pages.like,
+          component: () => import('@/views/like/AppLike.vue')
+        },
+        /*--------------------本地歌曲------------------*/
+        {
+          path: 'local',
+          name: Pages.local,
+          component: () => import('@/views/local/AppLocalSongs.vue')
+        },
+        /*--------------------下载歌曲------------------*/
+        {
+          path: 'download',
+          name: Pages.download,
+          component: () => import('@/views/download/AppDownload.vue')
+        },
+        /*--------------------最近播放------------------*/
+        {
+          path: 'recentPlay',
+          name: Pages.recentPlay,
+          component: () => import('@/views/recent-play/AppRecentPlay.vue')
+        }
       ]
+    },
+    /*--------------------404 ------------------*/
+    {
+      path: '/page404',
+      name: 'page404',
+      component: () => import('@/views/404page/PageNotFound.vue')
+    },
+    /*--------------------404 contact------------------*/
+    {
+      path: '/page404/contact',
+      name: 'contact',
+      component: () => import('@/views/404page/ContactPage.vue')
     }
   ]
 })
