@@ -1,4 +1,4 @@
-import { ElMessage, ElNotification } from 'element-plus'
+import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 
 const AlertSuccess = (msg: string) => {
   ElMessage({
@@ -44,4 +44,20 @@ const AlertRouterWarning = (msg: string) => {
   })
 }
 
-export { AlertError, AlertSuccess, AlertAxiosError, AlertRouterInfo, AlertRouterWarning }
+const AlertMsgWarning = (msg: string) => {
+  return ElMessageBox.confirm(msg, 'Warning', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning',
+    center: false
+  })
+}
+
+export {
+  AlertError,
+  AlertSuccess,
+  AlertAxiosError,
+  AlertRouterInfo,
+  AlertRouterWarning,
+  AlertMsgWarning
+}
