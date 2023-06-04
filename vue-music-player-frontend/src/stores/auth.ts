@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { UserProfile, registerUser } from '@/models/user'
 import { apiLogin, apiLoginStatus, apiRegister } from '@/utils/api/auth'
-import { AlertError, AlertSuccess } from '@/utils/alert/AlertPop'
+import { AlertError, AlertSuccess, AlertMsgWarning } from '@/utils/alert/AlertPop'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -65,6 +65,18 @@ export const useAuthStore = defineStore('auth', {
       } else {
         AlertError('获取用户信息失败')
       }
+    },
+
+    //退出登录
+    async logout() {
+      AlertMsgWarning('确定要退出登录吗？')
+        .then(() => {
+          AlertSuccess('操作成功')
+          this.isLogin = false
+          this.userId = 0
+          this.token = ''
+        })
+        .catch(() => {})
     }
   },
   //持久化

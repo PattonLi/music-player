@@ -29,7 +29,7 @@
 <script setup lang="ts">
 //图标组件
 import IconPark from '@/components/common/IconPark.vue'
-import { Pages } from '@/router/pages';
+import { Pages } from '@/router/pages'
 //引入菜单栏图标
 import {
   Planet,
@@ -39,7 +39,7 @@ import {
   Like,
   Computer,
   DownloadThree,
-  PlayTwo
+  Time
 } from '@icon-park/vue-next'
 
 //menu接口类型
@@ -80,7 +80,7 @@ const menus: IMenus[] = [
         theme: 'outline'
       },
       {
-        name: '电台',
+        name: '雷达',
         key: Pages.radio,
         icon: Fm,
         theme: 'outline'
@@ -112,7 +112,7 @@ const menus: IMenus[] = [
       {
         name: '最近播放',
         key: Pages.recentPlay,
-        icon: PlayTwo,
+        icon: Time,
         theme: 'outline'
       }
     ]
