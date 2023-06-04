@@ -4,9 +4,8 @@ import (
 	"fmt"
 	"music-player/musicplayerserver/controller"
 	"music-player/musicplayerserver/model"
-	"music-player/musicplayerserver/utils"
+	"music-player/musicplayerserver/utils/jwt"
 	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -56,6 +55,20 @@ func Posts(r *gin.Engine) {
 			})
 		}
 	})
+	
+	//修改用户头像上传照片
+	authorized.POST("/User/modifyUploadPic", func(c *gin.Context){
+		err := controller.NewUserController().UploadUserPicHandler(c)
+		if err != nil{
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
 
 	//修改管理员信息
 	r.POST("/adminUser/modifyInfo", func(c *gin.Context) {
@@ -84,6 +97,7 @@ func Posts(r *gin.Engine) {
 			})
 		}
 	})
+
 
 	//用户手机号注册
 	r.POST("/register",func(c *gin.Context){

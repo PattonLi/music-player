@@ -4,8 +4,10 @@ import (
 	"music-player/musicplayerserver/model"
 	"music-player/musicplayerserver/service"
 	"strconv"
-	"music-player/musicplayerserver/utils"
+	"music-player/musicplayerserver/utils/jwt"
 	"github.com/gin-gonic/gin"
+	"errors"
+	"strings"
 )
 
 type UserController struct {
@@ -99,4 +101,21 @@ func (usc *UserController) UserRegisterHandler(c *gin.Context) (int, string, err
 		token,_ = utils.CreateToken(userID)
 	}
 	return userID, token, err
+}
+
+//上传用户头像
+func (usc *UserController) UploadUserPicHandler(c *gin.Context) error{
+	fileHeader, err := c.FormFile("file")
+    if err != nil {
+		err = errors.New("照片上传失败！")
+        return err
+    }
+	if !strings.HasPrefix(fileHeader.Header.Get("Content-Type"), "image/") {
+        err = errors.New("上传文件非图片！")
+        return err
+    }
+	temp,_ := c.Get("id")
+	userID,_ := temp.(int)
+	err = usc.userservice.UploadUserPic(userID, fileHeader)
+	return err
 }
