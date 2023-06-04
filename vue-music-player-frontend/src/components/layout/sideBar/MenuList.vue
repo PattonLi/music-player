@@ -29,7 +29,7 @@
 <script setup lang="ts">
 //图标组件
 import IconPark from '@/components/common/IconPark.vue'
-import { Pages } from '@/router/pages';
+import { Pages } from '@/router/pages'
 //引入菜单栏图标
 import {
   Planet,
