@@ -4,14 +4,18 @@ import {
   apiGetPersonalizeArtists,
   apiGetPersonalizeSongs
 } from '@/utils/api/personalized'
+import {apiTopListDetail} from '@/utils/api/toplist'
 import type { PersonalizedSong, PersonalizedAlbum, PersonalizedArtist } from '@/models/personalized'
 import { AlertError } from '@/utils/alert/AlertPop'
+import type { TopList } from '@/models/toplist'
 
 export const useMusicStore = defineStore('music', {
   state: () => ({
     personalizedSongs: {} as PersonalizedSong[],
     personalizedAlbums: {} as PersonalizedAlbum[],
-    personalizedArtists: {} as PersonalizedArtist[]
+    personalizedArtists: {} as PersonalizedArtist[],
+
+    topListData : <TopList[]>([])
   }),
   getters: {},
   actions: {
@@ -51,6 +55,11 @@ export const useMusicStore = defineStore('music', {
           }
           break
       }
+    },
+
+    async updateTopListData(){
+      if (this.topListData.length) return;
+      this.topListData = await apiTopListDetail()
     }
   }
 })

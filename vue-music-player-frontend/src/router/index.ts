@@ -51,7 +51,8 @@ const router = createRouter({
           path: 'library',
           name: Pages.library,
           meta: {
-            menu: 'library'
+            menu: 'library',
+            keepAlive: true 
           },
           component: () => import('@/views/library/AppMusicLibrary.vue'),
           children: [
@@ -149,6 +150,7 @@ const router = createRouter({
           //music player组件
           path: 'player',
           name: Pages.player,
+          meta:{keepAlive: true},
           component: () => import('@/views/player/AppPlayer.vue')
         },
         /*--------------------用户中心组件 ------------------*/
@@ -176,6 +178,7 @@ const router = createRouter({
         {
           path: 'local',
           name: Pages.local,
+          meta:{keepAlive: true},
           component: () => import('@/views/local/AppLocalSongs.vue')
         },
         /*--------------------下载歌曲------------------*/
