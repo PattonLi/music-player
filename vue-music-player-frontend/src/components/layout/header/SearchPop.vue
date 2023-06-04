@@ -15,12 +15,12 @@
         v-model="searchKeyword"
         @focus="showSearchView = true"
         @focusout="showSearchView = false"
-        class="custom-input"
+        class="custom-input h-9"
       />
 
       <!-- 搜索结果显示 -->
     </template>
-    <div class="h-80">
+    <div class="h-96">
       <el-scrollbar>
         <div class="pb-2.5">
           <!-- 显示热搜或搜索结果 -->

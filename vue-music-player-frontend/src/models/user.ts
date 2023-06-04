@@ -1,7 +1,7 @@
 export interface UserProfile {
   nickname: string
   username: string
-  photoUrl: string
+  picUrl: string
   phone: string
   email: string
   age: string

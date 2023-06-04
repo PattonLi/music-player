@@ -1,10 +1,52 @@
 <template>
-  <el-empty :image-size="250" class="mt-14">
-    <el-text class="mx-1 mt-5" size="large">本页面正在开发中</el-text><br />
-    <el-button type="primary" class="mt-3" @click="router.push('/discover')">回到首页</el-button>
-  </el-empty>
+  <MyTitle title="推荐歌手" />
+  <div
+    class="mt-4 mx-6 mb-16 grid grid-flow-row gap-x-20 cursor-pointer grid-cols-3 2xl:grid-cols-5 gap-y-20"
+  >
+    <!-- 循环 -->
+    <div
+      v-for="(item, index) in _.sampleSize(personalizedArtists, 15)"
+      :key="index"
+      class="transition-all flex flex-col items-center"
+      @click="router.push({ name: 'artist', query: { id: item.artistId } })"
+    >
+      <!-- 第一列图片 -->
+      <img
+        :src="item.picUrl"
+        alt="歌曲图片"
+        class="w-50 h-50 object-cover rounded-full flex-shrink-0 cover-play-image"
+      />
+      <!-- 第二列文字信息 -->
+      <div class="px-3 pt-1 truncate flex flex-col">
+        <div class="text-xl truncate flex justify-center">
+          {{ item.artist }}
+        </div>
+        <div class="text-xl text-dc truncate flex justify-center">
+          {{ item.location }}
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
+import MyTitle from '@/components/common/MyTitle.vue'
+import { useMusicStore } from '@/stores/music'
+import _ from 'lodash'
+
+const { personalizedArtists } = toRefs(useMusicStore())
+const { UpdatePersonalize } = useMusicStore()
 const router = useRouter()
+
+onMounted(async () => {
+  await UpdatePersonalize(3)
+})
 </script>
+
+<style lang="scss" scoped>
+.cover-play-image {
+  @apply transition-all;
+  //位置移动
+  @apply hover:-translate-y-3;
+}
+</style>

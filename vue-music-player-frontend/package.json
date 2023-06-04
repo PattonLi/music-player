@@ -14,7 +14,7 @@
   "dependencies": {
     "@icon-park/vue-next": "^1.4.2",
     "axios": "^1.4.0",
-    "dayjs": "^1.11.7",
+    "dayjs": "^1.11.8",
     "element-plus": "^2.3.4",
     "lodash": "^4.17.21",
     "music-metadata": "^8.1.4",
