@@ -3,8 +3,10 @@ package router
 import (
 	"fmt"
 	"music-player/musicplayerserver/controller"
-	"net/http"
+	"music-player/musicplayerserver/model"
 	"music-player/musicplayerserver/utils"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -55,7 +57,33 @@ func Posts(r *gin.Engine) {
 		}
 	})
 
-	
+	//修改管理员信息
+	r.POST("/adminUser/modifyInfo", func(c *gin.Context) {
+		err := controller.NewAdminUserController().ModifyAdminUserInfoHandler(c)
+		if err != nil{
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
+
+	//添加管理员信息
+	r.POST("/adminUser/addInfo", func(c *gin.Context) {
+		err := controller.NewAdminUserController().AddAdminUserHandler(c)
+		if err != nil{
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
 
 	//用户手机号注册
 	r.POST("/register",func(c *gin.Context){
@@ -155,14 +183,47 @@ func GETs(r *gin.Engine) {
 	r.GET("/adminUser/allInfo", func(c *gin.Context) {
 		adminusers := controller.NewAdminUserController().AllAdminInfoHandler()
 		c.JSON(http.StatusOK, gin.H{
-			"code": "200",
-			"data": []gin.H{
-				{
-					"adminusers": adminusers,
-				},
-			},
+			"code": 200,
+			"data": adminusers,
 		})
 	})
+
+	//获得特定管理员信息
+	r.GET("/adminUser/theInfo", func(c *gin.Context) {
+		adminuser,err := controller.NewAdminUserController().AdminInfoHandler(c)
+		if err != nil{
+			c.JSON(http.StatusOK, struct{
+				*model.AdminUserInfo
+				Code int `json:"code"`
+			}{
+				adminuser,
+				300,
+			})
+		} else {
+			c.JSON(http.StatusOK, struct{
+				*model.AdminUserInfo
+				Code int `json:"code"`
+			}{
+				adminuser,
+				200,
+			})
+		}
+	})
+
+	//删除管理员信息
+	r.GET("/adminUser/deleteInfo", func(c *gin.Context) {
+		err := controller.NewAdminUserController().DeleteAdminUserInfoHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
+
 
 	//用户手机号登录
 	r.GET("/login/cellphone", func(c *gin.Context) {
