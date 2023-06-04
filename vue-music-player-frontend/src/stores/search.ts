@@ -24,22 +24,21 @@ export const useSearchStore = defineStore('search', {
   actions: {
     async updateSuggest() {
       const res = await apiSearchSuggest(this.searchKeyword)
-      if(res.code==200){
+      if (res.code == 200) {
         this.suggestData = {
-          albums:res.albums,
-          artists:res.artists,
-          songs:res.songs,
-          users:res.users
-        } 
-      }else{
+          albums: res.albums,
+          artists: res.artists,
+          songs: res.songs
+        }
+      } else {
         AlertError('获取热搜失败')
       }
     },
     async updateSearchHot() {
       const res = await apiSearchHotDetail()
-      if(res.code==200){
+      if (res.code == 200) {
         this.searchHotData = res.searchHot
-      }else{
+      } else {
         AlertError('获取搜索失败')
       }
     }

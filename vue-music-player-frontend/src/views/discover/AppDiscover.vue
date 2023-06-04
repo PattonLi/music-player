@@ -1,11 +1,11 @@
 <template>
-  <div class="px-5">
-    <h1 class="text-3xl font-bold pt-8 pb-4">推荐</h1>
-    <MySwiper :per-page="3" />
+  <div class="px-10">
+    <h1 class="text-3xl font-bold pt-4 pb-4">推荐</h1>
+    <MySwiper />
     <PersonalizedSong />
     <PersonalizedAlbum />
     <PersonalizedArtist />
-    <Mv />
+    <PersonalizedMv />
   </div>
 </template>
 
@@ -13,6 +13,7 @@
 import PersonalizedSong from '@/views/discover/PersonalizedSong.vue'
 import PersonalizedAlbum from '@/views/discover/PersonalizedAlbum.vue'
 import PersonalizedArtist from '@/views/discover/PersonalizedArtist.vue'
+import PersonalizedMv from '@/views/discover/PersonalizedMv.vue'
 import MySwiper from '@/components/common/MySwiper.vue'
 </script>
 

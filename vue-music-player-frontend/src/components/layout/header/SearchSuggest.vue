@@ -1,7 +1,7 @@
 <template>
   <div v-if="suggestData">
     <!-- 主体 -->
-    <div v-for="(types, index) in {0:'songs',1:'artists',2:'albums',3:'users'}" :key="index">
+    <div v-for="(types, index) in { 0: 'songs', 1: 'artists', 2: 'albums' }" :key="index">
       <!-- 推荐搜索条目是什么类型 -->
       <div class="pt-2 pb-1.5 px-2.5">{{ getTitle(types) }}</div>
 
@@ -25,7 +25,7 @@
           v-for="item in suggestData.albums"
           :key="item.albumId"
           class="suggestItem hover-bg-main"
-          @click="jump('album', item.albumId)"
+          @click="jump(Pages.albumDetail, item.albumId)"
         >
           <span class="text-emerald-500">{{ item.album }}</span>
           <span class="pl-1"> - {{ item.artist }}</span>
@@ -38,14 +38,13 @@
           v-for="item in suggestData.artists"
           :key="item.artistId"
           class="suggestItem hover-bg-main"
-          @click="jump('artist', item.artistId)"
+          @click="jump(Pages.artistDetail, item.artistId)"
         >
           <span class="text-emerald-500">{{ item.artistId }}</span>
           <span class="text-emerald-500 ml-2">{{ item.songSize }}</span>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -53,8 +52,8 @@
 import { storeToRefs } from 'pinia'
 import { useSearchStore } from '@/stores/search'
 import { usePlayerStore } from '@/stores/player'
-import { routerPush } from '@/utils/navigator/router'
-
+import { routerPushByNameId } from '@/utils/navigator/router'
+import { Pages } from '@/router/pages'
 const { suggestData, showSearchView } = storeToRefs(useSearchStore())
 const { play } = usePlayerStore()
 
@@ -74,7 +73,7 @@ const getTitle = (name: string) => {
 
 //跳转
 const jump = (name: string, id: number) => {
-  routerPush(name, id)
+  routerPushByNameId(name, id)
   showSearchView.value = false
 }
 </script>

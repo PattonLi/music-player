@@ -1,0 +1,11 @@
+/* 自定义基本样式 */
+
+//全局el组件样式
+.el-tabs__nav-wrap::after {
+  height: 0 !important;
+}
+
+//标签组件外边距
+.el-tabs__header {
+  @apply m-0;
+}
