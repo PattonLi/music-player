@@ -344,8 +344,13 @@ const confirmAdd = () => {
   addDialog.visable = false
 }
 
-const changePage = () => {
-
+const changePage = (newPage: number) => {
+  state.currentPage = newPage
+  getCustomerInfo(state.currentPage, state.pageSize).then((data) => {
+    state.tableData = data.data
+    state.totals = data.totals
+    console.log(state.totals)
+  })
 }
 
 const mhandleAvatarSuccess: UploadProps['onSuccess'] = (
