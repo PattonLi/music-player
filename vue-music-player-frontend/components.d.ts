@@ -17,6 +17,7 @@ declare module '@vue/runtime-core' {
     AppResgister: typeof import('./src/components/layout/auth/AppResgister.vue')['default']
     CommentItem: typeof import('./src/components/common/CommentItem.vue')['default']
     DarkMode: typeof import('./src/components/layout/header/DarkMode.vue')['default']
+    ElAffix: typeof import('element-plus/es')['ElAffix']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -34,6 +35,8 @@ declare module '@vue/runtime-core' {
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSlider: typeof import('element-plus/es')['ElSlider']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
     ElText: typeof import('element-plus/es')['ElText']
     IconPark: typeof import('./src/components/common/IconPark.vue')['default']
     MenuList: typeof import('./src/components/layout/sideBar/MenuList.vue')['default']
@@ -53,5 +56,8 @@ declare module '@vue/runtime-core' {
     SearchSuggest: typeof import('./src/components/layout/header/SearchSuggest.vue')['default']
     SongItem: typeof import('./src/components/common/SongItem.vue')['default']
     UserInfo: typeof import('./src/components/layout/header/UserInfo.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
