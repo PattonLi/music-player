@@ -34,15 +34,12 @@ declare module '@vue/runtime-core' {
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSlider: typeof import('element-plus/es')['ElSlider']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
-    ElTabPane: typeof import('element-plus/es')['ElTabPane']
-    ElTabs: typeof import('element-plus/es')['ElTabs']
     ElText: typeof import('element-plus/es')['ElText']
     IconPark: typeof import('./src/components/common/IconPark.vue')['default']
     MenuList: typeof import('./src/components/layout/sideBar/MenuList.vue')['default']
     MyCardSwiper: typeof import('./src/components/common/MyCardSwiper.vue')['default']
     MyCover: typeof import('./src/components/common/MyCover.vue')['default']
     MySwiper: typeof import('./src/components/common/MySwiper.vue')['default']
-    MySwiperCard: typeof import('./src/components/common/MySwiperCard.vue')['default']
     MyTitle: typeof import('./src/components/common/MyTitle.vue')['default']
     PlayerAction: typeof import('./src/components/layout/footer/PlayerAction.vue')['default']
     PlayerController: typeof import('./src/components/layout/footer/PlayerController.vue')['default']
@@ -56,8 +53,5 @@ declare module '@vue/runtime-core' {
     SearchSuggest: typeof import('./src/components/layout/header/SearchSuggest.vue')['default']
     SongItem: typeof import('./src/components/common/SongItem.vue')['default']
     UserInfo: typeof import('./src/components/layout/header/UserInfo.vue')['default']
-  }
-  export interface ComponentCustomProperties {
-    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

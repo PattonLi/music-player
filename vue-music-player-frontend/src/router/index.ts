@@ -71,6 +71,15 @@ const router = createRouter({
           ]
         },
 
+        /*--------------------搜索结果组件 ------------------*/
+
+        {
+          //搜索结果页
+          path:'search/result',
+          name:'searchResult',
+          component:()=>import('@/views/search-result/AppSearchResult.vue')
+        },
+
         /*--------------------播放器组件 ------------------*/
         {
           //mv player组件
