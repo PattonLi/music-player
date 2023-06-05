@@ -1,10 +1,61 @@
 <template>
-  <el-empty :image-size="250" class="mt-14">
-    <el-text class="mx-1 mt-5" size="large">本页面正在开发中</el-text><br />
-    <el-button type="primary" class="mt-3" @click="router.push('/discover')">回到首页</el-button>
-  </el-empty>
+  <!-- 主体界面 -->
+  <div class="search-detail px-7 pt-3">
+    <!-- 分页tab栏 -->
+    <el-tabs v-model="tab" class="mt-3">
+      <!-- 歌曲搜索结果 -->
+      <el-tab-pane lazy label="歌曲" name="song">
+        <SongSearchResult />
+      </el-tab-pane>
+      <!-- 专辑搜索结果 -->
+      <el-tab-pane lazy label="专辑" name="album">
+        <AlbumSearchResult />
+      </el-tab-pane>
+      <!-- 歌手搜索结果 -->
+      <el-tab-pane lazy label="歌手" name="artist">
+        <ArtistSearchResult />
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script setup lang="ts">
-const router = useRouter()
+import AlbumSearchResult from './AlbumSearchResult.vue'
+import SongSearchResult from './SongSearchResult.vue'
+import ArtistSearchResult from './ArtistSearchResult.vue'
+import { useSearchStore } from '@/stores/search'
+import { storeToRefs } from 'pinia'
+
+const { pageData } = storeToRefs(useSearchStore())
+const { clearPageData } = useSearchStore()
+
+//路由信息
+const route = useRoute()
+const keyWord: string = String(route.query.keyWord)
+const tab = ref('song')
+
+onMounted(() => {
+  pageData.value[0].keyWord = keyWord
+  pageData.value[1].keyWord = keyWord
+  pageData.value[2].keyWord = keyWord
+})
+
+onUnmounted(() => {
+  clearPageData()
+})
 </script>
+<style lang="scss">
+.search-detail {
+  .el-tabs__nav-wrap::after {
+    height: 0;
+  }
+
+  .el-tabs__header {
+    @apply m-0;
+
+    .el-tabs__item {
+      @apply text-base;
+    }
+  }
+}
+</style>
