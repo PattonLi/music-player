@@ -26,10 +26,10 @@ func (s *SongService) GetSongLyric(id string) (string, error) {
 }
 
 // 获取歌曲详情
-func (s *SongService) GetSongDetail(id string) (string, string, error) {
+/*func (s *SongService) GetSongDetail(id string) (string, string, error) {
 	songname, singer, err := s.songdao.GetSongInfo(id)
 	return songname, singer, err
-}
+}*/
 
 // 添加歌曲
 func (s *SongService) AddSong(song model.SongInfo) bool {
