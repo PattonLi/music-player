@@ -18,7 +18,7 @@ onMounted(() => {
       tagName: 'ACG'
     },
     {
-      tagName: 'ACG'
+      tagName: '古风'
     },
     {
       tagName: 'ACG'

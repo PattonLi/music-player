@@ -51,8 +51,7 @@ const router = createRouter({
           path: 'library',
           name: Pages.library,
           meta: {
-            menu: 'library',
-            keepAlive: true
+            menu: 'library'
           },
           component: () => import('@/views/library/AppMusicLibrary.vue'),
           children: [

@@ -57,74 +57,28 @@
 </template>
 
 <script setup lang="ts">
-import type { Artist } from '@/models/artist'
-import { apiArtistList } from '@/utils/api/artist'
 import { routerPushByNameId } from '@/utils/navigator/router'
 import { Pages } from '@/router/pages'
 import { ElDivider } from 'element-plus'
-import { AlertError } from '@/utils/alert/AlertPop'
-
+import { useArtistStore } from '@/stores/artist'
+import { storeToRefs } from 'pinia'
 const spacer = h(ElDivider, { direction: 'vertical' })
-const artists = ref<Artist[]>([])
-const pageData = reactive({
-  page: 0,
-  pageSize: 10,
-  pageTotal: 1,
 
-  //是否显示加载动画
-  loading: false,
-  noMore: false,
-  //查询信息
-  firstLetter: '0',
-  type: 0,
-  location: 0
-})
-
-//分页查询
-const pageGet = async () => {
-  pageData.loading = true
-  const res = await apiArtistList(
-    pageData.pageSize,
-    pageData.page,
-    pageData.firstLetter,
-    pageData.type,
-    pageData.location
-  )
-  if (res.code == 200) {
-    //判断是否已经没有页数了
-    if (pageData.page >= pageData.pageTotal) {
-      //所有数据已经取完
-      pageData.noMore = true
-      return
-    }
-    if (pageData.page == 0) {
-      //初始时设置数据
-      artists.value = res.artists
-    } else {
-      //否则push
-      artists.value.push(...res.artists)
-    }
-    //当前位置页数加1
-    pageData.page++
-    //更新pageSize
-    pageData.pageTotal = res.pageTotal
-  } else {
-    AlertError('抱歉，没有符合筛选条件的歌手！')
-  }
-  //加载动画
-  pageData.loading = false
-}
+const { pageData, artists } = storeToRefs(useArtistStore())
+const { pageGet } = useArtistStore()
 
 onMounted(async () => {
-  pageGet()
+  if (pageData.value.page == 0) {
+    pageGet()
+  }
 })
 
 const optionChange = (keyName: string, keyValue: number | string) => {
-  pageData.page = 0
-  pageData.pageTotal = 0
-  if (keyName === 'location') pageData.location = keyValue as number
-  if (keyName === 'type') pageData.type = keyValue as number
-  if (keyName === 'firstLetter') pageData.firstLetter = keyValue as string
+  pageData.value.page = 0
+  pageData.value.pageTotal = 0
+  if (keyName === 'location') pageData.value.location = keyValue as number
+  if (keyName === 'type') pageData.value.type = keyValue as number
+  if (keyName === 'firstLetter') pageData.value.firstLetter = keyValue as string
   pageGet()
 }
 

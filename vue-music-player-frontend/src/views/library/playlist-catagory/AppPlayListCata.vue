@@ -36,56 +36,18 @@
 
 <script setup lang="ts">
 import HotPlayList from '@/views/library/playlist-catagory/HotPlayList.vue'
-import type { PlayList } from '@/models/playlist'
-import { apiHotPlayList } from '@/utils/api/playlist'
 import MyCover from '@/components/common/MyCover.vue'
 import { Pages } from '@/router/pages'
 import { routerPushByNameId } from '@/utils/navigator/router'
-import { AlertError } from '@/utils/alert/AlertPop'
+import { usePlayListStore } from '@/stores/playlist'
+import { storeToRefs } from 'pinia'
 
-const playLists = ref<PlayList[]>([])
-
-const pageData = reactive({
-  page: 0,
-  pageSize: 10,
-  pageTotal: 1,
-
-  //是否显示加载动画
-  loading: false,
-  noMore: false
-})
-
-//分页查询
-const pageGet = async () => {
-  pageData.loading = true
-  const res = await apiHotPlayList(pageData.pageSize, pageData.page)
-  if (res.code == 200) {
-    //判断是否已经没有页数了
-    if (pageData.page >= pageData.pageTotal) {
-      //所有数据已经取完
-      pageData.noMore = true
-      return
-    }
-    if (pageData.page == 0) {
-      //初始时设置数据
-      playLists.value = res.playlist
-    } else {
-      //否则push
-      playLists.value.push(...res.playlist)
-    }
-    //当前位置页数加1
-    pageData.page++
-    //更新pageSize
-    pageData.pageTotal = res.pageTotal
-  } else {
-    AlertError('抱歉，没有找到歌单！')
-  }
-  //加载动画
-  pageData.loading = false
-}
-
+const { pageData, playLists } = storeToRefs(usePlayListStore())
+const { pageGet } = usePlayListStore()
 onMounted(async () => {
-  pageGet()
+  if (pageData.value.page == 0) {
+    pageGet()
+  }
 })
 </script>
 <style lang="scss"></style>
