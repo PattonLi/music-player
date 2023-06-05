@@ -42,3 +42,9 @@ func (s *SongService) GetTenSongs() []model.SongInfo {
 	songs := s.songdao.GetTenSongs()
 	return songs
 }
+
+// 获取专辑的所有歌曲
+func (s *SongService) GetAlbumSongs(albumid int) ([]model.SongInfo, error) {
+	songs, err := s.songdao.GetSongsInAlbum(albumid)
+	return songs, err
+}

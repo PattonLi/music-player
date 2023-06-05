@@ -445,4 +445,40 @@ func GETs(r *gin.Engine) {
 			})
 		}
 	})
+
+	//专辑详细页信息
+	r.GET("/detail/album", func(c *gin.Context) {
+		songs, err0 := controller.NewSongController().GetAlbumSongsHandler(c)
+		album, err1 := controller.NewAlbumController().GetAlbumByIdHandler(c)
+		if err0 != nil || err1 != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":  300,
+				"songs": nil,
+				"album": nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":  200,
+				"songs": songs,
+				"album": album,
+			})
+		}
+
+	})
+
+	//歌手详细页信息
+	r.GET("/detail/artist", func(c *gin.Context) {
+		artist, err := controller.NewArtistController().GetArtistDetailHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":         200,
+				"artistDetali": nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":         200,
+				"artistDetail": artist,
+			})
+		}
+	})
 }
