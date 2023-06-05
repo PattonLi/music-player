@@ -60,7 +60,7 @@
         </el-col>
       </el-form-item>
       <el-form-item label="管理员名称">
-        <el-input v-model="addDialog.data.adminname"></el-input>
+        <el-input v-model="addDialog.data.adminName"></el-input>
       </el-form-item>
       <el-form-item label="管理员密码">
         <el-input v-model="addDialog.data.password"></el-input>
@@ -85,59 +85,19 @@
     width="27%">
 
     <el-form :model="modifyDialog.data" label-width="100px">
-    <el-form-item label="ID">
-      <el-col :span="4">
-        <el-input v-model="modifyDialog.data.adminId" :readonly="true" />
-      </el-col>
-      <el-col :span="1"></el-col>
-      <el-col :span="3">
-        <span>姓名</span>
-      </el-col>
-      <el-col :span="6">
-        <el-input v-model="modifyDialog.data.adminname" />
-      </el-col>
-      <el-col :span="1"></el-col>
-      <el-col :span="3">
-        <span>年龄</span>
-      </el-col>
-      <el-col :span="6">
-        <el-input v-model="modifyDialog.data.age" />
-      </el-col>
-      
-    </el-form-item>
-    <el-form-item label="用户性别">
-      <el-radio-group v-model="modifyDialog.data.gender">
-        <el-radio label="男" />
-        <el-radio label="女" />
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label="用户昵称">
-      <el-input v-model="modifyDialog.data.nickname"></el-input>
-    </el-form-item>
-    <el-form-item label="用户密码">
-      <el-input v-model="modifyDialog.data.password"></el-input>
-    </el-form-item>
-    <el-form-item label="用户邮箱">
-      <el-input v-model="modifyDialog.data.email"></el-input>
-    </el-form-item>
-    <el-form-item label="用户电话">
-      <el-input v-model="modifyDialog.data.phone"></el-input>
-    </el-form-item>
-    <el-form-item label="用户头像">
-      <el-upload
-        class="avatar-uploader"
-        action="#"
-        :show-file-list="false"
-        list-type="picture-card"
-        :limit="1"
-        :on-success="mhandleAvatarSuccess"
-        :before-upload="mbeforeAvatarUpload"
-      >
-        <img style="width: 147px; height: 147px" v-if="modifyDialog.data.picUrl" :src="modifyDialog.data.picUrl" class="avatar" />
-        <el-icon v-else><Plus /></el-icon>
-      </el-upload>
-    </el-form-item>
-  </el-form>
+      <el-form-item label="ID">
+        <el-col :span="4">
+          <el-input v-model="modifyDialog.data.adminId" :readonly="true" />
+        </el-col>
+      </el-form-item>
+      <el-form-item label="管理员名称">
+        <el-input v-model="modifyDialog.data.adminName"></el-input>
+      </el-form-item>
+      <el-form-item label="管理员密码">
+        <el-input v-model="modifyDialog.data.password"></el-input>
+      </el-form-item>
+    </el-form>
+
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="modifyDialog.visable = false">Cancel</el-button>
@@ -216,8 +176,12 @@ onMounted(() => {
 const SearchClick = () => {
   console.log('click')
   getTheAdminInfo(input.input).then((data) => {
-    console.log(data.data)
-    state.tableData = data.data
+    if(data.code === 300) {
+      ElMessage.warning('找不到该管理员.')
+    } else if(data.code === 200) {
+      console.log(data.data)
+      state.tableData = data.data
+    }
   })
 }
 
@@ -300,88 +264,6 @@ const changePage = (newPage: number) => {
     state.totals = data.totals
     console.log(state.totals)
   })
-}
-
-const mhandleAvatarSuccess: UploadProps['onSuccess'] = (
-  response,
-  uploadFile
-) => {
-  modifyDialog.data.picUrl = URL.createObjectURL(uploadFile.raw!)
-  console.log(modifyDialog.data.picUrl)
-}
-
-const mbeforeAvatarUpload: UploadProps['beforeUpload'] = (file) => {
-  if (file.type !== 'image/png') {
-    ElMessage.error('头像必须是PNG文件！')
-    return false
-  } else if (file.size / 1024 / 1024 > 2) {
-    ElMessage.error('头像不能超过 2MB!')
-    return false
-  }
-  muploadAction(file)
-  return false
-}
-
-// 照片上传请求
-const muploadAction = (file: File) => {
-  let formData = new FormData();
-  formData.append('file', file)
-  const url = 'https://mock.apifox.cn/m1/2794549-0-default/admin/modifyUploadPic';
-  try {
-    axios.post('https://mock.apifox.cn/m1/2794549-0-default/admin/modifyUploadPic', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-    .then((response) => {
-      console.log(response)
-      modifyDialog.data.picUrl = URL.createObjectURL(file)
-      console.log(modifyDialog.data.picUrl)
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-const handleAvatarSuccess: UploadProps['onSuccess'] = (
-  response,
-  uploadFile
-) => {
-  addDialog.data.picUrl = URL.createObjectURL(uploadFile.raw!)
-  console.log(addDialog.data.picUrl)
-}
-
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (file) => {
-  if (file.type !== 'image/png') {
-    ElMessage.error('头像必须是PNG文件！')
-    return false
-  } else if (file.size / 1024 / 1024 > 2) {
-    ElMessage.error('头像不能超过 2MB!')
-    return false
-  }
-  uploadAction(file)
-  return false
-}
-
-// 照片上传请求
-const uploadAction = (file: File) => {
-  let formData = new FormData();
-  formData.append('file', file)
-  const url = 'https://mock.apifox.cn/m1/2794549-0-default/admin/addUploadPic';
-  try {
-    axios.post('https://mock.apifox.cn/m1/2794549-0-default/admin/addUploadPic', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-    .then((response) => {
-      console.log(response)
-      addDialog.data.picUrl = URL.createObjectURL(file)
-      console.log(addDialog.data.picUrl)
-    })
-  } catch (error) {
-    console.log(error)
-  }
 }
 
 </script>

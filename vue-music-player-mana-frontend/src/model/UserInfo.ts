@@ -17,6 +17,6 @@ export interface CustomerInfo {
 
 export interface AdminInfo {
   adminId: number;
-  adminname: string;
+  adminName: string;
   password: string
 }

@@ -267,8 +267,12 @@ onMounted(() => {
 const SearchClick = () => {
   console.log('click')
   getTheCustomerInfo(input.input).then((data) => {
-    console.log(data.data)
-    state.tableData = data.data
+    if(data.code === 300) {
+      ElMessage.warning('找不到该用户!')
+    } else if(data.code === 200) {
+      console.log(data.data)
+      state.tableData = data.data
+    }
   })
 }
 
