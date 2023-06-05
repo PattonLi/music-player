@@ -1,156 +1,196 @@
 <template>
-  <div class="pb-5">
-    <div v-for="option in options" :key="option.key" class="flex text-xs mb-5">
-      <div class="flex-shrink-0 text-slate-400">{{ option.name }}：</div>
-      <div class="ml-3">
-        <el-space wrap :size="10" :spacer="spacer">
-          <div type="text" class="hover-text px-1 py-0.5"
-               :class="{active:(item.key===pageData.type && option.key==='type')||(item.key===pageData.area && option.key==='area') || (item.key===pageData.initial  && option.key==='initial')}"
-               v-for="(item,index) in option.list" :key="index" @click="optionChange(option.key,item.key)">{{
-              item.name
-            }}
-          </div>
-        </el-space>
+  <div>
+    <!-- 选项 -->
+    <div class="pb-5">
+      <!-- 每一行 -->
+      <div v-for="option in options" :key="option.key" class="flex text-xs mb-5">
+        <div class="ml-3">
+          <el-space wrap :size="10" :spacer="spacer">
+            <!-- 每一列 -->
+            <div
+              type="text"
+              class="hover-text px-1 py-0.5"
+              :class="{
+                active:
+                  (item.key === pageData.type && option.key === 'type') ||
+                  (item.key === pageData.location && option.key === 'area') ||
+                  (item.key === pageData.firstLetter && option.key === 'fistLetter')
+              }"
+              v-for="(item, index) in option.list"
+              :key="index"
+              @click="optionChange(option.key, item.key)"
+            >
+              {{ item.name }}
+            </div>
+          </el-space>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="grid grid-flow-row grid-cols-6 xl:grid-cols-8 2xl:grid-cols-10 gap-5">
-    <div v-for="artist in artists" :key="artist.id" class="flex items-center flex-col"
-         @click="router.push({name:'artistDetail',query:{id:artist.id}})">
-      <img :src="artist.img1v1Url+'?param=120y120'" alt=""
-           class="rounded-full cursor-pointer w-full aspect-square object-cover bg-dc"/>
-      <div class="mt-2 text-sm">{{ artist.name }}</div>
+    <!-- 歌手展示 -->
+    <div class="grid grid-flow-row grid-cols-6 xl:grid-cols-8 2xl:grid-cols-10 gap-5">
+      <div
+        v-for="(artist, index) in artists"
+        :key="index"
+        class="flex items-center flex-col"
+        @click="routerPushByNameId(Pages.artistDetail, artist.artistId)"
+      >
+        <img
+          :src="artist.picUrl"
+          alt="歌手头像"
+          class="rounded-full cursor-pointer w-full aspect-square object-cover bg-dc"
+        />
+        <div class="mt-2 text-sm">{{ artist.artist }}</div>
+      </div>
     </div>
-  </div>
-  <div class="py-10">
-    <el-button type="text" class="text-center  w-full" @click="loadMore" :loading="pageData.loading">加载更多</el-button>
+    <!-- 加载按钮 -->
+    <div class="flex justify-center py-5" v-if="artists.length > 0 && !pageData.noMore">
+      <el-button
+        :loading="pageData.loading"
+        link
+        size="large"
+        class="text-center"
+        @click="pageGet()"
+        >加载更多
+      </el-button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref, reactive, h} from "vue";
-import http from '@/utils/http';
-import type {Artist} from "@/models/artist";
+import type { Artist } from '@/models/artist'
+import { apiArtistList } from '@/utils/api/artist'
+import { routerPushByNameId } from '@/utils/navigator/router'
+import { Pages } from '@/router/pages'
+import { ElDivider } from 'element-plus'
+import { AlertError } from '@/utils/alert/AlertPop'
 
-import {ElDivider} from 'element-plus'
-import {useRouter} from "vue-router";
-import {userArtistList} from "@/utils/api";
-
-const spacer = h(ElDivider, {direction: 'vertical'})
-const router = useRouter()
-const artists = ref<Artist[]>([]);
+const spacer = h(ElDivider, { direction: 'vertical' })
+const artists = ref<Artist[]>([])
 const pageData = reactive({
-  init: false,
+  page: 0,
+  pageSize: 10,
+  pageTotal: 1,
+
+  //是否显示加载动画
   loading: false,
-  page: 1,
-  limit: 60,
-  initial: "-1",
-  type: -1,
-  area: -1,
+  noMore: false,
+  //查询信息
+  firstLetter: '0',
+  type: 0,
+  location: 0
 })
 
-const getData = async () => {
+//分页查询
+const pageGet = async () => {
   pageData.loading = true
-  try {
-    const data = await userArtistList(pageData)
-    if (pageData.page === 1) {
-      artists.value = data
-    } else {
-      artists.value.push(...data)
+  const res = await apiArtistList(
+    pageData.pageSize,
+    pageData.page,
+    pageData.firstLetter,
+    pageData.type,
+    pageData.location
+  )
+  if (res.code == 200) {
+    //判断是否已经没有页数了
+    if (pageData.page >= pageData.pageTotal) {
+      //所有数据已经取完
+      pageData.noMore = true
+      return
     }
-    pageData.init = true
-    pageData.loading = false
-  } catch (e) {
-    pageData.page--
+    if (pageData.page == 0) {
+      //初始时设置数据
+      artists.value = res.artists
+    } else {
+      //否则push
+      artists.value.push(...res.artists)
+    }
+    //当前位置页数加1
+    pageData.page++
+    //更新pageSize
+    pageData.pageTotal = res.pageTotal
+  } else {
+    AlertError('抱歉，没有符合筛选条件的歌手！')
   }
+  //加载动画
+  pageData.loading = false
 }
 
-const load = () => {
-  console.log('load')
-}
-
-const loadMore = () => {
-  pageData.page++
-  getData()
-}
-onMounted(getData)
+onMounted(async () => {
+  pageGet()
+})
 
 const optionChange = (keyName: string, keyValue: number | string) => {
-  console.log(keyName, keyValue)
-  pageData.page = 1
+  pageData.page = 0
+  pageData.pageTotal = 0
+  if (keyName === 'location') pageData.location = keyValue as number
   if (keyName === 'type') pageData.type = keyValue as number
-  if (keyName === 'area') pageData.area = keyValue as number
-  if (keyName === 'initial') pageData.initial = keyValue as string
-
-  getData()
+  if (keyName === 'firstLetter') pageData.firstLetter = keyValue as string
+  pageGet()
 }
 
-const options: {
-  name: string,
-  key: string,
+//筛选项
+interface Option {
+  key: string
   list: {
-    key: string | number,
-    name: string,
+    key: string | number
+    name: string
   }[]
-}[] = [
+}
+
+const options: Option[] = [
   {
-    name: '语种',
-    key: 'area',
+    key: 'location',
     list: [
-      {key: -1, name: '全部'},
-      {key: 7, name: '华语'},
-      {key: 96, name: '欧美'},
-      {key: 8, name: '日本'},
-      {key: 16, name: '韩国'},
-      {key: 0, name: '其他'},
+      { key: 0, name: '全部' },
+      { key: 1, name: '华语' },
+      { key: 2, name: '欧美' },
+      { key: 3, name: '日本' },
+      { key: 4, name: '韩国' }
     ]
   },
   {
-    name: '分类',
     key: 'type',
     list: [
-      {key: -1, name: '全部'},
-      {key: 1, name: '男歌手'},
-      {key: 2, name: '女歌手'},
-      {key: 3, name: '乐队组合'},
+      { key: 0, name: '全部' },
+      { key: 1, name: '男' },
+      { key: 2, name: '女' },
+      { key: 3, name: '组合' }
     ]
   },
   {
-    name: '筛选',
-    key: 'initial',
+    key: 'firstLetter',
     list: [
-      {key: "-1", name: '热门'},
-      {key: 'a', name: 'A'},
-      {key: 'b', name: 'B'},
-      {key: 'c', name: 'C'},
-      {key: 'd', name: 'D'},
-      {key: 'e', name: 'E'},
-      {key: 'f', name: 'F'},
-      {key: 'g', name: 'G'},
-      {key: 'h', name: 'H'},
-      {key: 'i', name: 'I'},
-      {key: 'j', name: 'J'},
-      {key: 'k', name: 'K'},
-      {key: 'l', name: 'L'},
-      {key: 'm', name: 'M'},
-      {key: 'n', name: 'N'},
-      {key: 'o', name: 'O'},
-      {key: 'p', name: 'P'},
-      {key: 'q', name: 'Q'},
-      {key: 'r', name: 'R'},
-      {key: 's', name: 'S'},
-      {key: 't', name: 'T'},
-      {key: 'u', name: 'U'},
-      {key: 'v', name: 'V'},
-      {key: 'w', name: 'W'},
-      {key: 'x', name: 'X'},
-      {key: 'y', name: 'Y'},
-      {key: 'z', name: 'Z'},
-      {key: '0', name: '#'},
+      { key: '0', name: '全部' },
+      { key: 'a', name: 'A' },
+      { key: 'b', name: 'B' },
+      { key: 'c', name: 'C' },
+      { key: 'd', name: 'D' },
+      { key: 'e', name: 'E' },
+      { key: 'f', name: 'F' },
+      { key: 'g', name: 'G' },
+      { key: 'h', name: 'H' },
+      { key: 'i', name: 'I' },
+      { key: 'j', name: 'J' },
+      { key: 'k', name: 'K' },
+      { key: 'l', name: 'L' },
+      { key: 'm', name: 'M' },
+      { key: 'n', name: 'N' },
+      { key: 'o', name: 'O' },
+      { key: 'p', name: 'P' },
+      { key: 'q', name: 'Q' },
+      { key: 'r', name: 'R' },
+      { key: 's', name: 'S' },
+      { key: 't', name: 'T' },
+      { key: 'u', name: 'U' },
+      { key: 'v', name: 'V' },
+      { key: 'w', name: 'W' },
+      { key: 'x', name: 'X' },
+      { key: 'y', name: 'Y' },
+      { key: 'z', name: 'Z' },
+      { key: '#', name: '#' }
     ]
-  },
+  }
 ]
-
 </script>
 
 <style lang="scss" scoped>

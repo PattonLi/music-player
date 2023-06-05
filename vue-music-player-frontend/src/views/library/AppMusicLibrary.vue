@@ -78,11 +78,11 @@ watch(
 )
 
 const onTabClick = ({ props }: { props: Menu }) => {
-  router.push({ name: props.name, replace: true })
+  router.push({ name: props.name, replace: false })
 }
 
 onMounted(() => {
-  router.push({ name: 'select', replace: true })
+  router.push({ name: 'select' })
 })
 </script>
 

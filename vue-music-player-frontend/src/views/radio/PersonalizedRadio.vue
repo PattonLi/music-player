@@ -33,7 +33,7 @@ import { routerPushByNameId } from '@/utils/navigator/router'
 import { Pages } from '@/router/pages'
 
 const { personalizedAlbums } = toRefs(useMusicStore())
-const { UpdatePersonalize } = useMusicStore()
+const { updatePersonalize: UpdatePersonalize } = useMusicStore()
 
 onMounted(async () => {
   await UpdatePersonalize(2)

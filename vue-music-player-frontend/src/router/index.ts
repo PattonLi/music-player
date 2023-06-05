@@ -42,7 +42,7 @@ const router = createRouter({
           name: Pages.mv,
           meta: {
             menu: 'mv',
-            meta: { keepAlive: true }
+            keepAlive: true
           },
           component: () => import('@/views/mv/AppMusicVideo.vue')
         },
@@ -52,7 +52,7 @@ const router = createRouter({
           name: Pages.library,
           meta: {
             menu: 'library',
-            keepAlive: true 
+            keepAlive: true
           },
           component: () => import('@/views/library/AppMusicLibrary.vue'),
           children: [
@@ -110,7 +110,7 @@ const router = createRouter({
 
         /*--------------------详情页组件 ------------------*/
         {
-          //音乐库组件
+          //详情页组件
           path: 'detail',
           name: 'detail',
           component: () => import('@/views/detail/AppInfo.vue'),
@@ -126,6 +126,12 @@ const router = createRouter({
               path: 'albumDetail',
               name: Pages.albumDetail,
               component: () => import('@/views/detail/album/AppAlbumDetail.vue')
+            },
+            {
+              //播放列表详情页
+              path: 'playlistDetail',
+              name: Pages.playlistDetail,
+              component: () => import('@/views/detail/playlist/AppPlayList.vue')
             }
           ]
         },
@@ -150,7 +156,7 @@ const router = createRouter({
           //music player组件
           path: 'player',
           name: Pages.player,
-          meta:{keepAlive: true},
+          meta: { keepAlive: true },
           component: () => import('@/views/player/AppPlayer.vue')
         },
         /*--------------------用户中心组件 ------------------*/
@@ -178,7 +184,7 @@ const router = createRouter({
         {
           path: 'local',
           name: Pages.local,
-          meta:{keepAlive: true},
+          meta: { keepAlive: true },
           component: () => import('@/views/local/AppLocalSongs.vue')
         },
         /*--------------------下载歌曲------------------*/
