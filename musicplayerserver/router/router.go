@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"music-player/musicplayerserver/controller"
 	"music-player/musicplayerserver/model"
-	"music-player/musicplayerserver/utils/jwt"
+	utils "music-player/musicplayerserver/utils/jwt"
 	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -53,11 +54,11 @@ func Posts(r *gin.Engine) {
 			})
 		}
 	})
-	
+
 	//修改用户头像上传照片
-	authorized.POST("/User/modifyUploadPic", func(c *gin.Context){
+	authorized.POST("/User/modifyUploadPic", func(c *gin.Context) {
 		err := controller.NewUserController().UploadUserPicHandler(c)
-		if err != nil{
+		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 300,
 			})
@@ -71,7 +72,7 @@ func Posts(r *gin.Engine) {
 	//修改管理员信息
 	r.POST("/adminUser/modifyInfo", func(c *gin.Context) {
 		err := controller.NewAdminUserController().ModifyAdminUserInfoHandler(c)
-		if err != nil{
+		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 300,
 			})
@@ -85,7 +86,7 @@ func Posts(r *gin.Engine) {
 	//添加管理员信息
 	r.POST("/adminUser/addInfo", func(c *gin.Context) {
 		err := controller.NewAdminUserController().AddAdminUserHandler(c)
-		if err != nil{
+		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 300,
 			})
@@ -95,7 +96,6 @@ func Posts(r *gin.Engine) {
 			})
 		}
 	})
-
 
 	//用户手机号注册
 	r.POST("/register", func(c *gin.Context) {
@@ -202,9 +202,9 @@ func GETs(r *gin.Engine) {
 
 	//获得特定管理员信息
 	r.GET("/adminUser/theInfo", func(c *gin.Context) {
-		adminuser,err := controller.NewAdminUserController().AdminInfoHandler(c)
-		if err != nil{
-			c.JSON(http.StatusOK, struct{
+		adminuser, err := controller.NewAdminUserController().AdminInfoHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, struct {
 				*model.AdminUserInfo
 				Code int `json:"code"`
 			}{
@@ -212,7 +212,7 @@ func GETs(r *gin.Engine) {
 				300,
 			})
 		} else {
-			c.JSON(http.StatusOK, struct{
+			c.JSON(http.StatusOK, struct {
 				*model.AdminUserInfo
 				Code int `json:"code"`
 			}{
@@ -235,7 +235,6 @@ func GETs(r *gin.Engine) {
 			})
 		}
 	})
-
 
 	//用户手机号登录
 	r.GET("/login/cellphone", func(c *gin.Context) {
@@ -296,6 +295,7 @@ func GETs(r *gin.Engine) {
 		}
 	})*/
 
+	//未输入时显示热搜
 	r.GET("/search/hot", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 200,
@@ -325,8 +325,9 @@ func GETs(r *gin.Engine) {
 
 	})
 
+	//搜索推荐
 	r.GET("/search/suggest", func(c *gin.Context) {
-		albums, artists, songs := controller.NewSearchController().SearchSuggest(c)
+		albums, artists, songs := controller.NewSearchController().SearchSuggestHandler(c)
 		if albums == nil && artists == nil && songs == nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code":    300,
@@ -395,5 +396,53 @@ func GETs(r *gin.Engine) {
 			})
 		}
 
+	})
+
+	//歌曲推荐
+	r.GET("/discover/song", func(c *gin.Context) {
+		songs := controller.NewSongController().GetTenSongsHandler(c)
+		if songs == nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":  300,
+				"songs": nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":  200,
+				"songs": songs,
+			})
+		}
+	})
+
+	//专辑推荐
+	r.GET("discover/album", func(c *gin.Context) {
+		albums := controller.NewAlbumController().GetTenAlbumsHandler(c)
+		if albums == nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":   300,
+				"albums": nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":   200,
+				"albums": albums,
+			})
+		}
+	})
+
+	//歌手推荐
+	r.GET("discover/artist", func(c *gin.Context) {
+		artists := controller.NewArtistController().GetTenArtistHandler(c)
+		if artists == nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":    300,
+				"artists": nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":    200,
+				"artists": artists,
+			})
+		}
 	})
 }

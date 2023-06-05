@@ -54,3 +54,9 @@ func (sc *SongController) AddSongHandler(c *gin.Context) bool {
 	result := sc.songservice.AddSong(song)
 	return result
 }
+
+// 获取十首歌曲
+func (sc *SongController) GetTenSongsHandler(c *gin.Context) []model.SongInfo {
+	songs := sc.songservice.GetTenSongs()
+	return songs
+}
