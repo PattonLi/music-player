@@ -32,6 +32,15 @@ func (s *Songdao) AddSong(song *model.SongInfo) bool {
 
 }*/
 
+// 从数据库中获取十首歌曲
+func (s *Songdao) GetTenSongs() []model.SongInfo {
+	var song []model.SongInfo
+	var songs []model.SongInfo
+	DB.Find(&song)
+	songs = song[:10]
+	return songs
+}
+
 func NewSongDao() *Songdao {
 	return &Songdao{}
 }

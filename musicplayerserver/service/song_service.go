@@ -36,3 +36,9 @@ func (s *SongService) AddSong(song model.SongInfo) bool {
 	result := s.songdao.AddSong(&song)
 	return result
 }
+
+// 获取十首歌曲
+func (s *SongService) GetTenSongs() []model.SongInfo {
+	songs := s.songdao.GetTenSongs()
+	return songs
+}
