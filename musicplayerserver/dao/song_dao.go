@@ -41,6 +41,13 @@ func (s *Songdao) GetTenSongs() []model.SongInfo {
 	return songs
 }
 
+// 获取专辑中的所有歌曲
+func (s *Songdao) GetSongsInAlbum(albumid int) ([]model.SongInfo, error) {
+	var song []model.SongInfo
+	result := DB.Where("album_id = ?", albumid).Find(&song)
+	return song, result.Error
+}
+
 func NewSongDao() *Songdao {
 	return &Songdao{}
 }
