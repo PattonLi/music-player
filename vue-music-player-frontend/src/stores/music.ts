@@ -15,7 +15,7 @@ export const useMusicStore = defineStore('music', {
   }),
   getters: {},
   actions: {
-    async UpdatePersonalize(type: number) {
+    async updatePersonalize(type: number) {
       switch (type) {
         case 1:
           {

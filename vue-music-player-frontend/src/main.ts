@@ -15,6 +15,8 @@ import '@/assets/style/base.scss'
 import '@/assets/style/element-ui.scss'
 //element message样式
 import 'element-plus/dist/index.css'
+//animate css样式
+import 'animate.css'
 
 const app = createApp(App)
 

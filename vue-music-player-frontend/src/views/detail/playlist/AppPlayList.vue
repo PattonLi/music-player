@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { apiPlayListDetail } from '@/utils/api/playlist'
 import PlayListInfo from './PlayListInfo.vue'
-import PlatListSongs from '@/views/playlist/PlatListSongs.vue'
+import PlatListSongs from '@/views/detail/playlist/PlatListSongs.vue'
 import type { PlayList } from '@/models/playlist'
 import type { Song } from '@/models/song'
 import { usePlayerStore } from '@/stores/player'

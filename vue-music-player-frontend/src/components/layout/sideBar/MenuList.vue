@@ -132,7 +132,7 @@ watch(
 )
 
 const click = async (menu: IMenu) => {
-  await router.push({ name: menu.key, replace: true })
+  await router.push({ name: menu.key })
 }
 </script>
 

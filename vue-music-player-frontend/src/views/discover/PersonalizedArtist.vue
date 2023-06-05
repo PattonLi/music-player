@@ -35,7 +35,7 @@ import { useMusicStore } from '@/stores/music'
 import _ from 'lodash'
 
 const { personalizedArtists } = toRefs(useMusicStore())
-const { UpdatePersonalize } = useMusicStore()
+const { updatePersonalize: UpdatePersonalize } = useMusicStore()
 const router = useRouter()
 
 onMounted(async () => {

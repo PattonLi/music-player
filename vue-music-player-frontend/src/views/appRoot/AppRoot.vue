@@ -18,7 +18,12 @@
       <div class="flex-1 overflow-hidden">
         <ElScrollbar>
           <div class="container mx-auto">
-            <RouterView />
+            <!-- 路由 -->
+            <router-view v-slot="{ Component }">
+              <transition class="animate__animated animate__zoomIn" mode="out-in">
+                <component :is="Component" />
+              </transition>
+            </router-view>
           </div>
         </ElScrollbar>
       </div>
