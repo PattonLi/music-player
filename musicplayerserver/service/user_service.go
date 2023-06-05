@@ -2,8 +2,10 @@ package service
 
 import (
 	"errors"
+	"mime/multipart"
 	"music-player/musicplayerserver/dao"
 	"music-player/musicplayerserver/model"
+	"music-player/musicplayerserver/utils/oss"
 )
 
 type UserService struct {
@@ -79,4 +81,15 @@ func (us *UserService) UserRegister(user *model.UserInfo) (int,error) {
 func (us *UserService) UserProfile(userID int) (*model.UserInfo, error) {
 	user, err := us.userdao.GetUserProfile(userID)
 	return user, err
+}
+
+//上传用户头像
+func (us *UserService) UploadUserPic(userID int, fileHeader *multipart.FileHeader) error {
+	url,err := utils.UploadFile(userID,fileHeader,1)
+	if err != nil{
+		return err
+	} else {
+		err = us.userdao.UpdateUserPicUrl(userID,url)
+		return err
+	}
 }
