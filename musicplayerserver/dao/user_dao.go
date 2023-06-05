@@ -102,7 +102,16 @@ func (*UserDao) GetAllUserInfo(page int, pagesize int) ([]model.UserInfo,int64) 
 func (*UserDao) GetUserProfile (userID int) (*model.UserInfo, error) {
 	user := model.UserInfo{}
 	err := DB.Take(&user, "user_id = ?",userID).Error
-	return &user, err
+	return &user, 
+	err
 }
 
+//更新头像url
+func (*UserDao) UpdateUserPicUrl (userID int, url string) error {
+	err :=DB.Model(&model.UserInfo{ID: userID}).UpdateColumn("pic_url", url).Error
+	if err != nil{
+		err = errors.New("更新数据库头像url失败！")
+	}
+	return err
+}
 

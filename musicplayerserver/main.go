@@ -3,6 +3,7 @@ package main
 import (
 	"music-player/musicplayerserver/dao"
 	"music-player/musicplayerserver/router"
+	"music-player/musicplayerserver/utils/oss"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -37,6 +38,8 @@ func main() {
 		},
 		MaxAge: 6 * time.Hour,
 	}
+	//开启OSS访问
+	utils.CreateClient()
 	r.Use(cors.New(corsConfig))
 	router.Posts(r)
 	router.GETs(r)

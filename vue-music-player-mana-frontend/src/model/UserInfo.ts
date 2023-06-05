@@ -14,3 +14,9 @@ export interface CustomerInfo {
   phone: string;
   picUrl: string
 }
+
+export interface AdminInfo {
+  adminId: number;
+  adminName: string;
+  password: string
+}
