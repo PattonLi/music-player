@@ -1,10 +1,9 @@
 package controller
 
 import (
-	"fmt"
 	"music-player/musicplayerserver/model"
 	"music-player/musicplayerserver/service"
-	//"strconv"
+	"strconv"
 	"github.com/gin-gonic/gin"
 )
 
@@ -32,27 +31,37 @@ func (ausc *AdminUserController) AdminLoginHandler(c *gin.Context) (string, uint
 }
 
 //获取特定管理员信息
-func (ausc *AdminUserController) AdminProfileHandler(c *gin.Context) (*model.AdminUserInfo, error) {
-	var adminuser *model.AdminUserInfo
-	adminuser = nil
-	var err error
-	fmt.Print(c.Query("adminid"))
+func (ausc *AdminUserController) AdminInfoHandler(c *gin.Context) (*model.AdminUserInfo, error) {
 	adminname := c.Query("adminname")
-	adminuser, err = ausc.adminuserservice.AdminUserInfo(adminname)
+	adminuser, err := ausc.adminuserservice.AdminUserInfo(adminname)
 	return adminuser, err
 }
 
 //获取所有管理员信息
-func (ausc *AdminUserController) AllAdminInfoHandler() []gin.H{
+func (ausc *AdminUserController) AllAdminInfoHandler() []model.AdminUserInfo{
 	adminlist := ausc.adminuserservice.AllAdminInfo()
-	adminusers := make([]gin.H,0)
-	for _, adminuser := range adminlist{
-		userinfo := gin.H{
-			"user_id":    adminuser.ID,
-			"username":   adminuser.Adminname,
-			"password":   adminuser.Password,
-		}
-		adminusers = append(adminusers,userinfo)
-	}
-	return adminusers
+	return adminlist
+}
+
+//管理员信息修改
+func (ausc *AdminUserController) ModifyAdminUserInfoHandler(c *gin.Context) error {
+	adminuser := model.AdminUserInfo{}
+	c.BindJSON(&adminuser)
+	err := ausc.adminuserservice.ModifyAdminUserInfo(&adminuser)
+	return err
+}
+
+//添加管理员信息
+func (ausc *AdminUserController) AddAdminUserHandler(c *gin.Context) (error) {
+	adminuser := model.AdminUserInfo{}
+	c.BindJSON(&adminuser)
+	err := ausc.adminuserservice.AddAdminUserInfo(&adminuser)
+	return err
+}
+
+//删除管理员信息
+func (ausc *AdminUserController) DeleteAdminUserInfoHandler(c *gin.Context) error {
+	adminID,_ := strconv.Atoi(c.Query("adminId"))
+	err := ausc.adminuserservice.DeleteAdminUserInfo(adminID)
+	return err
 }
