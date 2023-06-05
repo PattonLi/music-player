@@ -26,11 +26,11 @@ func (s *Songdao) AddSong(song *model.SongInfo) bool {
 }
 
 // 获取歌曲详情
-func (s *Songdao) GetSongInfo(id string) (string, string, error) {
+/*func (s *Songdao) GetSongInfo(id string) (string, string, error) {
 	song := model.SongInfo{}
 	err := DB.First(&song, id).Error
-	return song.Name, song.Singer, err
-}
+
+}*/
 
 func NewSongDao() *Songdao {
 	return &Songdao{}

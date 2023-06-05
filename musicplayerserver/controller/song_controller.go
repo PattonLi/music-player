@@ -32,6 +32,7 @@ func (sc *SongController) GetSongLyricHandler(c *gin.Context) (string, error) {
 	return lyric, err
 }
 
+/*
 // 获取歌曲详细信息的控制器
 func (sc *SongController) GetSongDetailHandler(c *gin.Context) (string, string, error) {
 	/*type parameter struct {
@@ -40,11 +41,11 @@ func (sc *SongController) GetSongDetailHandler(c *gin.Context) (string, string, 
 
 	var par parameter
 	c.ShouldBind(&par)
-	id := par.Id*/
+	id := par.Id
 	id := c.Query("id")
 	songname, singer, err := sc.songservice.GetSongDetail(id)
 	return songname, singer, err
-}
+}*/
 
 // 添加歌曲的控制器
 func (sc *SongController) AddSongHandler(c *gin.Context) bool {
