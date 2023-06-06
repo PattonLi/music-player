@@ -551,4 +551,39 @@ func GETs(r *gin.Engine) {
 			"swipers": swipers,
 		})
 	})
+
+	//分页获取歌手歌曲
+	r.GET("/detail/artist/songs", func(c *gin.Context) {
+		songpage, err0, err1, pagetotal := controller.NewSongController().GetSongsPageHandler(c)
+		if err0 != nil || err1 != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      300,
+				"songs":     nil,
+				"pageTotal": nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      200,
+				"songs":     songpage,
+				"pageTotal": pagetotal,
+			})
+		}
+	})
+
+	r.GET("/detail/artist/album", func(c *gin.Context) {
+		albumpage, err0, err1, pagenum := controller.NewAlbumController().GetAlbumPageHandler(c)
+		if err0 != nil || err1 != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      300,
+				"albums":    nil,
+				"pageTotal": nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      200,
+				"albums":    albumpage,
+				"pageTotal": pagenum,
+			})
+		}
+	})
 }

@@ -73,3 +73,19 @@ func (sc *SongController) GetAlbumSongsHandler(c *gin.Context) ([]model.SongInfo
 	songs, err := sc.songservice.GetAlbumSongs(albumId)
 	return songs, err
 }
+
+// 分页获取歌手歌曲
+func (sc *SongController) GetSongsPageHandler(c *gin.Context) ([]model.SongInfo, error, error, int) {
+	params := []string{"artistId", "order", "currentPage", "pageSize"}
+	id := c.Query(params[0])
+	order := c.Query(params[1])
+	currentpage := c.Query(params[2])
+	pagesize := c.Query(params[3])
+
+	Id, _ := strconv.Atoi(id)
+	currentPage, _ := strconv.Atoi(currentpage)
+	pageSize, _ := strconv.Atoi(pagesize)
+
+	songpage, err0, err1, pagetotal := sc.songservice.GetSongsPage(Id, order, currentPage, pageSize)
+	return songpage, err0, err1, pagetotal
+}

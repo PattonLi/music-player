@@ -44,4 +44,9 @@ func (*AlbumDao) GetAllAlbumInfo(page int, pagesize int) ([]model.AlbumInfo, int
 	DB.Offset(offset).Limit(pagesize).Find(&albumlist).Offset(-1).Limit(-1).Count(&totalrecord)
 	totalPage := int64(math.Ceil(float64(totalrecord) / float64(pagesize)))
 	return albumlist, totalPage
+// 根据歌手id获取歌手所有专辑
+func (a *AlbumDao) GetAlbumByArtistid(artist_id int) ([]model.AlbumInfo, error) {
+	var album []model.AlbumInfo
+	result := DB.Where("artist_id = ?", artist_id).Find(&album)
+	return album, result.Error
 }
