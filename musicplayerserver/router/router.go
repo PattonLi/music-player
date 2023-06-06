@@ -485,6 +485,35 @@ func GETs(r *gin.Engine) {
 			})
 		}
 	})
+	//获得特定页所有专辑信息
+	r.GET("/admin/pageAllAlbum", func(c *gin.Context) {
+		albums, totalPage := controller.NewAlbumController().AllAlbumInfoHandler(c)
+		c.JSON(http.StatusOK, gin.H{
+			"code":      200,
+			"data":      albums,
+			"totalPage": totalPage,
+		},
+		)
+	})
+
+	//获得特定名称专辑信息
+	r.GET("/admin/theAlbum", func(c *gin.Context) {
+		albums, err := controller.NewAlbumController().AlbumInfoHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+				"data": nil,
+			},
+			)
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"data": albums,
+			},
+			)
+		}
+	})
+
 
 	r.GET("/discover/swiper", func(c *gin.Context) {
 		type swiper struct {

@@ -38,6 +38,19 @@ func (ac *AlbumController) GetAlbumByIdHandler(c *gin.Context) (model.AlbumInfo,
 	return album, err
 }
 
+// 获取特定名称专辑信息
+func (ac *AlbumController) AlbumInfoHandler(c *gin.Context) ([]model.AlbumInfo, error) {
+	name := c.Query("name")
+	albumlist, err := ac.albumService.AlbumInfo(name)
+	return albumlist, err
+}
+
+// 获取特定页所有专辑信息
+func (ac *AlbumController) AllAlbumInfoHandler(c *gin.Context) ([]model.AlbumInfo, int64) {
+	page, _ := strconv.Atoi(c.Query("currentPage"))
+	pagesize, _ := strconv.Atoi(c.Query("pageSize"))
+	albumlist, totalPage := ac.albumService.AllAlbumInfo(page, pagesize)
+	return albumlist, totalPage
 // 分页获取歌手专辑
 func (ac *AlbumController) GetAlbumPageHandler(c *gin.Context) ([]model.AlbumInfo, error, error, int) {
 	artistid := c.Query("artistId")
