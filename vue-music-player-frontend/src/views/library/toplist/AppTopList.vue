@@ -45,7 +45,7 @@
     </div>
 
     <!-- 地区榜 -->
-    <div class="text-xl py-5 font-bold">{{ topListData[1].type }}</div>
+    <div class="text-xl py-8 font-bold">{{ topListData[1].type }}</div>
     <!-- 网格 -->
     <div class="grid grid-flow-row grid-cols-5 2xl:grid-cols-7 gap-8">
       <div v-for="(item, index) in topListData[1].topList" :key="index" @click="toPlaylist(item)">
@@ -55,7 +55,7 @@
     </div>
 
     <!-- 全球榜 -->
-    <div class="text-xl py-5 font-bold">{{ topListData[2].type }}</div>
+    <div class="text-xl py-8 font-bold">{{ topListData[2].type }}</div>
     <!-- 网格 -->
     <div class="mb-10 grid grid-flow-row grid-cols-5 2xl:grid-cols-7 gap-8">
       <div v-for="(item, index) in topListData[2].topList" :key="index" @click="toPlaylist(item)">

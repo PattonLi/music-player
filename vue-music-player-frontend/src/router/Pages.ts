@@ -49,5 +49,5 @@ export const PagesAuth = {
   userEdit: 'userEdit',
   userProfile: 'userProfile',
   //我喜欢
-  like: 'like', 
+  like: 'like'
 }

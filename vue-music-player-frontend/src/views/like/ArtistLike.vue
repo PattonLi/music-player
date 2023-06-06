@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-7 mx-2">
+  <div class="mt-5 mx-2">
     <!-- 歌手展示 -->
     <div class="grid grid-flow-row grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10">
       <div
@@ -26,7 +26,7 @@ import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 import { useLikeStore } from '@/stores/like'
 
-const {updateLikes} = useLikeStore()
+const { updateLikes } = useLikeStore()
 const { artists } = storeToRefs(useLikeStore())
 const { userId } = storeToRefs(useAuthStore())
 
