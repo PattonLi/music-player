@@ -51,3 +51,10 @@ func (s *Songdao) GetSongsInAlbum(albumid int) ([]model.SongInfo, error) {
 func NewSongDao() *Songdao {
 	return &Songdao{}
 }
+
+// 根据热度或者时间对歌手歌曲进行排序
+func (s *Songdao) SortSongsByOrder(id int, order string) ([]model.SongInfo, error) {
+	var song []model.SongInfo
+	result := DB.Order(order).Where("artist_id = ?", id).Find(&song)
+	return song, result.Error
+}

@@ -37,3 +37,17 @@ func (ac *AlbumController) GetAlbumByIdHandler(c *gin.Context) (model.AlbumInfo,
 	album, err := ac.albumService.GetAlbumById(Id)
 	return album, err
 }
+
+// 分页获取歌手专辑
+func (ac *AlbumController) GetAlbumPageHandler(c *gin.Context) ([]model.AlbumInfo, error, error, int) {
+	artistid := c.Query("artistId")
+	currentpage := c.Query("currentPage")
+	pagesize := c.Query("pageSize")
+
+	artistId, _ := strconv.Atoi(artistid)
+	currentPage, _ := strconv.Atoi(currentpage)
+	pageSize, _ := strconv.Atoi(pagesize)
+
+	albumpage, err0, err1, pagenum := ac.albumService.GetAlbumPage(artistId, currentPage, pageSize)
+	return albumpage, err0, err1, pagenum
+}
