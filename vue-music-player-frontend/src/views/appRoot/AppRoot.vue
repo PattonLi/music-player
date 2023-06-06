@@ -19,11 +19,7 @@
         <ElScrollbar>
           <div class="container mx-auto">
             <!-- 路由 -->
-            <router-view v-slot="{ Component }">
-              <transition class="animate__animated animate__zoomIn" mode="out-in">
-                <component :is="Component" />
-              </transition>
-            </router-view>
+            <router-view> </router-view>
           </div>
         </ElScrollbar>
       </div>

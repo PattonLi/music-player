@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3 flex items-center justify-between">
+  <div class="mt-5 mb-3 flex items-center justify-between">
     <!-- 功能区 -->
     <div class="flex gap-x-3">
       <button class="w-28 button-outline" @click="playAll">

@@ -32,6 +32,8 @@ export const Pages = {
   player: 'player',
   /* 用户中心 */
   userCenter: 'userCenter',
+  userEdit: 'userEdit',
+  userProfile: 'userProfile',
   /* 搜索结果组件 */
   searchResult: 'searchResult',
   /* 404page */

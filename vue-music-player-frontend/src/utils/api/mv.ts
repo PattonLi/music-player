@@ -1,10 +1,11 @@
 import type { Mv } from '@/models/mv'
 import myAxios from './myAxios'
 
-export async function apiGetMv(movieId: number) {
+//获取所有mv
+export async function apiMvHot() {
   const data = await myAxios.get<{
     code: number
-    mv: Mv
-  }>('detail/mv', { movieId: movieId })
+    mvs: Mv[]
+  }>('mv', {})
   return data
 }

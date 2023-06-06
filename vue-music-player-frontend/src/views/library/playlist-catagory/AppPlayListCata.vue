@@ -7,7 +7,6 @@
       <div
         v-for="(item, index) in playLists"
         :key="index"
-        :class="{ 'item-1': index === 0 }"
         @click="routerPushByNameId(Pages.playlistDetail, item.playListId)"
       >
         <MyCover
@@ -16,8 +15,8 @@
           :play-count="item.size"
           :show-play-count="true"
         />
-        <div class="mt-2 text-xs text-main leading-5">{{ item.playList }}</div>
-        <div class="mt-2 text-xs text-main truncate text-dc">{{ item.user }}</div>
+        <div class="mt-1 ml-1 text-sm text-main leading-5">{{ item.playList }}</div>
+        <div class="mt-0 ml-1 text-sm text-main truncate text-dc">{{ item.user }}</div>
       </div>
     </div>
     <!-- 加载按钮 -->

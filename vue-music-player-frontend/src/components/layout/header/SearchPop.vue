@@ -51,7 +51,7 @@
       </div>
     </el-popover>
 
-    <el-button class="button-outline button search-button" :icon="Search" @click="search"/>
+    <el-button class="button-outline button search-button" :icon="Search" @click="search" />
   </div>
 </template>
 
@@ -83,10 +83,10 @@ const hotClick = (text: string) => {
 }
 
 //搜索
-const search = ()=>{
-  if(searchKeyword.value!=''){
-    routerPushByNameKeyWord(Pages.searchResult,searchKeyword.value)
-  }else{
+const search = () => {
+  if (searchKeyword.value != '') {
+    routerPushByNameKeyWord(Pages.searchResult, searchKeyword.value)
+  } else {
     AlertError('搜索关键词不得为空！')
   }
 }
@@ -99,7 +99,7 @@ const search = ()=>{
   }
 }
 
-.search-button{
+.search-button {
   @apply rounded-full h-9 ml-2 w-11 dark:bg-stone-900 dark:border-gray-700;
 }
 </style>

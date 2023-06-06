@@ -141,6 +141,7 @@ const router = createRouter({
           //搜索结果页
           path: 'search/result',
           name: Pages.searchResult,
+          meta: { keepAlive: true },
           component: () => import('@/views/search-result/AppSearchResult.vue')
         },
 
@@ -163,8 +164,25 @@ const router = createRouter({
           path: 'userCenter',
           name: Pages.userCenter,
           meta: { keepAlive: true },
-          component: () => import('@/views/user-center/AppUserCenter.vue')
+          component: () => import('@/views/user-center/AppUserCenter.vue'),
+          children: [
+            /*--------------------编辑用户信息组件 ------------------*/
+            {
+              path: 'userEdit',
+              name: Pages.userEdit,
+              meta: { keepAlive: true },
+              component: () => import('@/views/user-center/EditPage.vue')
+            },
+            /*--------------------显示用户信息组件 ------------------*/
+            {
+              path: 'userProfile',
+              name: Pages.userProfile,
+              meta: { keepAlive: true },
+              component: () => import('@/views/user-center/UserProfile.vue')
+            }
+          ]
         },
+
         /*--------------------付款界面------------------*/
         {
           path: 'vip/pay',

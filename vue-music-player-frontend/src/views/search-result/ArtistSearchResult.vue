@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="mt-7 mx-2">
     <!-- 歌手展示 -->
-    <div class="grid grid-flow-row grid-cols-6 xl:grid-cols-8 2xl:grid-cols-10 gap-5">
+    <div class="grid grid-flow-row grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10">
       <div
         v-for="(artist, index) in artistSearchResult"
         :key="index"

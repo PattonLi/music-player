@@ -1,8 +1,8 @@
 <template>
   <!-- 主体界面 -->
-  <div class="search-detail px-7 pt-3">
+  <div class="search-detail px-7">
     <!-- 分页tab栏 -->
-    <el-tabs v-model="tab" class="mt-3">
+    <el-tabs v-model="tab" class="mt-4">
       <!-- 歌曲搜索结果 -->
       <el-tab-pane lazy label="歌曲" name="song">
         <SongSearchResult />

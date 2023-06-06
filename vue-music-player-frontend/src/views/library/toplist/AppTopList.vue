@@ -3,7 +3,7 @@
     <!-- 官方榜 -->
     <div class="text-xl pb-5 font-bold">{{ topListData[0].type }}</div>
     <!-- 网格 -->
-    <div class="grid grid-flow-row grid-cols-2 2xl:grid-cols-4 gap-5">
+    <div class="grid grid-flow-row grid-cols-2 2xl:grid-cols-4 gap-8">
       <div
         v-for="(item, index) in topListData[0].topList"
         :key="index"
@@ -17,9 +17,10 @@
           :play-count="item.listeners"
           class="w-36 flex-shrink-0"
           show-play-count
+          :hot="true"
         />
 
-        <div class="px-5 flex-1 flex-shrink-0 flex flex-col">
+        <div class="px-3 flex-1 flex-shrink-0 flex flex-col">
           <!-- 排行榜名字 -->
           <div class="text-xl font-bold">{{ item.name }}</div>
           <!-- 3条显示 -->
@@ -46,20 +47,20 @@
     <!-- 地区榜 -->
     <div class="text-xl py-5 font-bold">{{ topListData[1].type }}</div>
     <!-- 网格 -->
-    <div class="grid grid-flow-row grid-cols-5 2xl:grid-cols-10 gap-5">
+    <div class="grid grid-flow-row grid-cols-5 2xl:grid-cols-7 gap-8">
       <div v-for="(item, index) in topListData[1].topList" :key="index" @click="toPlaylist(item)">
         <MyCover :name="item.name" :pic-url="item.picUrl" :play-count="item.listeners" />
-        <div class="text-xs mt-2">{{ item.name }}</div>
+        <div class="text-sm mt-2">{{ item.name }}</div>
       </div>
     </div>
 
     <!-- 全球榜 -->
     <div class="text-xl py-5 font-bold">{{ topListData[2].type }}</div>
     <!-- 网格 -->
-    <div class="grid grid-flow-row grid-cols-5 2xl:grid-cols-10 gap-5">
+    <div class="mb-10 grid grid-flow-row grid-cols-5 2xl:grid-cols-7 gap-8">
       <div v-for="(item, index) in topListData[2].topList" :key="index" @click="toPlaylist(item)">
         <MyCover :name="item.name" :pic-url="item.picUrl" :play-count="item.listeners" />
-        <div class="text-xs mt-2">{{ item.name }}</div>
+        <div class="text-sm mt-2">{{ item.name }}</div>
       </div>
     </div>
   </div>
@@ -101,31 +102,37 @@ const topListData = ref([
       },
       {
         topListId: 2,
-        listeners: 123.3,
+        listeners: 1143.7,
         name: '热歌榜',
         picUrl: 'sss'
       },
       {
         topListId: 3,
-        listeners: 123.3,
+        listeners: 43.3,
         name: '新歌榜',
         picUrl: 'sss'
       },
       {
         topListId: 4,
-        listeners: 123.3,
+        listeners: 342.1,
         name: '流行指数榜',
         picUrl: 'sss'
       },
       {
         topListId: 5,
-        listeners: 123.3,
+        listeners: 626.2,
         name: '腾讯音乐人原创榜',
         picUrl: 'sss'
       },
       {
         topListId: 6,
-        listeners: 123.3,
+        listeners: 446.1,
+        name: '听歌识曲榜',
+        picUrl: 'sss'
+      },
+      {
+        topListId: 7,
+        listeners: 935.5,
         name: 'MV榜',
         picUrl: 'sss'
       }
@@ -136,38 +143,38 @@ const topListData = ref([
     topList: [
       {
         topListId: 1,
-        listeners: 123.3,
-        name: '飙升榜',
+        listeners: 142.1,
+        name: '内地榜',
         picUrl: 'asdasdasd'
       },
       {
         topListId: 2,
-        listeners: 123.3,
-        name: '热歌榜',
+        listeners: 56.2,
+        name: '香港地区榜',
         picUrl: 'asdasdasd'
       },
       {
         topListId: 3,
-        listeners: 123.3,
-        name: '新歌榜',
+        listeners: 46.1,
+        name: '台湾地区榜',
         picUrl: 'asdasdasd'
       },
       {
         topListId: 4,
-        listeners: 123.3,
-        name: '流行指数榜',
+        listeners: 1443.2,
+        name: '欧美榜',
         picUrl: 'asdasdasd'
       },
       {
         topListId: 5,
-        listeners: 123.3,
-        name: '腾讯音乐人原创榜',
+        listeners: 123.8,
+        name: '韩国榜',
         picUrl: 'asdasdasd'
       },
       {
         topListId: 6,
-        listeners: 123.3,
-        name: 'MV榜',
+        listeners: 64.3,
+        name: '日本榜',
         picUrl: 'asdasdasd'
       }
     ]
@@ -177,38 +184,32 @@ const topListData = ref([
     topList: [
       {
         topListId: 1,
-        listeners: 123.3,
+        listeners: 1233.3,
         name: 'billboard',
         picUrl: 'asdasdasd'
       },
       {
         topListId: 2,
-        listeners: 123.3,
-        name: '热歌榜',
+        listeners: 155.7,
+        name: 'melon',
         picUrl: 'asdasdasd'
       },
       {
         topListId: 3,
-        listeners: 123.3,
-        name: '新歌榜',
+        listeners: 331.4,
+        name: 'UK',
         picUrl: 'asdasdasd'
       },
       {
         topListId: 4,
-        listeners: 123.3,
-        name: '流行指数榜',
+        listeners: 166.2,
+        name: '日本公信榜',
         picUrl: 'asdasdasd'
       },
       {
         topListId: 5,
-        listeners: 123.3,
-        name: '腾讯音乐人原创榜',
-        picUrl: 'asdasdasd'
-      },
-      {
-        topListId: 6,
-        listeners: 123.3,
-        name: 'MV榜',
+        listeners: 34.3,
+        name: '香港TVB金曲榜',
         picUrl: 'asdasdasd'
       }
     ]
