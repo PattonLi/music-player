@@ -2,7 +2,7 @@ import myAxios from './myAxios'
 import type { Album } from '@/models/album'
 import type { Artist } from '@/models/artist'
 import type { Song } from '@/models/song'
-import type {LikeForm} from '@/models/like'
+import type { LikeForm } from '@/models/like'
 
 //获取用户收藏
 export async function apiUserLike(userId: number) {
@@ -18,9 +18,9 @@ export async function apiUserLike(userId: number) {
 }
 
 //添加收藏
-export async function apiAddLike(likeForm:LikeForm) {
+export async function apiAddLike(likeForm: LikeForm) {
   const data = await myAxios.post<{
-    code:number
+    code: number
   }>('user/like', {
     userId: likeForm.userId,
     songId: likeForm.songId,
@@ -32,9 +32,9 @@ export async function apiAddLike(likeForm:LikeForm) {
 }
 
 //删除收藏
-export async function apiDelLike(likeForm:LikeForm) {
+export async function apiDelLike(likeForm: LikeForm) {
   const data = await myAxios.post<{
-    code:number
+    code: number
   }>('user/like/delete', {
     userId: likeForm.userId,
     songId: likeForm.songId,

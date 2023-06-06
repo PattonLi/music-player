@@ -75,7 +75,7 @@ export const useAuthStore = defineStore('auth', {
           this.isLogin = false
           this.userId = 0
           this.token = ''
-          this.profile={} as UserProfile
+          this.profile = {} as UserProfile
         })
         .catch(() => {})
     }

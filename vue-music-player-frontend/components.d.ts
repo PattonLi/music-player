@@ -63,6 +63,8 @@ declare module '@vue/runtime-core' {
     SearchPop: typeof import('./src/components/layout/header/SearchPop.vue')['default']
     SearchSuggest: typeof import('./src/components/layout/header/SearchSuggest.vue')['default']
     SongItem: typeof import('./src/components/common/SongItem.vue')['default']
+    SongItemWithEdit: typeof import('./src/components/common/SongItemWithEdit.vue')['default']
+    SongItemWithSinger: typeof import('./src/components/common/SongItemWithSinger.vue')['default']
     UserInfo: typeof import('./src/components/layout/header/UserInfo.vue')['default']
   }
   export interface ComponentCustomProperties {
