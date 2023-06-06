@@ -4,20 +4,21 @@
     <div class="mb-10 grid grid-flow-row gap-x-20 grid-cols-3 2xl:grid-cols-5 gap-y-9">
       <!-- 循环 -->
       <div
-        v-for="(item, index) in _.sampleSize(personalizedAlbums, 20)"
+        v-for="(item, index) in mvs"
         :key="index"
-        @click="routerPushByNameId(Pages.mvDetail, _.random(1, 10))"
+        @click="routerPushByNameId(Pages.mvDetail, item.movieId)"
       >
         <!-- 封面组件 -->
         <MyCover
-          :name="item.album"
+          :name="item.movie"
           :pic-url="item.picUrl"
           :showPlayCount="true"
-          :play-count="item.size"
+          :movie="true"
+          :play-count="item.duration"
         />
-        <!-- 专辑名 -->
+        <!-- MV名 -->
         <div class="mx-2 mt-2 text-lg text-main truncate">
-          {{ item.album }}
+          {{ item.movie }}
         </div>
       </div>
     </div>
@@ -26,16 +27,17 @@
 
 <script setup lang="ts">
 import MyTitle from '@/components/common/MyTitle.vue'
-import { useMusicStore } from '@/stores/music'
+
 import MyCover from '@/components/common/MyCover.vue'
-import _ from 'lodash'
 import { routerPushByNameId } from '@/utils/navigator/router'
 import { Pages } from '@/router/pages'
+import { useMvStore } from '@/stores/mv'
+import { storeToRefs } from 'pinia'
 
-const { personalizedAlbums } = toRefs(useMusicStore())
-const { UpdatePersonalize } = useMusicStore()
+const { updateMv } = useMvStore()
+const { mvs } = storeToRefs(useMvStore())
 
 onMounted(async () => {
-  await UpdatePersonalize(2)
+  await updateMv()
 })
 </script>

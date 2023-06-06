@@ -18,7 +18,8 @@
       <div class="flex-1 overflow-hidden">
         <ElScrollbar>
           <div class="container mx-auto">
-            <RouterView />
+            <!-- 路由 -->
+            <router-view> </router-view>
           </div>
         </ElScrollbar>
       </div>

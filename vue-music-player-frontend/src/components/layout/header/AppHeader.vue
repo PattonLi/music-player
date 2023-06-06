@@ -19,7 +19,7 @@
         @click="router.forward()"
       />
       <!-- 搜索框 -->
-      <div class="ml-8">
+      <div class="ml-4">
         <SearchPop />
       </div>
     </div>

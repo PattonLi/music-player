@@ -12,7 +12,7 @@
       />
     </div>
     <div v-if="showPlayCount" class="play-count">
-      <IconPark :icon="video ? Play : Record" class="mr-2" :size="18" />
+      <IconPark :icon="video ? Play : hot ? Headset : Record" class="mr-2" :size="18" />
       <text class="text-sm">
         {{ video ? numberToDuration(playCount || 0) : playCount }}
       </text>
@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { PlayOne, Play, Record } from '@icon-park/vue-next'
+import { PlayOne, Play, Record, Headset } from '@icon-park/vue-next'
 import { numberToDuration } from '@/utils/number/number'
 import IconPark from '@/components/common/IconPark.vue'
 
@@ -32,6 +32,7 @@ defineProps<{
   showPlayCount?: boolean
   onPlay?: () => void
   video?: boolean //是否是mv
+  hot?: boolean //是否显示听众
 }>()
 </script>
 
