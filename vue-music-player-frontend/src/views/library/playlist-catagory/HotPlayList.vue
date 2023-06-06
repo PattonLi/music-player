@@ -1,8 +1,8 @@
 <template>
-  <div class="grid grid-flow-row grid-cols-8 2xl:grid-cols-12 gap-2.5">
-    <div class="button-dc">全部</div>
-    <div v-for="(tag, index) in tags" :key="index" class="button-dc">
-      <button>{{ tag.tagName }}</button>
+  <div class="grid grid-flow-row grid-cols-8 2xl:grid-cols-12 gap-2 gap-y-4">
+    <button class="button-outline w-24">全部</button>
+    <div v-for="(tag, index) in tags" :key="index">
+      <button class="button-outline w-24">{{ tag.tagName }}</button>
     </div>
   </div>
 </template>
@@ -18,22 +18,25 @@ onMounted(() => {
       tagName: 'ACG'
     },
     {
-      tagName: 'ACG'
+      tagName: '游戏'
     },
     {
-      tagName: 'ACG'
+      tagName: '英语'
     },
     {
-      tagName: 'ACG'
+      tagName: '说唱'
     },
     {
-      tagName: 'ACG'
+      tagName: '国风'
     },
     {
-      tagName: 'ACG'
+      tagName: '私藏'
     },
     {
-      tagName: 'ACG'
+      tagName: '流行'
+    },
+    {
+      tagName: '摇滚'
     }
   ]
 })

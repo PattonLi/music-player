@@ -32,6 +32,8 @@ export const Pages = {
   player: 'player',
   /* 用户中心 */
   userCenter: 'userCenter',
+  userEdit: 'userEdit',
+  userProfile: 'userProfile',
   /* 搜索结果组件 */
   searchResult: 'searchResult',
   /* 404page */
@@ -42,5 +44,10 @@ export const Pages = {
 }
 
 export const PagesAuth = {
-  userCenter: 'userCenter'
+  /* 用户中心 */
+  userCenter: 'userCenter',
+  userEdit: 'userEdit',
+  userProfile: 'userProfile',
+  //我喜欢
+  like: 'like', 
 }
