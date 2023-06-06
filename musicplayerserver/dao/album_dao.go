@@ -23,3 +23,10 @@ func (a *AlbumDao) GetAlbumById(id int) (model.AlbumInfo, error) {
 
 	return album, result.Error
 }
+
+// 根据歌手id获取歌手所有专辑
+func (a *AlbumDao) GetAlbumByArtistid(artist_id int) ([]model.AlbumInfo, error) {
+	var album []model.AlbumInfo
+	result := DB.Where("artist_id = ?", artist_id).Find(&album)
+	return album, result.Error
+}

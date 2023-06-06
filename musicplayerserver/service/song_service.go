@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"music-player/musicplayerserver/dao"
 	"music-player/musicplayerserver/model"
 )
@@ -47,4 +48,36 @@ func (s *SongService) GetTenSongs() []model.SongInfo {
 func (s *SongService) GetAlbumSongs(albumid int) ([]model.SongInfo, error) {
 	songs, err := s.songdao.GetSongsInAlbum(albumid)
 	return songs, err
+}
+
+// 根据时间或者热度对歌手歌曲进行排序,获取歌曲分页
+func (s *SongService) GetSongsPage(id int, order string, currentpage int, pagesize int) ([]model.SongInfo, error, error, int) {
+	songs, err := s.songdao.SortSongsByOrder(id, order)
+	l := len(songs)
+	n := l / pagesize
+	remainder := l % pagesize
+	var pagenum int
+	var remainder_flag bool
+	if remainder == 0 {
+		pagenum = n
+		remainder_flag = false
+	} else {
+		pagenum = n + 1
+		remainder_flag = true
+	}
+
+	if currentpage > pagenum {
+		err1 := errors.New("当前要获取的歌曲分页过大！")
+		return nil, err, err1, pagenum
+	}
+
+	var songpage []model.SongInfo
+
+	if currentpage == pagenum && remainder_flag {
+		songpage = songs[(currentpage-1)*pagesize : l]
+		return songpage, err, nil, pagenum
+	}
+
+	songpage = songs[(currentpage-1)*pagesize : currentpage*pagesize]
+	return songpage, err, nil, pagenum
 }
