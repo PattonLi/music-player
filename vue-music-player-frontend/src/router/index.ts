@@ -194,28 +194,40 @@ const router = createRouter({
         {
           path: 'like',
           name: Pages.like,
-          meta: { keepAlive: true },
+          meta: {
+            keepAlive: true,
+            menu: Pages.like
+          },
           component: () => import('@/views/like/AppLike.vue')
         },
         /*--------------------本地歌曲------------------*/
         {
           path: 'local',
           name: Pages.local,
-          meta: { keepAlive: true },
+          meta: {
+            keepAlive: true,
+            menu: Pages.local
+          },
           component: () => import('@/views/local/AppLocalSongs.vue')
         },
         /*--------------------下载歌曲------------------*/
         {
           path: 'download',
           name: Pages.download,
-          meta: { keepAlive: true },
+          meta: {
+            keepAlive: true,
+            menu: Pages.download
+          },
           component: () => import('@/views/download/AppDownLoad.vue')
         },
         /*--------------------最近播放------------------*/
         {
           path: 'recentPlay',
           name: Pages.recentPlay,
-          meta: { keepAlive: true },
+          meta: {
+            keepAlive: true,
+            menu: Pages.recentPlay
+          },
           component: () => import('@/views/recent-play/AppRecentPlay.vue')
         }
       ]

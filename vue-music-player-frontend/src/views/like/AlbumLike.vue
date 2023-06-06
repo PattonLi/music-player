@@ -1,6 +1,5 @@
 <template>
   <div class="mt-5 mx-5">
-    
     <!-- 网格 -->
     <div class="grid grid-flow-row gap-6 grid-cols-4 2xl:grid-cols-6">
       <!-- 循环 -->
