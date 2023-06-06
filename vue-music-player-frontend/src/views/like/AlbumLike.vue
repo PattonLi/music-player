@@ -1,5 +1,6 @@
 <template>
-  <div class="mt-8 mx-5">
+  <div class="mt-5 mx-5">
+    
     <!-- 网格 -->
     <div class="grid grid-flow-row gap-6 grid-cols-4 2xl:grid-cols-6">
       <!-- 循环 -->
@@ -31,7 +32,7 @@ import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 import { useLikeStore } from '@/stores/like'
 
-const {updateLikes} = useLikeStore()
+const { updateLikes } = useLikeStore()
 const { albums } = storeToRefs(useLikeStore())
 const { userId } = storeToRefs(useAuthStore())
 
