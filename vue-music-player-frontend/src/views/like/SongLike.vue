@@ -1,5 +1,6 @@
 <template>
-  <div class="mt-5 mb-3 flex items-center justify-between">
+  <div>
+    <div class="mt-5 mb-3 flex items-center justify-between">
     <!-- 功能区 -->
     <div class="flex gap-x-3">
       <button class="w-28 button-outline" @click="playAll">
@@ -32,6 +33,8 @@
       </template>
     </div>
   </div>
+  </div>
+  
 </template>
 
 <script setup lang="ts">
@@ -41,9 +44,9 @@ import IconPark from '@/components/common/IconPark.vue'
 import { usePlayerStore } from '@/stores/player'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
-import { apiUserLike } from '@/utils/api/like'
 import { useLikeStore } from '@/stores/like'
 
+const {updateLikes} = useLikeStore()
 const { songs } = storeToRefs(useLikeStore())
 const { userId } = storeToRefs(useAuthStore())
 const { pushPlayList, play } = usePlayerStore()
@@ -54,7 +57,7 @@ const playAll = () => {
 }
 
 onMounted(async () => {
-  apiUserLike(userId.value)
+  updateLikes(userId.value)
 })
 </script>
 <style lang="scss" scoped>

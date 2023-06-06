@@ -44,5 +44,8 @@ export const Pages = {
 }
 
 export const PagesAuth = {
-  userCenter: 'userCenter'
+  userCenter: 'userCenter',
+  userEdit: 'userEdit',
+  userProfile: 'userProfile',
+  like:'like',
 }

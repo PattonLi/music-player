@@ -28,15 +28,15 @@ import MyCover from '@/components/common/MyCover.vue'
 import { routerPushByNameId } from '@/utils/navigator/router'
 import { Pages } from '@/router/pages'
 import { storeToRefs } from 'pinia'
-import { apiUserLike } from '@/utils/api/like'
 import { useAuthStore } from '@/stores/auth'
 import { useLikeStore } from '@/stores/like'
 
+const {updateLikes} = useLikeStore()
 const { albums } = storeToRefs(useLikeStore())
 const { userId } = storeToRefs(useAuthStore())
 
 onMounted(async () => {
-  apiUserLike(userId.value)
+  updateLikes(userId.value)
 })
 </script>
 <style lang="scss" scoped>

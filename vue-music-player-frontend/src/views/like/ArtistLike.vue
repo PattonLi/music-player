@@ -25,13 +25,13 @@ import { Pages } from '@/router/pages'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 import { useLikeStore } from '@/stores/like'
-import { apiUserLike } from '@/utils/api/like'
 
+const {updateLikes} = useLikeStore()
 const { artists } = storeToRefs(useLikeStore())
 const { userId } = storeToRefs(useAuthStore())
 
 onMounted(async () => {
-  apiUserLike(userId.value)
+  updateLikes(userId.value)
 })
 </script>
 

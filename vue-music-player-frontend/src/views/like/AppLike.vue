@@ -20,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+
 import SongLike from './SongLike.vue'
 import AlbumLike from './AlbumLike.vue'
 import ArtistLike from './ArtistLike.vue'
