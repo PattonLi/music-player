@@ -22,6 +22,8 @@ router.beforeEach((to, from, next) => {
     if (to.name in PagesAuth) {
       AlertRouterWarning('You need login before visiting!')
       next({ name: Pages.discover })
+    }else{
+      next()
     }
   }
   //放行
