@@ -481,7 +481,7 @@ func GETs(r *gin.Engine) {
 			})
 		}
 	})
-	//获得特定页所有用户信息
+	//获得特定页所有专辑信息
 	r.GET("/admin/pageAllAlbum", func(c *gin.Context) {
 		albums, totalPage := controller.NewAlbumController().AllAlbumInfoHandler(c)
 		c.JSON(http.StatusOK, gin.H{
