@@ -38,7 +38,7 @@ import _ from 'lodash'
 
 const { play } = usePlayerStore()
 const { personalizedSongs } = toRefs(useMusicStore())
-const { UpdatePersonalize } = useMusicStore()
+const { updatePersonalize: UpdatePersonalize } = useMusicStore()
 
 onMounted(async () => {
   await UpdatePersonalize(1)

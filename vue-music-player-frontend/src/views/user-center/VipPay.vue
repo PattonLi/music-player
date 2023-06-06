@@ -13,26 +13,32 @@
         class="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none"
       >
         <div class="p-8 sm:p-10 lg:flex-auto">
-          <h3 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-blue-400">Lifetime membership</h3>
+          <h3 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-blue-400">
+            Lifetime membership
+          </h3>
           <p class="mt-6 text-lg leading-7 text-gray-500">
             我们的会员有效期是终身制的，只需一次付费，就可以永久使用，并且没有各种额外的收费项目。
           </p>
           <div class="mt-10 flex items-center gap-x-4">
-            <h4 class="flex-none text-base font-semibold leading-6 text-indigo-600 dark:text-blue-400">
+            <h4
+              class="flex-none text-base font-semibold leading-6 text-indigo-600 dark:text-blue-400"
+            >
               What’s included
             </h4>
             <div class="h-px flex-auto bg-gray-100" />
           </div>
           <ul
             role="list"
-            class="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6 "
+            class="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6"
           >
             <li v-for="feature in includedFeatures" :key="feature" class="flex gap-x-3">
-              <CheckIcon class="h-6 w-5 flex-none text-indigo-600 dark:text-indigo-300" aria-hidden="true" />
+              <CheckIcon
+                class="h-6 w-5 flex-none text-indigo-600 dark:text-indigo-300"
+                aria-hidden="true"
+              />
               <div class="dark:text-white dark:text-base">
                 {{ feature }}
               </div>
-              
             </li>
           </ul>
         </div>
@@ -65,10 +71,5 @@
 <script setup lang="ts">
 import { CheckIcon } from '@heroicons/vue/20/solid'
 
-const includedFeatures = [
-  '无限量下载付费歌曲',
-  '播放vip歌曲',
-  '没有任何广告',
-  '更高的歌曲音质'
-]
+const includedFeatures = ['无限量下载付费歌曲', '播放vip歌曲', '没有任何广告', '更高的歌曲音质']
 </script>

@@ -135,9 +135,13 @@ func Posts(r *gin.Engine) {
 	r.POST("/admin/addsong", func(c *gin.Context) {
 		result := controller.NewSongController().AddSongHandler(c)
 		if result {
-			c.JSON(http.StatusOK, gin.H{"message": "成功添加歌曲"})
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
 		} else {
-			c.JSON(http.StatusBadRequest, gin.H{"message": "添加歌曲失败"})
+			c.JSON(http.StatusBadRequest, gin.H{
+				"code": 300,
+			})
 		}
 	})
 
@@ -510,4 +514,41 @@ func GETs(r *gin.Engine) {
 		}
 	})
 
+
+	r.GET("/discover/swiper", func(c *gin.Context) {
+		type swiper struct {
+			TargetId   int    `json:"targetId"`
+			PicUrl     string `json:"picUrl"`
+			TargetType string `json:"targetType"`
+			TypeTitle  string `json:"typeTitle"`
+		}
+
+		songs := controller.NewSongController().GetTenSongsHandler(c)
+		albums := controller.NewAlbumController().GetTenAlbumsHandler(c)
+
+		var swipers []swiper
+
+		for i := 0; i < 3; i++ {
+			var s1 swiper
+			var s2 swiper
+
+			s1.TargetId = songs[i].Song_ID
+			s1.PicUrl = songs[i].Pic_url
+			s1.TargetType = songs[i].Type
+			s1.TypeTitle = songs[i].Name
+
+			s2.TargetId = albums[i].AlbumID
+			s2.PicUrl = albums[i].Pic_url
+			s2.TargetType = albums[i].Type
+			s2.TypeTitle = albums[i].Name
+
+			swipers = append(swipers, s1)
+			swipers = append(swipers, s2)
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"code":    200,
+			"swipers": swipers,
+		})
+	})
 }

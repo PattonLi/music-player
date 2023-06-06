@@ -38,3 +38,26 @@ export async function apiArtistSongs(
     order: order
   })
 }
+
+//获取对应筛选条件的歌手
+export async function apiArtistList(
+  pageSize: number,
+  currentPage: number,
+  //查询信息
+  firstLetter: string,
+  type: number,
+  location: number
+) {
+  return await myAxios.get<{
+    code: number
+    pageTotal: number
+    artists: Artist[]
+  }>('library/artist', {
+    pageSize: pageSize,
+    currentPage: currentPage,
+    //查询信息
+    firstLetter: firstLetter,
+    type: type,
+    location: location
+  })
+}
