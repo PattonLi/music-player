@@ -89,3 +89,11 @@ func (sc *SongController) GetSongsPageHandler(c *gin.Context) ([]model.SongInfo,
 	songpage, err0, err1, pagetotal := sc.songservice.GetSongsPage(Id, order, currentPage, pageSize)
 	return songpage, err0, err1, pagetotal
 }
+
+// 根据songid获取歌曲
+func (sc *SongController) GetSongDetailHandler(c *gin.Context) (model.SongInfo, error) {
+	id := c.Query("songId")
+	Id, _ := strconv.Atoi(id)
+	song, err := sc.songservice.GetSongDetail(Id)
+	return song, err
+}

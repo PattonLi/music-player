@@ -36,3 +36,11 @@ func (ac *ArtistController) GetArtistDetailHandler(c *gin.Context) (model.Artist
 	artist, err := ac.artistservice.GetArtistDetail(Id)
 	return artist, err
 }
+
+// 获取歌手描述
+func (ac *ArtistController) GetArtistDescribeHandler(c *gin.Context) (string, error) {
+	id := c.Query("artistId")
+	Id, _ := strconv.Atoi(id)
+	profile, err := ac.artistservice.GetArtistDescribe(Id)
+	return profile, err
+}
