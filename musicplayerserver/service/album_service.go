@@ -28,3 +28,15 @@ func (al *AlbumService) GetAlbumById(id int) (model.AlbumInfo, error) {
 	album, err := al.albumdao.GetAlbumById(id)
 	return album, err
 }
+
+// 特定专辑信息获取
+func (as *AlbumService) AlbumInfo(Name string) ([]model.AlbumInfo, error) {
+	album, err := as.albumdao.GetAlbumbyName(Name)
+	return album, err
+}
+
+// 特定页所有专辑信息获取
+func (als *AlbumService) AllAlbumInfo(page int, pagesize int) ([]model.AlbumInfo, int64) {
+	albumlist, totalPage := als.albumdao.GetAllAlbumInfo(page, pagesize)
+	return albumlist, totalPage
+}
