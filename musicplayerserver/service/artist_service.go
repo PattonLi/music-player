@@ -27,3 +27,9 @@ func (a *ArtistService) GetArtistDetail(id int) (model.ArtistInfo, error) {
 	artist, err := a.artistdao.GetInfoById(id)
 	return artist, err
 }
+
+// 获得歌手描述
+func (a *ArtistService) GetArtistDescribe(id int) (string, error) {
+	profile, err := a.artistdao.GetProfile(id)
+	return profile, err
+}

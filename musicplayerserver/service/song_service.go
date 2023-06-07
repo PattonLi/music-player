@@ -81,3 +81,9 @@ func (s *SongService) GetSongsPage(id int, order string, currentpage int, pagesi
 	songpage = songs[(currentpage-1)*pagesize : currentpage*pagesize]
 	return songpage, err, nil, pagenum
 }
+
+// 根据songid获取歌曲
+func (s *SongService) GetSongDetail(id int) (model.SongInfo, error) {
+	song, err := s.songdao.GetSongDetail(id)
+	return song, err
+}
