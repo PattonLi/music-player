@@ -29,3 +29,11 @@ func (a *ArtistDao) GetProfile(id int) (string, error) {
 	result := DB.First(&artist, id)
 	return artist.Profile, result.Error
 }
+
+// 根据关键词获取歌手
+func (a *ArtistDao) GetArtistByKeyWord(keyword string) ([]model.ArtistInfo, error) {
+	var artist []model.ArtistInfo
+	keyword = "%" + keyword + "%"
+	result := DB.Where("name  LIKE ?", keyword).Find(&artist)
+	return artist, result.Error
+}

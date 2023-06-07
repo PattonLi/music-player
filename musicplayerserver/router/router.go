@@ -514,7 +514,7 @@ func GETs(r *gin.Engine) {
 		}
 	})
 
-
+	//轮播图推荐
 	r.GET("/discover/swiper", func(c *gin.Context) {
 		type swiper struct {
 			TargetId   int    `json:"targetId"`
@@ -570,6 +570,7 @@ func GETs(r *gin.Engine) {
 		}
 	})
 
+	//分页获取歌手的专辑
 	r.GET("/detail/artist/album", func(c *gin.Context) {
 		albumpage, err0, err1, pagenum := controller.NewAlbumController().GetAlbumPageHandler(c)
 		if err0 != nil || err1 != nil {
@@ -587,6 +588,7 @@ func GETs(r *gin.Engine) {
 		}
 	})
 
+	//根据songid获取歌曲
 	r.GET("/detail/song", func(c *gin.Context) {
 		song, err := controller.NewSongController().GetSongDetailHandler(c)
 		if err != nil {
@@ -602,6 +604,7 @@ func GETs(r *gin.Engine) {
 		}
 	})
 
+	//获取歌手描述
 	r.GET("/detail/artist/describe", func(c *gin.Context) {
 		type Describe struct {
 			Profile   string `json:"profile"`
@@ -636,4 +639,93 @@ func GETs(r *gin.Engine) {
 		}
 	})
 
+	//获取热门歌单
+	r.GET("/library/playlist/hot", func(c *gin.Context) {
+		playlist, err0, err1, pagatotal := controller.NewPlaylistController().GetHotPlaylistHandler(c)
+		if err0 != nil || err1 != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      300,
+				"pageTotal": nil,
+				"platlist":  nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      200,
+				"pageTotal": pagatotal,
+				"playlist":  playlist,
+			})
+		}
+	})
+
+	//获取歌单详情
+	r.GET("/detail/playlist", func(c *gin.Context) {
+		playlist, songs, err := controller.NewPlaylistController().GetPlaylistAllSongsHandler(c)
+		if !err {
+			c.JSON(http.StatusOK, gin.H{
+				"code":     300,
+				"playlist": nil,
+				"songs":    nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":     200,
+				"playlist": playlist,
+				"songs":    songs,
+			})
+		}
+	})
+
+	// 关键词搜索歌曲
+	r.GET("/search/song", func(c *gin.Context) {
+		songpage, err0, err1, pagetotal := controller.NewSongController().GetSongByKeyWordHandler(c)
+		if err0 != nil || err1 != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      300,
+				"pageTotal": nil,
+				"songs":     nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      200,
+				"pageTotal": pagetotal,
+				"songs":     songpage,
+			})
+		}
+	})
+
+	//关键词搜索歌手
+	r.GET("/search/artist", func(c *gin.Context) {
+		artistpage, err0, err1, pagetotal := controller.NewArtistController().GetArtistByKeyWordHandler(c)
+		if err0 != nil || err1 != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      300,
+				"pageTotal": nil,
+				"artists":   nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      200,
+				"pageTotal": pagetotal,
+				"artists":   artistpage,
+			})
+		}
+	})
+
+	//关键词搜索专辑
+	r.GET("/search/album", func(c *gin.Context) {
+		albumpage, err0, err1, pagetotal := controller.NewAlbumController().GetAlbumByKeyWordHandler(c)
+		if err0 != nil || err1 != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      300,
+				"pageTotal": nil,
+				"albums":    nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      200,
+				"pageTotal": pagetotal,
+				"albums":    albumpage,
+			})
+		}
+	})
 }

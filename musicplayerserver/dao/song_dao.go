@@ -65,3 +65,11 @@ func (s *Songdao) GetSongDetail(id int) (model.SongInfo, error) {
 	result := DB.First(&song, id)
 	return song, result.Error
 }
+
+// 根据关键词获取歌曲
+func (s *Songdao) GetSongByKeyWord(keyword string) ([]model.SongInfo, error) {
+	var song []model.SongInfo
+	keyword = "%" + keyword + "%"
+	result := DB.Where("name  LIKE ?", keyword).Find(&song)
+	return song, result.Error
+}
