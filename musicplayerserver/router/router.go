@@ -55,7 +55,7 @@ func Posts(r *gin.Engine) {
 	})
 	
 	//修改用户头像上传照片
-	authorized.POST("/User/modifyUploadPic", func(c *gin.Context){
+	authorized.POST("/User/uploadPic", func(c *gin.Context){
 		err := controller.NewUserController().UploadUserPicHandler(c)
 		if err != nil{
 			c.JSON(http.StatusOK, gin.H{
@@ -150,11 +150,11 @@ func GETs(r *gin.Engine) {
 
 	//获得特定页所有用户信息
 	r.GET("/User/pageAllInfo", func(c *gin.Context) {
-		users, totalPage := controller.NewUserController().AllUserInfoHandler(c)
+		users, totalrecord := controller.NewUserController().AllUserInfoHandler(c)
 		c.JSON(http.StatusOK, gin.H{
 			"code":      200,
 			"data":      users,
-			"totalPage": totalPage,
+			"totals": totalrecord,
 		},
 		)
 	})

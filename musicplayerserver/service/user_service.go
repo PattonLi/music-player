@@ -33,8 +33,8 @@ func (us *UserService) UserInfo(name string) ([]model.UserInfo, error) {
 
 // 特定页所有普通用户信息获取
 func (us *UserService) AllUserInfo(page int, pagesize int) ([]model.UserInfo, int64) {
-	userlist,totalPage := us.userdao.GetAllUserInfo(page,pagesize)
-	return userlist, totalPage
+	userlist,totalrecord := us.userdao.GetAllUserInfo(page,pagesize)
+	return userlist, totalrecord
 }
 
 // 用户信息修改

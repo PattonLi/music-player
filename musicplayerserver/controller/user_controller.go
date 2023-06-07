@@ -55,8 +55,8 @@ func (usc *UserController) UserInfoHandler(c *gin.Context) ([]model.UserInfo, er
 func (usc *UserController) AllUserInfoHandler(c *gin.Context) ([]model.UserInfo, int64) {
 	page, _ := strconv.Atoi(c.Query("currentPage"))
 	pagesize, _ := strconv.Atoi(c.Query("pageSize"))
-	userlist, totalPage := usc.userservice.AllUserInfo(page, pagesize)
-	return userlist, totalPage
+	userlist, totalrecord := usc.userservice.AllUserInfo(page, pagesize)
+	return userlist, totalrecord
 }
 
 //根据ID获取单个用户信息

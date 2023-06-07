@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"music-player/musicplayerserver/model"
-	"math"
 	"gorm.io/gorm"
 )
 
@@ -94,8 +93,7 @@ func (*UserDao) GetAllUserInfo(page int, pagesize int) ([]model.UserInfo,int64) 
 	var totalrecord int64
 	offset := (page-1)*pagesize
 	DB.Offset(offset).Limit(pagesize).Find(&userlist).Offset(-1).Limit(-1).Count(&totalrecord)
-	totalPage := int64(math.Ceil(float64(totalrecord)/float64(pagesize)))
-	return userlist,totalPage
+	return userlist,totalrecord
 }
 
 //根据ID获取单个用户信息
