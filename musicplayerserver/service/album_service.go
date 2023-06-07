@@ -73,3 +73,35 @@ func (al *AlbumService) GetAlbumPage(artist_id int, currentpage int, pagesize in
 	albumpage = albums[(currentpage-1)*pagesize : currentpage*pagesize]
 	return albumpage, err, nil, pagenum
 }
+
+// 根据关键词获取专辑
+func (al *AlbumService) GetAlbumByKeyWord(pagesize int, currentpage int, keyword string) ([]model.AlbumInfo, error, error, int) {
+	albums, err := al.albumdao.GetAlbumByKeyWord(keyword)
+	l := len(albums)
+	n := l / pagesize
+	remainder := l % pagesize
+	var pagenum int
+	var remainder_flag bool
+	if remainder == 0 {
+		pagenum = n
+		remainder_flag = false
+	} else {
+		pagenum = n + 1
+		remainder_flag = true
+	}
+
+	if currentpage > pagenum {
+		err1 := errors.New("当前要获取的专辑分页过大！")
+		return nil, err, err1, pagenum
+	}
+
+	var albumpage []model.AlbumInfo
+
+	if currentpage == pagenum && remainder_flag {
+		albumpage = albums[(currentpage-1)*pagesize : l]
+		return albumpage, err, nil, pagenum
+	}
+
+	albumpage = albums[(currentpage-1)*pagesize : currentpage*pagesize]
+	return albumpage, err, nil, pagenum
+}
