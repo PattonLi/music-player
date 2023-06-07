@@ -586,4 +586,54 @@ func GETs(r *gin.Engine) {
 			})
 		}
 	})
+
+	r.GET("/detail/song", func(c *gin.Context) {
+		song, err := controller.NewSongController().GetSongDetailHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+				"song": nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"song": song,
+			})
+		}
+	})
+
+	r.GET("/detail/artist/describe", func(c *gin.Context) {
+		type Describe struct {
+			Profile   string `json:"profile"`
+			BasicInfo string `json:"basicInfo"`
+			TimeLine  string `json:"timeLine"`
+			Award     string `json:"award"`
+		}
+
+		profile, err := controller.NewArtistController().GetArtistDescribeHandler(c)
+
+		if err != nil {
+			var describe Describe
+			describe.Profile = ""
+			describe.BasicInfo = ""
+			describe.TimeLine = ""
+			describe.Award = ""
+
+			c.JSON(http.StatusOK, gin.H{
+				"code":     300,
+				"describe": describe,
+			})
+		} else {
+			var describe Describe
+			describe.Profile = profile
+			describe.BasicInfo = "test"
+			describe.TimeLine = "test"
+			describe.Award = "test"
+			c.JSON(http.StatusOK, gin.H{
+				"code":     200,
+				"describe": describe,
+			})
+		}
+	})
+
 }

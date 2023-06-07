@@ -22,3 +22,10 @@ func (a *ArtistDao) GetInfoById(id int) (model.ArtistInfo, error) {
 	result := DB.First(&artist, id)
 	return artist, result.Error
 }
+
+// 获取歌手描述
+func (a *ArtistDao) GetProfile(id int) (string, error) {
+	var artist model.ArtistInfo
+	result := DB.First(&artist, id)
+	return artist.Profile, result.Error
+}

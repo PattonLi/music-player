@@ -58,3 +58,10 @@ func (s *Songdao) SortSongsByOrder(id int, order string) ([]model.SongInfo, erro
 	result := DB.Order(order).Where("artist_id = ?", id).Find(&song)
 	return song, result.Error
 }
+
+// 根据歌曲id获得歌曲
+func (s *Songdao) GetSongDetail(id int) (model.SongInfo, error) {
+	var song model.SongInfo
+	result := DB.First(&song, id)
+	return song, result.Error
+}
