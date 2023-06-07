@@ -40,6 +40,7 @@ func (as *AlbumService) AlbumInfo(Name string) ([]model.AlbumInfo, error) {
 func (als *AlbumService) AllAlbumInfo(page int, pagesize int) ([]model.AlbumInfo, int64) {
 	albumlist, totalPage := als.albumdao.GetAllAlbumInfo(page, pagesize)
 	return albumlist, totalPage
+}
 // 分页获取歌手专辑
 func (al *AlbumService) GetAlbumPage(artist_id int, currentpage int, pagesize int) ([]model.AlbumInfo, error, error, int) {
 	albums, err := al.albumdao.GetAlbumByArtistid(artist_id)

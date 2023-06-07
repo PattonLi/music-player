@@ -51,6 +51,7 @@ func (ac *AlbumController) AllAlbumInfoHandler(c *gin.Context) ([]model.AlbumInf
 	pagesize, _ := strconv.Atoi(c.Query("pageSize"))
 	albumlist, totalPage := ac.albumService.AllAlbumInfo(page, pagesize)
 	return albumlist, totalPage
+}
 // 分页获取歌手专辑
 func (ac *AlbumController) GetAlbumPageHandler(c *gin.Context) ([]model.AlbumInfo, error, error, int) {
 	artistid := c.Query("artistId")

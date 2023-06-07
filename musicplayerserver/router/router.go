@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"music-player/musicplayerserver/controller"
 	"music-player/musicplayerserver/model"
-	utils "music-player/musicplayerserver/utils/jwt"
+	"music-player/musicplayerserver/utils/jwt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
