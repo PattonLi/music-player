@@ -34,7 +34,7 @@ import { Pages } from '@/router/pages'
 const router = useRouter()
 
 const { personalizedAlbums } = toRefs(useMusicStore())
-const { UpdatePersonalize } = useMusicStore()
+const { updatePersonalize: UpdatePersonalize } = useMusicStore()
 
 onMounted(async () => {
   await UpdatePersonalize(2)

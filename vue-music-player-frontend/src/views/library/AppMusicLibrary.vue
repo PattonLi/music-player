@@ -16,7 +16,11 @@
       </div>
     </el-affix>
     <div class="mt-5">
-      <RouterView />
+      <router-view v-slot="{ Component }">
+        <transition class="animate__animated animate__zoomIn" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </div>
   </div>
 </template>
@@ -74,11 +78,11 @@ watch(
 )
 
 const onTabClick = ({ props }: { props: Menu }) => {
-  router.push({ name: props.name, replace: true })
+  router.push({ name: props.name, replace: false })
 }
 
 onMounted(() => {
-  router.push({ name: 'select', replace: true })
+  router.push({ name: 'select' })
 })
 </script>
 

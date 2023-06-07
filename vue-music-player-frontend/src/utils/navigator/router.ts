@@ -11,3 +11,13 @@ export const routerPushByNameId = (name: string, id: number) => {
     }
   })
 }
+
+//跳转搜索
+export const routerPushByNameKeyWord = (name: string, keyWord: string) => {
+  router.push({ name: name, query: { keyWord: keyWord } }).then((failure) => {
+    if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
+      //failure.to.path
+      //failure.from.path
+    }
+  })
+}

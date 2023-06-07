@@ -1,13 +1,13 @@
 package model
 
 type ArtistInfo struct {
-	ArtistID   int `gorm:"primarykey"`
-	Name       string
-	Profile    string
-	Location   string
-	Song_size  int
-	Album_size int
-	Pic_url    string
+	ArtistID   int    `json:"artistId" gorm:"primarykey"`
+	Name       string `json:"artist"`
+	Profile    string `json:"profile"`
+	Location   string `json:"location"`
+	Song_size  int    `json:"songSize"`
+	Album_size int    `json:"albumSize"`
+	Pic_url    string `json:"picUrl"`
 }
 
 func (a *ArtistInfo) TableName() string {
