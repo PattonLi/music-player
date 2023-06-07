@@ -15,6 +15,7 @@
     "@headlessui/vue": "^1.7.14",
     "@heroicons/vue": "^2.0.18",
     "@icon-park/vue-next": "^1.4.2",
+    "animate.css": "^4.1.1",
     "axios": "^1.4.0",
     "dayjs": "^1.11.8",
     "element-plus": "^2.3.4",

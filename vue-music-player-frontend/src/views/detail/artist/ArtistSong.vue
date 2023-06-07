@@ -133,8 +133,8 @@ const setOrder = (order: 'time' | 'hot') => {
   pageGet()
 }
 
-onMounted(async () => {
-  await pageGet()
+onMounted(() => {
+  pageGet()
 })
 </script>
 <style lang="scss" scoped>

@@ -6,6 +6,7 @@
     <PersonalizedAlbum />
     <PersonalizedArtist />
     <PersonalizedMv />
+    <!-- 回到开头按钮 -->
   </div>
 </template>
 

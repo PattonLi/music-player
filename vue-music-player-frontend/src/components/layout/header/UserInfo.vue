@@ -40,9 +40,15 @@
           <p class="demo-rich-content__desc" style="margin: 0">
             欢迎您来到QQ音乐网页版(仿),本网站中山大学软件工程学院学生开发！
           </p>
-
-          <el-button @click="routerPushByNameId(Pages.userCenter, userId)">用户中心</el-button>
-          <el-button @click="logout">退出登录</el-button>
+          <div class="flex items-center flex-auto space-x-2">
+            <button
+              class="button-outline w-40"
+              @click="routerPushByNameId(Pages.userProfile, userId)"
+            >
+              用户中心
+            </button>
+            <button class="button-outline w-40" @click="logout">退出登录</button>
+          </div>
         </div>
       </template>
     </el-popover>

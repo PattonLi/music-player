@@ -41,6 +41,27 @@ func (s *Songdao) GetTenSongs() []model.SongInfo {
 	return songs
 }
 
+// 获取专辑中的所有歌曲
+func (s *Songdao) GetSongsInAlbum(albumid int) ([]model.SongInfo, error) {
+	var song []model.SongInfo
+	result := DB.Where("album_id = ?", albumid).Find(&song)
+	return song, result.Error
+}
+
 func NewSongDao() *Songdao {
 	return &Songdao{}
+}
+
+// 根据热度或者时间对歌手歌曲进行排序
+func (s *Songdao) SortSongsByOrder(id int, order string) ([]model.SongInfo, error) {
+	var song []model.SongInfo
+	result := DB.Order(order).Where("artist_id = ?", id).Find(&song)
+	return song, result.Error
+}
+
+// 根据歌曲id获得歌曲
+func (s *Songdao) GetSongDetail(id int) (model.SongInfo, error) {
+	var song model.SongInfo
+	result := DB.First(&song, id)
+	return song, result.Error
 }

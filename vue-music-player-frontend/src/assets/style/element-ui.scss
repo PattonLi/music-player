@@ -11,14 +11,13 @@
 }
 
 //消息弹出框
-.el-message-box{
-
-  .el-message-box__btns{
-    .el-button{
+.el-message-box {
+  .el-message-box__btns {
+    .el-button {
       @apply dark:bg-zinc-800 border-none;
     }
 
-    .el-button--primary{
+    .el-button--primary {
       @apply dark:bg-green-600 hover:text-emerald-200 cursor-pointer;
     }
   }
