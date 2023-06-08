@@ -8,19 +8,20 @@ export const useRecentPlayStore = defineStore('recentPlay', {
   }),
   getters: {},
   actions: {
-    addRecentSongs(...songs : Song[]){
+    addRecentSongs(...songs: Song[]) {
       for (let index = 0; index < songs.length; index++) {
-        const i = _.findIndex(this.rSongs, (o:Song)=>{ return o.songId ==  songs[index].songId})
+        const i = _.findIndex(this.rSongs, (o: Song) => {
+          return o.songId == songs[index].songId
+        })
         //移除重复元素
-        if(i!=-1){
-          _.pullAt(this.rSongs, i);
+        if (i != -1) {
+          _.pullAt(this.rSongs, i)
         }
         this.rSongs.push(songs[index])
       }
-      
     },
-    clearRecent(){
-      this.rSongs=[]
+    clearRecent() {
+      this.rSongs = []
     }
   }
 })

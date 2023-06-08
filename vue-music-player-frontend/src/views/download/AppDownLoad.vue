@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { PlayOne, DownloadFour,Delete } from '@icon-park/vue-next'
+import { PlayOne, DownloadFour, Delete } from '@icon-park/vue-next'
 import SongItem from '@/components/common/SongItem.vue'
 import IconPark from '@/components/common/IconPark.vue'
 import { usePlayerStore } from '@/stores/player'

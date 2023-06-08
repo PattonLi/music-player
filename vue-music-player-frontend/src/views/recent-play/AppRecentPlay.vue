@@ -45,7 +45,7 @@ import { storeToRefs } from 'pinia'
 import { useRecentPlayStore } from '@/stores/recentPlay'
 
 const { rSongs } = storeToRefs(useRecentPlayStore())
-const {clearRecent} = useRecentPlayStore()
+const { clearRecent } = useRecentPlayStore()
 const { pushPlayList, play } = usePlayerStore()
 
 const playAll = () => {

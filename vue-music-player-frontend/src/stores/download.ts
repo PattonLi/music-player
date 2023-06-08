@@ -7,11 +7,11 @@ export const useDwldStore = defineStore('download', {
   }),
   getters: {},
   actions: {
-    addDwlnSongs(...songs : Song[]){
+    addDwlnSongs(...songs: Song[]) {
       this.dwldSongs.push(...songs)
     },
-    clearDwld(){
-      this.dwldSongs=[]
+    clearDwld() {
+      this.dwldSongs = []
     }
   }
 })

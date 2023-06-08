@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import type { Song } from '@/models/song'
-import SongItemWithEdit from '@/components/common/SongItemWithEdit.vue';
+import SongItemWithEdit from '@/components/common/SongItemWithEdit.vue'
 
 const props = defineProps<{
   songs: Song[]

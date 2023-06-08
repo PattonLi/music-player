@@ -2,26 +2,26 @@
   <div class="flex-col flex h-full pb-28 justify-center">
     <div class="flex items-center">
       <!-- 左边专辑封面 -->
-      <div class="flex-1">
+      <div class="w-1/2">
         <div class="flex justify-center">
-          <div class="w-80 h-80">
+          <div class="w-1/2 h-1/2">
             <img :src="albumLogo" alt="" />
           </div>
         </div>
       </div>
 
       <!-- 右边歌词歌曲信息 -->
-      <div class="flex-1">
-        <div class="flex justify-center">
-          <div class="flex flex-col items-center">
+      <div class="w-1/2">
+        <div class="flex justify-center h-full">
+          <div class="flex flex-col items-center mr-20">
             <!-- 歌曲标题 -->
-            <div class="h-5 mb-8">
+            <div class="h-5 mt-9 mb-5">
               <span class="font-bold text-3xl">歌曲名</span>
             </div>
             <div class="h-5">
               <span>{{ songPos }}</span>
             </div>
-            <div class="h-5 pb-10">
+            <div class="h-5 mb-12">
               <span>{{ artistPos }}</span>
             </div>
             <!-- 歌词显示 -->
@@ -56,6 +56,3 @@ const artistPos = computed(() => {
 
 const { song } = storeToRefs(usePlayerStore())
 </script>
-
-
-

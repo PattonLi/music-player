@@ -7,7 +7,6 @@ import { useAuthStore } from './auth'
 import { apiLogPlay } from '@/utils/api/log'
 import { useRecentPlayStore } from './recentPlay'
 
-
 // 将00:00.00转换为秒数
 function timeStrToNum(str: string) {
   const minute = Number(str.slice(0, 2))
@@ -16,9 +15,9 @@ function timeStrToNum(str: string) {
   return minute * 60 + second + minSec / 100
 }
 
-interface LineLrc{
-  time:number
-  content:string
+interface LineLrc {
+  time: number
+  content: string
 }
 
 // 将歌词字符串转换为对象，格式为{开始时间: 歌词, ...}
@@ -26,14 +25,14 @@ function lyricToObj(lyricStr: string) {
   const obj: LineLrc[] = []
   let perLyric
   let time
-  let index=0
+  let index = 0
   lyricStr.split('\n').forEach((item, idx) => {
     perLyric = item.slice(item.indexOf(']') + 1)
     if (perLyric) {
       time = timeStrToNum(item.slice(1, 9))
       obj[index] = {
-        time:time,
-        content:perLyric
+        time: time,
+        content: perLyric
       }
       index++
     }
@@ -63,8 +62,7 @@ export const usePlayerStore = defineStore('player', {
     // 原始歌词
     lyric: [] as LineLrc[],
     // 原始译词
-    tlyric: [] as LineLrc[],
-
+    tlyric: [] as LineLrc[]
   }),
   getters: {
     //播放列表歌曲数量
@@ -94,7 +92,7 @@ export const usePlayerStore = defineStore('player', {
         const prevIndex: number = this.getPlayListIndex - 1
         return state.playList[prevIndex]
       }
-    },
+    }
   },
   actions: {
     //播放列表里面添加音乐
@@ -146,7 +144,7 @@ export const usePlayerStore = defineStore('player', {
           this.isPlaying = true
           this.pushPlayList(false, this.song)
           //记录日志
-          apiLogPlay(authStore.userId,this.song.songId)
+          apiLogPlay(authStore.userId, this.song.songId)
           //添加到最近播放
           const recentPlay = useRecentPlayStore()
           recentPlay.addRecentSongs(this.song)
@@ -243,11 +241,10 @@ export const usePlayerStore = defineStore('player', {
     changePlayerShow() {
       this.showPlayWindow = !this.showPlayWindow
     },
-    updateLrc(lrc1:string,lrc2:string) {
-      this.lyric=lyricToObj(lrc1)
-      this.tlyric=lyricToObj(lrc2)
+    updateLrc(lrc1: string, lrc2: string) {
+      this.lyric = lyricToObj(lrc1)
+      this.tlyric = lyricToObj(lrc2)
     }
-    
   }
 })
 

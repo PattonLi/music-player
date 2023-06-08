@@ -30,7 +30,7 @@ export const useAuthStore = defineStore('auth', {
         this.token = res.token
         this.userId = res.userId
         await this.checkLogin()
-        this.isLogin=true
+        this.isLogin = true
       } else if (res.code == 300) {
         AlertError('用户名不存在')
       } else if (res.code == 301) {
@@ -50,7 +50,7 @@ export const useAuthStore = defineStore('auth', {
         AlertSuccess('你已成功注册')
         this.token = res.token
         await this.checkLogin()
-        this.isLogin=true
+        this.isLogin = true
       } else if (res.code == 300) {
         AlertError('手机号已存在')
       } else {

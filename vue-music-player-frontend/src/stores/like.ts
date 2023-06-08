@@ -14,9 +14,7 @@ export const useLikeStore = defineStore('like', {
     songs: [] as Song[],
     playlists: [] as PlayList[]
   }),
-  getters: {
-
-  },
+  getters: {},
   actions: {
     async updateLikes(userId: number) {
       //加载数据
@@ -30,7 +28,7 @@ export const useLikeStore = defineStore('like', {
         AlertError('获取用户收藏')
       }
     },
-    async addLike(likeForm: LikeForm,userId:number){
+    async addLike(likeForm: LikeForm, userId: number) {
       const res = await apiAddLike(likeForm)
       if (res.code == 200) {
         AlertSuccess('添加收藏成功')
@@ -39,7 +37,7 @@ export const useLikeStore = defineStore('like', {
         AlertError('添加收藏失败')
       }
     },
-    async delLike(likeForm: LikeForm,userId:number){
+    async delLike(likeForm: LikeForm, userId: number) {
       const res = await apiAddLike(likeForm)
       if (res.code == 200) {
         AlertSuccess('删除收藏成功')
