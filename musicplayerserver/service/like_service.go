@@ -9,6 +9,7 @@ type LikesService struct {
 	likesdao *dao.LikeDao
 }
 
+// 获取用户所有收藏
 func (l *LikesService) GetUserLikes(userid int) ([]model.SongInfo, []model.AlbumInfo, []model.ArtistInfo, []model.PlaylistInfo, error) {
 	likes, err := l.likesdao.GetUserLikes(userid)
 	var song_id []int
@@ -63,4 +64,16 @@ func (l *LikesService) GetUserLikes(userid int) ([]model.SongInfo, []model.Album
 	}
 
 	return songs, albums, artists, playlists, err
+}
+
+// 添加用户收藏
+func (l *LikesService) AddUserLikes(like model.LikesInfo) error {
+	err := l.likesdao.AddUserLikes(like)
+	return err
+}
+
+// 删除用户收藏
+func (l *LikesService) DeleteUserLikes(like model.LikesInfo) error {
+	err := l.likesdao.DeleteUserLikes(like)
+	return err
 }

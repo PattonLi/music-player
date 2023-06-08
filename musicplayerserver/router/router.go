@@ -172,6 +172,34 @@ func Posts(r *gin.Engine) {
 			})
 		}
 	})
+
+	//添加用户收藏
+	r.POST("/user/like", func(c *gin.Context) {
+		err := controller.NewLikesController().AddUserLikesHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
+
+	//删除用户收藏
+	r.POST("/user/like/delete", func(c *gin.Context) {
+		err := controller.NewLikesController().DeleteUserLikesHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
 }
 
 func GETs(r *gin.Engine) {
@@ -793,4 +821,5 @@ func GETs(r *gin.Engine) {
 			})
 		}
 	})
+
 }
