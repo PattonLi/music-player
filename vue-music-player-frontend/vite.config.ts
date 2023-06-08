@@ -5,6 +5,7 @@ import { defineConfig } from 'vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 
 
@@ -14,11 +15,11 @@ export default defineConfig({
     vue(),
     //plugin
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver(),NaiveUiResolver()],
       imports: ['vue', 'vue-router'],
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver(),NaiveUiResolver()],
     })
   ],
   resolve: {

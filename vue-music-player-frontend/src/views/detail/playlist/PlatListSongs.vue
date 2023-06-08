@@ -4,11 +4,10 @@
       <div class="flex-auto">歌曲</div>
       <div class="w-1/4">歌手</div>
       <div class="w-1/4">专辑</div>
-      <div class="w-20">时长</div>
     </div>
     <div class="text-sm">
       <template v-for="(song, index) in songs" :key="index">
-        <SongItem :prop-song="song" :order="index + 1" />
+        <SongItemWithEdit :prop-song="song" :order="index + 1" />
       </template>
     </div>
   </div>
@@ -16,7 +15,7 @@
 
 <script setup lang="ts">
 import type { Song } from '@/models/song'
-import SongItem from '@/components/common/SongItem.vue'
+import SongItemWithEdit from '@/components/common/SongItemWithEdit.vue'
 
 const props = defineProps<{
   songs: Song[]

@@ -31,11 +31,17 @@
       <!-- 操作栏 -->
       <div class="mt-3 gap-x-5 flex items-center">
         <button
+          v-if="!isArtistLike"
           class="w-28 button rounded-full bg-gradient-to-r to-teal-400 from-emerald-300 text-slate-50"
         >
           <IconPark :icon="Plus" size="18" class="mr-1" />
           <span>关注</span>
         </button>
+        <button v-else class="w-28 button rounded-full text-teal-600">
+          <IconPark :icon="Dislike" size="18" class="mr-1" />
+          <span>取消关注</span>
+        </button>
+
         <button class="w-28 button-outline">
           <IconPark :icon="Fm" size="18" class="mr-1" />
           <span>歌手电台</span>
@@ -50,12 +56,61 @@
 </template>
 
 <script setup lang="ts">
-import { Plus, Fm, More } from '@icon-park/vue-next'
+import { Plus, Fm, More, Dislike } from '@icon-park/vue-next'
 import IconPark from '@/components/common/IconPark.vue'
 
 import type { Artist } from '@/models/artist'
 
-defineProps<{
+import { useLikeStore } from '@/stores/like'
+import { storeToRefs } from 'pinia'
+import type { LikeForm } from '@/models/like'
+import _ from 'lodash'
+import { useAuthStore } from '@/stores/auth'
+import { AlertError } from '@/utils/alert/AlertPop'
+
+const { userId, isLogin } = storeToRefs(useAuthStore())
+const { artists } = storeToRefs(useLikeStore())
+const { addLike, delLike } = useLikeStore()
+const isArtistLike = computed(() => {
+  let index = _.findIndex(artists.value, (o) => {
+    return o.artistId == props.artistDetail.artistId
+  })
+  return index == -1 ? false : true
+})
+
+const props = defineProps<{
   artistDetail: Artist
 }>()
+
+const addArtistLike = () => {
+  if (isLogin.value) {
+    const likeForm: LikeForm = {
+      albumId: 0,
+      userId: userId.value,
+      songId: 0,
+      artistId: props.artistDetail.artistId,
+      playlistId: 0,
+      type: 2 //歌手
+    }
+    addLike(likeForm, userId.value)
+  } else {
+    AlertError('请先登录！')
+  }
+}
+
+const delArtistLike = () => {
+  if (isLogin.value) {
+    const likeForm: LikeForm = {
+      albumId: 0,
+      userId: userId.value,
+      songId: 0,
+      artistId: props.artistDetail.artistId,
+      playlistId: 0,
+      type: 2 //歌手
+    }
+    delLike(likeForm, userId.value)
+  } else {
+    AlertError('请先登录！')
+  }
+}
 </script>
