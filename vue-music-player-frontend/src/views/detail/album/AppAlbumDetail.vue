@@ -1,7 +1,7 @@
 <template>
   <div class="p-5" v-if="albumData">
     <!-- 专辑详情页 -->
-    <Info :album="albumData" />
+    <Info :album="albumData" :songs="songList"/>
     <!-- 标签栏 -->
     <el-tabs class="mt-3" v-model="tab">
       <!-- 歌曲 -->

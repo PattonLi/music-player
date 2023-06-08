@@ -12,12 +12,23 @@
       </div>
       <!-- 喜欢按钮 -->
       <div class="items-center flex flex-1 flex-shrink-0">
-        <IconPark
+        <IconPark v-if="isSongLike"
           :icon="Like"
           size="20"
           :stroke-width="3"
-          class="text-gray-400 ml-4 mr-2 cursor-pointer hover:text-red-400"
+          class="text-gray-400 ml-3 mr-2 cursor-pointer hover:text-red-400"
+          @click="addSongLike"
         />
+        <IconPark v-else
+            :icon="Like" 
+            size="20"
+            :stroke-width="3"
+            theme="filled"
+            fill="#d0021b"
+            @click="delSongListLike"
+            class="text-gray-400 ml-3 mr-2 cursor-pointer"
+        />
+
         <!-- 歌曲名 -->
         <div class="truncate text-lg" style="max-width: 40%">
           <small>{{ propSong.name }}</small>
@@ -43,7 +54,7 @@
             @click="play(propSong.songId)"
           />
           <IconPark :icon="Add" size="20" class="hover-text" />
-          <IconPark :icon="DownTwo" size="20" class="hover-text" />
+          <IconPark :icon="DownTwo" size="20" class="hover-text" @click="dwld"/>
           <IconPark :icon="MoreTwo" size="20" class="hover-text" />
         </div>
       </div>
@@ -74,16 +85,72 @@ import IconPark from '@/components/common/IconPark.vue'
 import type { Song } from '@/models/song'
 import { Pages } from '@/router/pages'
 import { routerPushByNameId } from '@/utils/navigator/router'
+import type { LikeForm } from '@/models/like'
+import _ from 'lodash';
+import { useAuthStore } from '@/stores/auth';
+import { AlertError } from '@/utils/alert/AlertPop';
 import { storeToRefs } from 'pinia'
-import _ from 'lodash'
+import { useLikeStore } from '@/stores/like'
+import { downloadSong } from '@/utils/download/dowmload'
+const {userId,isLogin} = storeToRefs(useAuthStore())
+const {songs} = storeToRefs(useLikeStore())
+const {addLike,delLike} = useLikeStore()
 
-defineProps<{
+const dwld=()=>{
+  if(props.propSong.url){
+    downloadSong(props.propSong)
+  }else{
+    AlertError('抱歉，这首歌暂时没有开放下载')
+  }
+}
+
+const isSongLike =  computed(()=>{
+ let index = _.findIndex(songs.value, (o)=>{ return o.songId == props.propSong.songId })
+ return index==-1 ? false : true
+})
+
+const props = defineProps<{
   propSong: Song
   order: number
 }>()
 const { play } = usePlayerStore()
 const { song } = storeToRefs(usePlayerStore())
 const id = song.value.songId
+
+
+const addSongLike=()=>{
+  if(isLogin.value){
+    const likeForm : LikeForm = {
+    albumId:0,
+    userId: userId.value,
+    songId: props.propSong.songId,
+    artistId: 0,
+    playlistId: 0,
+    type: 1//歌曲
+    }
+    addLike(likeForm,userId.value)
+  }else{
+    AlertError('请先登录！')
+  }
+}
+
+const delSongListLike=()=>{
+  if(isLogin.value){
+    const likeForm : LikeForm = {
+      albumId:0,
+    userId: userId.value,
+    songId: props.propSong.songId,
+    artistId: 0,
+    playlistId: 0,
+    type: 1//歌曲
+    }
+    delLike(likeForm,userId.value)
+  }else{
+    AlertError('请先登录！')
+  }
+}
+
+
 </script>
 
 <style lang="scss" scoped>
