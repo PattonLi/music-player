@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 import { getAlbumInfo } from '@/utils/api/album'
-import type { AlbumInfo } from '@/model/albumInfo'
+import type { AlbumInfo } from '@/model/AlbumInfo'
 import EditSongDialog from '@/components/edit-dialog/EditSongDialog.vue'
 import { useSongManaStore } from '@/stores/songMana'
 
