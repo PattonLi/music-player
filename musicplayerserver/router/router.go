@@ -145,6 +145,33 @@ func Posts(r *gin.Engine) {
 		}
 	})
 
+	//发送播放歌曲日志
+	r.POST("/log/play", func(c *gin.Context) {
+		err := controller.NewLogController().AddPlayLogHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
+
+	//发送下载歌曲日志
+	r.POST("/log/download", func(c *gin.Context) {
+		err := controller.NewLogController().AddDownloadLog(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
 }
 
 func GETs(r *gin.Engine) {
@@ -725,6 +752,44 @@ func GETs(r *gin.Engine) {
 				"code":      200,
 				"pageTotal": pagetotal,
 				"albums":    albumpage,
+			})
+		}
+	})
+
+	// 获取所有mv信息
+	r.GET("/mv", func(c *gin.Context) {
+		mvs, err := controller.NewMvController().GetAllMvHandler()
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+				"mvs":  nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"mvs":  mvs,
+			})
+		}
+	})
+
+	// 获取用户的所有收藏
+	r.GET("/user/like", func(c *gin.Context) {
+		songs, albums, artists, playlists, err := controller.NewLikesController().GetUserLikesHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      300,
+				"songs":     nil,
+				"albums":    nil,
+				"artists":   nil,
+				"playlists": nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      200,
+				"songs":     songs,
+				"albums":    albums,
+				"artists":   artists,
+				"playlists": playlists,
 			})
 		}
 	})

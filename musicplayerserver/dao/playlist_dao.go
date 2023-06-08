@@ -40,3 +40,10 @@ func (p *PlaylistDao) GetPlaylistAllSongs(playlistid int) (model.PlaylistInfo, [
 
 	return playlist, songs, false
 }
+
+// 根据playlist_id获取歌单详情
+func (p *PlaylistDao) GetInfoById(playlistid int) (model.PlaylistInfo, error) {
+	var playlist model.PlaylistInfo
+	result := DB.First(&playlist, playlistid)
+	return playlist, result.Error
+}
