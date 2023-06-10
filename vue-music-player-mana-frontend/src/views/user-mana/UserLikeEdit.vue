@@ -12,7 +12,7 @@
       </el-col>
       <!--歌曲-->
       <el-col :span="4" class="el-col-3">
-        <el-card class="data-card">
+        <el-card class="data-card"  :body-style="{ padding: '0px' }">
           <template #header>
             <div class="card-header">
               <span style="font-size: 30px; font-weight: bold">收藏的歌</span>
@@ -21,10 +21,16 @@
           <el-table :data="state.songData" style="width: 300px" :show-header="false" :height="530">
             <el-table-column prop="picUrl" width="100">
               <template #default="scope">
-                <el-avatar shape="square" :size="90" :fit="'cover'" :src="scope.row.picUrl" />
+                <el-avatar shape="square" :size="70" :fit="'cover'" :src="scope.row.picUrl" />
               </template>
             </el-table-column>
             <el-table-column prop="artist"  width="165" />
+            <el-table-column type="expand" width="35">
+              <template #default="props">
+                <p class="text">专辑信息:《 {{ props.row.album }} 》</p>
+                <p class="text">歌手信息: {{ props.row.artist }}</p>
+              </template>
+            </el-table-column>
           </el-table>
 
         </el-card>
@@ -38,13 +44,13 @@
           <el-table :data="state.artistData" style="width: 300px" :show-header="false" :height="530">
               <el-table-column prop="picUrl" width="100">
               <template #default="scope">
-                <el-avatar shape="circle" :size="90" :fit="'cover'" :src="scope.row.picUrl" />
+                <el-avatar shape="circle" :size="70" :fit="'cover'" :src="scope.row.picUrl" />
               </template>
               </el-table-column>
               <el-table-column prop="artist"  width="165" />
               <el-table-column type="expand" width="35">
                 <template #default="props">
-                  <p class="text">State: {{ props.row.profile }}</p>
+                  <p class="text">歌手简介: {{ props.row.profile }}</p>
                 </template>
               </el-table-column>
             </el-table>
@@ -59,13 +65,13 @@
             <el-table :data="state.albumData" style="width: 300px" :show-header="false" :height="530">
               <el-table-column prop="picUrl" width="100">
               <template #default="scope">
-                <el-avatar shape="square" :size="90" :fit="'cover'" :src="scope.row.picUrl" />
+                <el-avatar shape="square" :size="70" :fit="'cover'" :src="scope.row.picUrl" />
               </template>
               </el-table-column>
               <el-table-column prop="album"  width="165" />
               <el-table-column type="expand" width="35">
                 <template #default="props">
-                  <p class="text">State: {{ props.row.profile }}</p>
+                  <p class="text">专辑描述: {{ props.row.profile }}</p>
                 </template>
               </el-table-column>
             </el-table>
@@ -79,7 +85,6 @@
     v-model:page-size="state.pageSize"
     layout="total, prev, pager, next, jumper"
     :total="state.totals"
-    @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
   />
 
@@ -122,6 +127,25 @@ onMounted(() => {
     }
   })
 })
+const handleCurrentChange = (val: number) => {
+  console.log(`current page: ${val}`)
+  state.currentPage = val
+  getACustomerInfo(val).then((data) => {
+    if(data.code === 200) {
+      state.userData = data.data
+      state.totals = data.totals
+      console.log(state.totals)
+    }
+  })
+  getUserLikeInfo(state.userData.userId).then((data) => {
+    if(data.code === 200) {
+      state.songData = data.songs
+      state.albumData = data.albums
+      state.artistData = data.artists
+      console.log(state)
+    }
+  })
+}
 </script>
 
 <style scoped>
