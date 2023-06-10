@@ -70,7 +70,7 @@
         <!--二级menu-->
         <el-menu-item-group>
           <el-menu-item index="/loginHistory">
-            <el-icon> <DataLine /> </el-icon>登录日志
+            <el-icon> <DataLine /> </el-icon>下载日志
           </el-menu-item>
           <el-menu-item index="/registerHistory">
             <el-icon> <DataLine /> </el-icon>注册日志
