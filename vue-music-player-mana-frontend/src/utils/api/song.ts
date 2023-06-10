@@ -17,6 +17,21 @@ const getSongInfo = async (currentPage: number, pageSize: number) => {
   }
 }
 
+// 获取歌手全部歌曲信息
+const getArtistAllSong = async (artistId: number) => {
+  try {
+    const response = await axios.get('/admin/getSongByArtist', {
+      params: {
+        artistId: artistId
+      }
+    })
+    console.log(response.data)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // 获得特定歌曲
 const getTheSongInfo = async (songName: string) => {
   try {
@@ -75,4 +90,19 @@ const deleteTheSongInfo = async (songId: number) => {
   }
 }
 
-export { getSongInfo, addSongInfo, modifySongInfo, getTheSongInfo, deleteTheSongInfo }
+// 获取专辑所有歌
+const getSongByAlbum = async (albumId: number) => {
+  try {
+    const response = await axios.get('/admin/getSongByAlbum', {
+      params: {
+        albumId: albumId
+      }
+    })
+    console.log(response.data)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export { getSongInfo, addSongInfo, modifySongInfo, getTheSongInfo, deleteTheSongInfo, getArtistAllSong, getSongByAlbum }
