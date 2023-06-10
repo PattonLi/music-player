@@ -29,14 +29,20 @@
 
       <!-- 功能键 -->
       <div class="justify-self-stretch mt-5 gap-x-2 flex items-center">
-        <button class="w-32 button" @click="playAll">
+        <button class="w-32 button-outline rounded-full" @click="playAll">
           <IconPark :icon="PlayOne" size="22" class="mr-1" />
           <span>播放全部</span>
         </button>
-        <button class="w-32 button-outline">
-          <IconPark :icon="Like" size="18" class="mr-1" />
+
+        <button class="w-28 button-outline" v-if="isPlayListLike" @click="addPlayListLike">
+          <IconPark :icon="Like" size="18" class="mr-1" theme="outline" />
           <span>收藏</span>
         </button>
+        <button class="w-28 button-outline" v-else @click="delPlayListLike">
+          <IconPark :icon="Like" size="18" class="mr-1" theme="filled" fill="#d0021b" />
+          <span>取消收藏</span>
+        </button>
+
         <button class="button-outline w-8">
           <IconPark :icon="More" />
         </button>
@@ -50,9 +56,57 @@ import { PlayOne, Like, More } from '@icon-park/vue-next'
 
 import IconPark from '@/components/common/IconPark.vue'
 import type { PlayList } from '@/models/playlist'
+import { useLikeStore } from '@/stores/like'
+import { storeToRefs } from 'pinia'
+import type { LikeForm } from '@/models/like'
+import _ from 'lodash'
+import { useAuthStore } from '@/stores/auth'
+import { AlertError } from '@/utils/alert/AlertPop'
+const { userId, isLogin } = storeToRefs(useAuthStore())
+const { playlists } = storeToRefs(useLikeStore())
+const { addLike, delLike } = useLikeStore()
 
-defineProps<{
+const isPlayListLike = computed(() => {
+  let index = _.findIndex(playlists.value, (o) => {
+    return o.playListId == props.playlist.playListId
+  })
+  return index == -1 ? false : true
+})
+
+const props = defineProps<{
   playlist: PlayList
   playAll?: () => void
 }>()
+
+const addPlayListLike = () => {
+  if (isLogin.value) {
+    const likeForm: LikeForm = {
+      albumId: 0,
+      userId: userId.value,
+      songId: 0,
+      artistId: 0,
+      playlistId: props.playlist.playListId,
+      type: 4 //歌单
+    }
+    addLike(likeForm, userId.value)
+  } else {
+    AlertError('请先登录！')
+  }
+}
+
+const delPlayListLike = () => {
+  if (isLogin.value) {
+    const likeForm: LikeForm = {
+      albumId: 0,
+      userId: userId.value,
+      songId: 0,
+      artistId: 0,
+      playlistId: props.playlist.playListId,
+      type: 4 //歌单
+    }
+    delLike(likeForm, userId.value)
+  } else {
+    AlertError('请先登录！')
+  }
+}
 </script>

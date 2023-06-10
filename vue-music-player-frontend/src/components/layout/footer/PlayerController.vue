@@ -12,7 +12,7 @@
     <IconPark :icon="GoStart" size="30" theme="filled" class="hover-text" @click="prev" />
     <!-- 播放暂停按钮 -->
     <IconPark
-      :icon="isPlaying ? Play : PauseOne"
+      :icon="isPlaying ? PauseOne : Play"
       size="45"
       theme="filled"
       class="hover-text text-emerald-500"

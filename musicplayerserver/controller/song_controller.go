@@ -97,3 +97,16 @@ func (sc *SongController) GetSongDetailHandler(c *gin.Context) (model.SongInfo, 
 	song, err := sc.songservice.GetSongDetail(Id)
 	return song, err
 }
+
+// 根据关键词获取歌曲
+func (sc *SongController) GetSongByKeyWordHandler(c *gin.Context) ([]model.SongInfo, error, error, int) {
+	keyword := c.Query("keyWord")
+	pagesize := c.Query("pageSize")
+	currentpage := c.Query("currentPage")
+
+	pageSize, _ := strconv.Atoi(pagesize)
+	currntPage, _ := strconv.Atoi(currentpage)
+
+	songpage, err0, err1, pagetotal := sc.songservice.GetSongByKeyWord(pageSize, currntPage, keyword)
+	return songpage, err0, err1, pagetotal
+}
