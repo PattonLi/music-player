@@ -6,7 +6,7 @@
       <div
         v-for="(item, index) in mvs"
         :key="index"
-        @click="routerPushByNameId(Pages.mvDetail, item.movieId)"
+        @click="toMv(item.movieId)"
       >
         <!-- 封面组件 -->
         <MyCover
@@ -29,10 +29,16 @@
 import MyTitle from '@/components/common/MyTitle.vue'
 
 import MyCover from '@/components/common/MyCover.vue'
-import { routerPushByNameId } from '@/utils/navigator/router'
+import { routerPush } from '@/utils/navigator/router'
 import { Pages } from '@/router/pages'
 import { useMvStore } from '@/stores/mv'
 import { storeToRefs } from 'pinia'
+
+const {id} = storeToRefs(useMvStore())
+const toMv = (movieId:number)=>{
+  id.value = movieId
+  routerPush(Pages.mvPlayer)
+}
 
 const { updateMv } = useMvStore()
 const { mvs } = storeToRefs(useMvStore())

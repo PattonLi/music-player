@@ -40,8 +40,8 @@
           class="suggestItem hover-bg-main"
           @click="jump(Pages.artistDetail, item.artistId)"
         >
-          <span class="text-emerald-500">{{ item.artistId }}</span>
-          <span class="text-emerald-500 ml-2">{{ item.songSize }}</span>
+          <span class="text-emerald-500">{{ item.artist }}</span>
+          <span class="text-emerald-500">-歌曲数：{{ item.songSize }}</span>
         </div>
       </div>
     </div>

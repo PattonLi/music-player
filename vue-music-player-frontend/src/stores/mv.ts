@@ -5,7 +5,8 @@ import { apiMvHot } from '@/utils/api/mv'
 
 export const useMvStore = defineStore('mv', {
   state: () => ({
-    mvs: [] as Mv[]
+    mvs: [] as Mv[],
+    id: {} as number
   }),
   getters: {},
   actions: {
@@ -18,5 +19,6 @@ export const useMvStore = defineStore('mv', {
         AlertError('请求热门mv失败')
       }
     }
-  }
+  },
+  persist:true
 })

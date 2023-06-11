@@ -129,7 +129,7 @@ export const usePlayerStore = defineStore('player', {
       if (id == this.song.songId) return
       this.isPlaying = false
       //获取歌曲信息
-      const res = await apiGetSong(this.song.songId)
+      const res = await apiGetSong(id)
       if (res.code == 200) {
         this.song = res.song
       } else {

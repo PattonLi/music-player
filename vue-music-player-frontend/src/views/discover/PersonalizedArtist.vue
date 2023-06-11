@@ -7,15 +7,19 @@
     <div
       v-for="(item, index) in _.sampleSize(personalizedArtists, 15)"
       :key="index"
-      class="transition-all flex flex-col items-center"
+      class="transition-all flex flex-col items-center justify-center"
       @click="router.push({ name: 'artist', query: { id: item.artistId } })"
     >
       <!-- 第一列图片 -->
-      <img
-        :src="item.picUrl"
-        alt="歌曲图片"
-        class="w-50 h-50 object-cover rounded-full flex-shrink-0 cover-play-image"
-      />
+      <div class="w-50 h-50 flex-1">
+        <img
+          :src="item.picUrl"
+          alt="歌曲图片"
+          class="w-full h-full object-cover rounded-full"
+          style="object-fit: cover; aspect-ratio: 1/1"
+        />
+      </div>
+
       <!-- 第二列文字信息 -->
       <div class="px-3 pt-1 truncate flex flex-col">
         <div class="text-xl truncate flex justify-center">

@@ -29,6 +29,7 @@ export const useAuthStore = defineStore('auth', {
         AlertSuccess('你已成功登录')
         this.token = res.token
         this.userId = res.userId
+        this.isLogin = true
         await this.checkLogin()
         this.isLogin = true
       } else if (res.code == 300) {
