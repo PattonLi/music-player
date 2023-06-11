@@ -3,7 +3,7 @@ import type { UserInfo, CustomerInfo, AdminInfo } from '@/model/UserInfo'
 
 // 获取特定页管理员信息
 const getAdminInfo = async (currentPage: number, pageSize: number) => {
-    let customerInfoArray = ref<AdminInfo[]>([]);
+    // let customerInfoArray = ref<AdminInfo[]>([]);
     try {
       const response = await axios.get('/adminUser/pageAllInfo', {
         params: {

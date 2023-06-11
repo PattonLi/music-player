@@ -15,7 +15,7 @@ const getUserInfo = async () => {
 
 // 获取特定页客户信息
 const getCustomerInfo = async (currentPage: number, pageSize: number) => {
-  let customerInfoArray = ref<CustomerInfo[]>([]);
+  // let customerInfoArray = ref<CustomerInfo[]>([]);
   try {
     const response = await axios.get('/User/pageAllInfo', {
       params: {

@@ -69,15 +69,15 @@ const logout = () => {
 <style scoped>
 .header {
   height: 50px;
-  border-bottom: 1px solid #e9e9e9;
+  border-bottom: 4px solid gray;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 10px;
 }
 
 .right > .author {
-  font-size: 18px;
+  font-size: 20px;
 }
 .author {
   margin-left: 10px;
