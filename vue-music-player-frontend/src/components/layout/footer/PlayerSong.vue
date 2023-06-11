@@ -18,7 +18,7 @@
       <!-- 功能区 -->
       <div class="flex gap-x-3">
         <IconPark :icon="Like" size="18" :stroke-width="3" class="text-slate-400 hover-text" />
-        <IconPark :icon="DownTwo" size="18" :stroke-width="3" class="text-slate-400 hover-text" />
+        <IconPark :icon="DownTwo" size="18" :stroke-width="3" class="text-slate-400 hover-text" @click="downloadSong(song)"/>
         <IconPark :icon="MoreTwo" size="18" :stroke-width="3" class="text-slate-400 hover-text" />
         <el-badge :value="1000" :max="999" class="badge">
           <IconPark :icon="Comment" size="18" :stroke-width="3" class="text-slate-400 hover-text" />
@@ -33,7 +33,9 @@ import { Like, DownTwo, MoreTwo, Comment } from '@icon-park/vue-next'
 import { usePlayerStore } from '@/stores/player'
 import albumLogo from '@/assets/images/albumLogo.png'
 import IconPark from '@/components/common/IconPark.vue'
+import { downloadSong } from '@/utils/download/dowmload'
 const { changePlayerShow } = usePlayerStore()
+
 
 const { song } = toRefs(usePlayerStore())
 </script>

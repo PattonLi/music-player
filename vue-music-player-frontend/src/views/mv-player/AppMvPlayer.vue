@@ -10,6 +10,9 @@
           <div class="flex mt-8">
             <div class="text-2xl">{{ mv.movie }}------{{ mv.artist }}</div>
           </div>
+          <div class="mt-8">
+            <MvComment></MvComment>
+          </div>
         </div>
         
       </div>
@@ -46,9 +49,7 @@ import { usePlayerStore } from '@/stores/player'
 import { storeToRefs } from 'pinia'
 import _ from 'lodash'
 import MyCover from '@/components/common/MyCover.vue'
-import { routerPush } from '@/utils/navigator/router'
-import { Pages } from '@/router/pages'
-import type { Mv } from '@/models/mv'
+import MvComment from './MvComment.vue'
 
 const { mvs } = storeToRefs(useMvStore())
 const {id} = storeToRefs(useMvStore())
