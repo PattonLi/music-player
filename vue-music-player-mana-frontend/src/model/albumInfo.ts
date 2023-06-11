@@ -1,7 +1,11 @@
 export interface AlbumInfo {
-  name: string
-  artist: string
+  albumId: number
+  artistId: number
   album: string
-  time: string
-  style: string
+  picUrl: string
+  artist: string
+  publishTime: number
+  size: number
+  type: string
+  profile: string
 }

@@ -45,6 +45,21 @@ const getTheCustomerInfo = async (name: string) => {
   }
 }
 
+// 获取特定用户信息
+const getACustomerInfo = async (index: number) => {
+  try {
+    const response = await axios.get('/User/aInfo', {
+      params: {
+        index: index
+      }
+    })
+    console.log(response)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // 删除特定用户
 const deleteTheCustomerInfo = async (userId: number) => {
   try {
@@ -86,4 +101,4 @@ const addTheCustomerInfo = async (data: CustomerInfo) => {
   }
 }
 
-export { getUserInfo, getCustomerInfo, getTheCustomerInfo, deleteTheCustomerInfo, modifyTheCustomerInfo, addTheCustomerInfo }
+export { getUserInfo, getCustomerInfo, getTheCustomerInfo, deleteTheCustomerInfo, modifyTheCustomerInfo, addTheCustomerInfo, getACustomerInfo }

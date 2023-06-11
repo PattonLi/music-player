@@ -51,3 +51,25 @@ func (s *Songdao) GetSongsInAlbum(albumid int) ([]model.SongInfo, error) {
 func NewSongDao() *Songdao {
 	return &Songdao{}
 }
+
+// 根据热度或者时间对歌手歌曲进行排序
+func (s *Songdao) SortSongsByOrder(id int, order string) ([]model.SongInfo, error) {
+	var song []model.SongInfo
+	result := DB.Order(order).Where("artist_id = ?", id).Find(&song)
+	return song, result.Error
+}
+
+// 根据歌曲id获得歌曲
+func (s *Songdao) GetSongDetail(id int) (model.SongInfo, error) {
+	var song model.SongInfo
+	result := DB.First(&song, id)
+	return song, result.Error
+}
+
+// 根据关键词获取歌曲
+func (s *Songdao) GetSongByKeyWord(keyword string) ([]model.SongInfo, error) {
+	var song []model.SongInfo
+	keyword = "%" + keyword + "%"
+	result := DB.Where("name  LIKE ?", keyword).Find(&song)
+	return song, result.Error
+}

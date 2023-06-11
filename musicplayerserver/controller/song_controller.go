@@ -73,3 +73,40 @@ func (sc *SongController) GetAlbumSongsHandler(c *gin.Context) ([]model.SongInfo
 	songs, err := sc.songservice.GetAlbumSongs(albumId)
 	return songs, err
 }
+
+// 分页获取歌手歌曲
+func (sc *SongController) GetSongsPageHandler(c *gin.Context) ([]model.SongInfo, error, error, int) {
+	params := []string{"artistId", "order", "currentPage", "pageSize"}
+	id := c.Query(params[0])
+	order := c.Query(params[1])
+	currentpage := c.Query(params[2])
+	pagesize := c.Query(params[3])
+
+	Id, _ := strconv.Atoi(id)
+	currentPage, _ := strconv.Atoi(currentpage)
+	pageSize, _ := strconv.Atoi(pagesize)
+
+	songpage, err0, err1, pagetotal := sc.songservice.GetSongsPage(Id, order, currentPage, pageSize)
+	return songpage, err0, err1, pagetotal
+}
+
+// 根据songid获取歌曲
+func (sc *SongController) GetSongDetailHandler(c *gin.Context) (model.SongInfo, error) {
+	id := c.Query("songId")
+	Id, _ := strconv.Atoi(id)
+	song, err := sc.songservice.GetSongDetail(Id)
+	return song, err
+}
+
+// 根据关键词获取歌曲
+func (sc *SongController) GetSongByKeyWordHandler(c *gin.Context) ([]model.SongInfo, error, error, int) {
+	keyword := c.Query("keyWord")
+	pagesize := c.Query("pageSize")
+	currentpage := c.Query("currentPage")
+
+	pageSize, _ := strconv.Atoi(pagesize)
+	currntPage, _ := strconv.Atoi(currentpage)
+
+	songpage, err0, err1, pagetotal := sc.songservice.GetSongByKeyWord(pageSize, currntPage, keyword)
+	return songpage, err0, err1, pagetotal
+}
