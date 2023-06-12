@@ -9,7 +9,7 @@ export async function apiAlbumDetail(albumId: number) {
     album: Album
     songs: Song[]
   }>('detail/album', { albumId: albumId })
-
+  
   return data
 }
 

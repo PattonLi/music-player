@@ -15,6 +15,7 @@ export async function apiGetPersonalizeAlbums() {
     code: number
     albums: PersonalizedAlbum[]
   }>('discover/album')
+  
   return result
 }
 

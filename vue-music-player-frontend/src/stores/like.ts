@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { AlertError, AlertSuccess } from '@/utils/alert/AlertPop'
-import { apiAddLike, apiUserLike } from '@/utils/api/like'
+import { apiAddLike, apiDelLike, apiUserLike } from '@/utils/api/like'
 import type { Album } from '@/models/album'
 import type { Artist } from '@/models/artist'
 import type { Song } from '@/models/song'
@@ -38,7 +38,7 @@ export const useLikeStore = defineStore('like', {
       }
     },
     async delLike(likeForm: LikeForm, userId: number) {
-      const res = await apiAddLike(likeForm)
+      const res = await apiDelLike(likeForm)
       if (res.code == 200) {
         AlertSuccess('删除收藏成功')
         this.updateLikes(userId)

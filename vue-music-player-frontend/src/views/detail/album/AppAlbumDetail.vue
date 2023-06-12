@@ -51,7 +51,7 @@ import { apiAlbumDetail } from '@/utils/api/album'
 import Info from './AlbumInfo.vue'
 import AlbumSongs from './AlbumSongs.vue'
 import AlbumComments from './AlbumComments.vue'
-import { AlertError } from '@/utils/alert/AlertPop'
+import { AlertError, AlertSuccess } from '@/utils/alert/AlertPop'
 
 const albumData = ref<Album>()
 const songList = ref<Song[]>([])
@@ -67,6 +67,7 @@ onMounted(async () => {
   if (res.code == 200) {
     albumData.value = res.album
     songList.value = res.songs
+    
   } else {
     AlertError('获取专辑歌曲失败')
   }

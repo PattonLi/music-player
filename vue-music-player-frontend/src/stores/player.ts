@@ -186,13 +186,14 @@ export const usePlayerStore = defineStore('player', {
     togglePlay() {
       //没有歌曲在播放
       if (!this.song.songId) return
-      this.isPlaying = !this.isPlaying
       //开始播放
       if (!this.isPlaying) {
         this.audio.play()
+        this.isPlaying = true
       } //暂停播放
       else {
         this.audio.pause()
+        this.isPlaying = false
       }
     },
 

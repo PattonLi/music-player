@@ -12,7 +12,7 @@
       :mousewheel="true"
       :show-dots="false"
     >
-      <div v-for="(item, index) in lyric" :key="index">
+      <div v-for="(item, index) in lyric" :key="index" class="hover:cursor-pointer">
         <div>{{ item.content }}</div>
         <div>
           {{

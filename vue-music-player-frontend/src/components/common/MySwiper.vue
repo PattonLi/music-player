@@ -18,7 +18,7 @@
   >
     <!-- slider -->
     <SwiperSlide v-for="(item, index) in swipers" :key="index">
-      <img :src="item.picUrl" class="swiper-image" @click="onClick(item)" />
+      <img :src="item.picUrl" class="swiper-image" style="object-fit: cover; aspect-ratio: 1/1" @click="onClick(item)" />
       <div class="text-center">
         <span>{{ item.typeTitle }}</span>
       </div>
@@ -90,7 +90,7 @@ onUnmounted(() => {})
       @apply w-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 px-11 pb-12;
 
       .swiper-image {
-        @apply rounded-2xl cursor-pointer transition-all object-cover;
+        @apply rounded-2xl cursor-pointer transition-all w-full h-full;
         @apply hover:shadow hover:opacity-50;
       }
     }

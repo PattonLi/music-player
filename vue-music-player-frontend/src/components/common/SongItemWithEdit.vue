@@ -13,7 +13,7 @@
       <!-- 喜欢按钮 -->
       <div class="items-center flex flex-1 flex-shrink-0">
         <IconPark
-          v-if="isSongLike"
+          v-if="!isSongLike"
           :icon="Like"
           size="20"
           :stroke-width="3"

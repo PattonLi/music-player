@@ -4,6 +4,7 @@ import type { Artist } from '@/models/artist'
 import type { Song } from '@/models/song'
 import type { LikeForm } from '@/models/like'
 import type { PlayList } from '@/models/playlist'
+import { AlertSuccess } from '../alert/AlertPop'
 
 //获取用户收藏
 export async function apiUserLike(userId: number) {
@@ -21,6 +22,7 @@ export async function apiUserLike(userId: number) {
 
 //添加收藏
 export async function apiAddLike(likeForm: LikeForm) {
+  
   const data = await myAxios.post<{
     code: number
   }>('user/like', {
