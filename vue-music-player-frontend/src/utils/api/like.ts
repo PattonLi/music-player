@@ -30,7 +30,7 @@ export async function apiAddLike(likeForm: LikeForm) {
     songId: likeForm.songId,
     albumId: likeForm.albumId,
     artistId: likeForm.artistId,
-    playlistId: likeForm.playlistId,
+    playListId: likeForm.playListId,
     type: likeForm.type
   })
   return data
@@ -45,7 +45,7 @@ export async function apiDelLike(likeForm: LikeForm) {
     songId: likeForm.songId,
     albumId: likeForm.albumId,
     artistId: likeForm.artistId,
-    playlistId: likeForm.playlistId,
+    playListId: likeForm.playListId,
     type: likeForm.type
   })
   return data

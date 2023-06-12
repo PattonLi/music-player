@@ -131,7 +131,7 @@ const addSongLike = () => {
       userId: userId.value,
       songId: props.propSong.songId,
       artistId: 0,
-      playlistId: 0,
+      playListId: 0,
       type: 1 //歌曲
     }
     addLike(likeForm, userId.value)
@@ -147,7 +147,7 @@ const delSongListLike = () => {
       userId: userId.value,
       songId: props.propSong.songId,
       artistId: 0,
-      playlistId: 0,
+      playListId: 0,
       type: 1 //歌曲
     }
     delLike(likeForm, userId.value)

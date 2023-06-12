@@ -15,7 +15,7 @@ export const useArtistStore = defineStore('artist', {
       noMore: false,
       //查询信息
       firstLetter: '0',
-      type: 0,
+      gender: 0,
       location: 0
     },
 
@@ -25,12 +25,13 @@ export const useArtistStore = defineStore('artist', {
   actions: {
     //分页查询
     async pageGet() {
+      this.pageData.noMore=false
       this.pageData.loading = true
       const res = await apiArtistList(
         this.pageData.pageSize,
         this.pageData.page,
         this.pageData.firstLetter,
-        this.pageData.type,
+        this.pageData.gender,
         this.pageData.location
       )
       if (res.code == 200) {
@@ -42,6 +43,8 @@ export const useArtistStore = defineStore('artist', {
         }
         if (this.pageData.page == 0) {
           //初始时设置数据
+          console.log(11111111111);
+          
           this.artists = res.artists
         } else {
           //否则push
@@ -49,6 +52,7 @@ export const useArtistStore = defineStore('artist', {
         }
         //当前位置页数加1
         this.pageData.page++
+        console.log(2222222222222222);
         //更新pageSize
         this.pageData.pageTotal = res.pageTotal
       } else {

@@ -62,13 +62,13 @@
       </div>
     </div>
 
-    <!-- 歌手名 -->
+    <!-- 专辑名 -->
     <div class="text-lg flex-shrink-0 w-1/3 items-center">
       <small
         class="truncate hover-text"
-        @click="routerPushByNameId(Pages.artistDetail, propSong.artistId)"
+        @click="routerPushByNameId(Pages.albumDetail, propSong.albumId)"
       >
-        {{ propSong.name }}
+        {{ propSong.album }}
       </small>
     </div>
 
@@ -128,7 +128,7 @@ const addSongLike = () => {
       userId: userId.value,
       songId: props.propSong.songId,
       artistId: 0,
-      playlistId: 0,
+      playListId: 0,
       type: 1 //歌曲
     }
     addLike(likeForm, userId.value)
@@ -144,7 +144,7 @@ const delSongListLike = () => {
       userId: userId.value,
       songId: props.propSong.songId,
       artistId: 0,
-      playlistId: 0,
+      playListId: 0,
       type: 1 //歌曲
     }
     delLike(likeForm, userId.value)

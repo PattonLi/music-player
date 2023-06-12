@@ -3,7 +3,7 @@
     <HotPlayList />
     <div class="py-5 text-xl">歌单</div>
 
-    <div class="gap-5 gap-y-7 grid grid-flow-row grid-cols-3 lg:grid-cols-5 2xl:grid-cols-7">
+    <div class="gap-x-5 gap-y-7 grid grid-flow-row grid-cols-3 lg:grid-cols-5 2xl:grid-cols-7">
       <div
         v-for="(item, index) in playLists"
         :key="index"
@@ -12,7 +12,7 @@
         <!-- mycover调整 -->
         <div class="cover-play-image">
           <!-- 图片 -->
-          <el-image :src="item.picUrl" alt="playlist" class="w-full bg-gray-50 object-cover" />
+          <el-image :src="item.picUrl" alt="playlist" class="w-full h-full bg-gray-50 object-cover" style="object-fit: cover; aspect-ratio: 1/1"/>
         </div>
 
         <div class="mt-1 text-sm text-main leading-5 flex justify-center">{{ item.playList }}</div>
@@ -49,7 +49,7 @@ onMounted(async () => {
 </script>
 <style lang="scss">
 .cover-play-image {
-  @apply rounded-xl cursor-pointer transition-all relative overflow-hidden;
+  @apply rounded-xl cursor-pointer transition-all relative overflow-hidden ;
   //位置移动
   @apply hover:-translate-y-1.5;
   //悬浮时
