@@ -321,7 +321,7 @@
   <!--歌手对话框-->
   <el-dialog v-model="artistDialog.visable" title="歌手简介" width="27%">
     <el-card class="user-card" shadow="hover" :body-style="{ padding: '0px' }">
-      <img class="image" :src="artistDialog.tableData.picUrl" :fit="'cover'" />
+      <img v-if="artistDialog.tableData.picUrl" class="image" :src="artistDialog.tableData.picUrl" :fit="'cover'" />
       <div style="padding: 14px">
         <span style="font-size: 35px; font-weight: bold">{{ artistDialog.tableData.artist }}</span>
         <p>歌手简介：{{ artistDialog.tableData.profile }}</p>
@@ -419,19 +419,20 @@ onMounted(() => {
   })
 })
 
-const DBClick = (row: AlbumInfo, cell: any, column: any) => {
+const DBClick = async (row: AlbumInfo, cell: any, column: any) => {
   if (cell.property === 'album') {
     profileDialog.visable = true
     profileDialog.profile = row.profile
     console.log('okokokok')
   } else if (cell.property === 'artist') {
-    getArtistByAlbum(row.albumId).then((data) => {
+    await getArtistByAlbum(row.albumId).then((data) => {
+      console.log('data.data',data.data);
       artistDialog.visable = true
       artistDialog.tableData = data.data
       console.log('artistDialog')
     })
   } else if (cell.property === 'size') {
-    getSongByAlbum(row.artistId).then((data) => {
+    await getSongByAlbum(row.albumId).then((data) => {
       songDialog.visable = true
       songDialog.tableData = data.data
       console.log(songDialog.tableData)
