@@ -12,7 +12,12 @@
         <!-- mycover调整 -->
         <div class="cover-play-image">
           <!-- 图片 -->
-          <el-image :src="item.picUrl" alt="playlist" class="w-full h-full bg-gray-50 object-cover" style="object-fit: cover; aspect-ratio: 1/1"/>
+          <el-image
+            :src="item.picUrl"
+            alt="playlist"
+            class="w-full h-full bg-gray-50 object-cover"
+            style="object-fit: cover; aspect-ratio: 1/1"
+          />
         </div>
 
         <div class="mt-1 text-sm text-main leading-5 flex justify-center">{{ item.playList }}</div>
@@ -49,7 +54,7 @@ onMounted(async () => {
 </script>
 <style lang="scss">
 .cover-play-image {
-  @apply rounded-xl cursor-pointer transition-all relative overflow-hidden ;
+  @apply rounded-xl cursor-pointer transition-all relative overflow-hidden;
   //位置移动
   @apply hover:-translate-y-1.5;
   //悬浮时

@@ -67,7 +67,6 @@ onMounted(async () => {
   if (res.code == 200) {
     albumData.value = res.album
     songList.value = res.songs
-    
   } else {
     AlertError('获取专辑歌曲失败')
   }

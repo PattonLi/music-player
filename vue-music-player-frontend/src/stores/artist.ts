@@ -25,7 +25,7 @@ export const useArtistStore = defineStore('artist', {
   actions: {
     //分页查询
     async pageGet() {
-      this.pageData.noMore=false
+      this.pageData.noMore = false
       this.pageData.loading = true
       const res = await apiArtistList(
         this.pageData.pageSize,
@@ -43,8 +43,8 @@ export const useArtistStore = defineStore('artist', {
         }
         if (this.pageData.page == 0) {
           //初始时设置数据
-          console.log(11111111111);
-          
+          console.log(11111111111)
+
           this.artists = res.artists
         } else {
           //否则push
@@ -52,7 +52,7 @@ export const useArtistStore = defineStore('artist', {
         }
         //当前位置页数加1
         this.pageData.page++
-        console.log(2222222222222222);
+        console.log(2222222222222222)
         //更新pageSize
         this.pageData.pageTotal = res.pageTotal
       } else {

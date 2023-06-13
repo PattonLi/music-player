@@ -3,11 +3,7 @@
     <MyTitle title="MV推荐" />
     <div class="mb-10 grid grid-flow-row gap-x-20 grid-cols-3 2xl:grid-cols-5 gap-y-9">
       <!-- 循环 -->
-      <div
-        v-for="(item, index) in mvs"
-        :key="index"
-        @click="toMv(item.movieId)"
-      >
+      <div v-for="(item, index) in mvs" :key="index" @click="toMv(item.movieId)">
         <!-- 封面组件 -->
         <MyCover
           :name="item.movie"
@@ -34,8 +30,8 @@ import { Pages } from '@/router/pages'
 import { useMvStore } from '@/stores/mv'
 import { storeToRefs } from 'pinia'
 
-const {id} = storeToRefs(useMvStore())
-const toMv = (movieId:number)=>{
+const { id } = storeToRefs(useMvStore())
+const toMv = (movieId: number) => {
   id.value = movieId
   routerPush(Pages.mvPlayer)
 }

@@ -40,12 +40,11 @@ export async function apiRegister(ruleForm: registerUser) {
   })
 }
 
-
 export const apiUploadAction = async (file: File) => {
   return await upload(file)
 }
 
-const upload=(file: File)=>{
+const upload = (file: File) => {
   const formData = new FormData()
   formData.append('file', file)
   return new Promise((resolve, reject) => {

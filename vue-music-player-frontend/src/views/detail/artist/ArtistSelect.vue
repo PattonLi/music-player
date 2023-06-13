@@ -113,7 +113,7 @@ const pageGet = async () => {
 
   if (res2.code == 200) {
     //判断是否已经没有页数了
-    
+
     if (pageData.page2 >= pageData.pageTotal) {
       //所有数据已经取完
       pageData.noMore = true
@@ -122,8 +122,6 @@ const pageGet = async () => {
     if (pageData.page2 == 0) {
       //初始时设置数据
       listSongs.value = res2.songs
-      
-      
     } else {
       //否则push
       listSongs.value.push(...res2.songs)

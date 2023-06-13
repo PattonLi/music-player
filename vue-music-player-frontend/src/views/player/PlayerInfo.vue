@@ -5,7 +5,7 @@
       <div class="w-1/2">
         <div class="flex justify-center">
           <div class="w-1/2 h-1/2 rounded-full">
-            <img id="myImageAAAA" :src="song.picUrl||albumLogo" alt="" />
+            <img id="myImageAAAA" :src="song.picUrl || albumLogo" alt="" />
           </div>
         </div>
       </div>
@@ -46,7 +46,7 @@ const lyric = ref()
 const get = () => {
   lyric.value = apiGetLyric(song.value.lyricUrl!)
 }
-const {song} = storeToRefs(usePlayerStore())
+const { song } = storeToRefs(usePlayerStore())
 const songPos = computed(() => {
   return song.value.artist ? '歌手：' + song.value.artist : ''
 })
@@ -86,6 +86,4 @@ const artistPos = computed(() => {
 // // 初始化动画效果
 // initAnimation();
 // })
-
-
 </script>

@@ -18,7 +18,12 @@
   >
     <!-- slider -->
     <SwiperSlide v-for="(item, index) in swipers" :key="index">
-      <img :src="item.picUrl" class="swiper-image" style="object-fit: cover; aspect-ratio: 1/1" @click="onClick(item)" />
+      <img
+        :src="item.picUrl"
+        class="swiper-image"
+        style="object-fit: cover; aspect-ratio: 1/1"
+        @click="onClick(item)"
+      />
       <div class="text-center">
         <span>{{ item.typeTitle }}</span>
       </div>

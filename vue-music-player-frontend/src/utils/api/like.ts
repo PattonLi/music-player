@@ -22,7 +22,6 @@ export async function apiUserLike(userId: number) {
 
 //添加收藏
 export async function apiAddLike(likeForm: LikeForm) {
-  
   const data = await myAxios.post<{
     code: number
   }>('user/like', {

@@ -11,7 +11,7 @@ export const useAuthStore = defineStore('auth', {
     token: '',
     //是否显示登录注册框
     showRegister: false,
-    showModify:false,
+    showModify: false,
     showLogin: false,
     //用户信息
     profile: {} as UserProfile,

@@ -6,7 +6,7 @@ export interface UserProfile {
   email: string
   age: string
   gender: string
-  password:string
+  password: string
 }
 
 export interface registerUser {

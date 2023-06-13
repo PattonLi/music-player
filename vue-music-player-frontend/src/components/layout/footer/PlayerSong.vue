@@ -35,7 +35,13 @@
           @click="delSongListLike"
           class="text-gray-400 ml-3 mr-2 cursor-pointer"
         />
-        <IconPark :icon="DownTwo" size="18" :stroke-width="3" class="text-slate-400 hover-text" @click="dwld"/>
+        <IconPark
+          :icon="DownTwo"
+          size="18"
+          :stroke-width="3"
+          class="text-slate-400 hover-text"
+          @click="dwld"
+        />
         <IconPark :icon="MoreTwo" size="18" :stroke-width="3" class="text-slate-400 hover-text" />
         <el-badge :value="1000" :max="999" class="badge">
           <IconPark :icon="Comment" size="18" :stroke-width="3" class="text-slate-400 hover-text" />
@@ -61,9 +67,7 @@ const { userId, isLogin } = storeToRefs(useAuthStore())
 const { songs } = storeToRefs(useLikeStore())
 const { addLike, delLike } = useLikeStore()
 
-
 const { changePlayerShow } = usePlayerStore()
-
 
 const { song } = toRefs(usePlayerStore())
 
@@ -82,7 +86,6 @@ const isSongLike = computed(() => {
   return index == -1 ? false : true
 })
 
-
 const addSongLike = () => {
   if (isLogin.value) {
     const likeForm: LikeForm = {
@@ -93,7 +96,9 @@ const addSongLike = () => {
       playListId: 0,
       type: 1 //歌曲
     }
-    addLike(likeForm, userId.value)
+    if (likeForm.songId != null) {
+      addLike(likeForm, userId.value)
+    }
   } else {
     AlertError('请先登录！')
   }

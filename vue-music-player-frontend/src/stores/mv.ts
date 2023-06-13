@@ -20,5 +20,5 @@ export const useMvStore = defineStore('mv', {
       }
     }
   },
-  persist:true
+  persist: true
 })

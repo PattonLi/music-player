@@ -389,6 +389,8 @@ const muploadAction = (file: File) => {
         if(response.data.code==200){
           AlertSuccess('成功上传照片')
           modifyDialog.data.picUrl=response.data.picUrl
+          console.log('response.data.picUrl'+response.data.picUrl);
+          
         }else{
           AlertError('上传照片失败')
         }

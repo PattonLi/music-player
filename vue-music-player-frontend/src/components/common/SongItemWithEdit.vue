@@ -134,7 +134,9 @@ const addSongLike = () => {
       playListId: 0,
       type: 1 //歌曲
     }
-    addLike(likeForm, userId.value)
+    if (likeForm.songId != null) {
+      addLike(likeForm, userId.value)
+    }
   } else {
     AlertError('请先登录！')
   }

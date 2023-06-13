@@ -22,13 +22,11 @@ export const routerPushByNameKeyWord = (name: string, keyWord: string) => {
   })
 }
 
-
 export const routerPush = (name: string) => {
-  router.push({ name: name}).then((failure) => {
+  router.push({ name: name }).then((failure) => {
     if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
       //failure.to.path
       //failure.from.path
     }
   })
 }
-

@@ -26,7 +26,15 @@
           {{ item.artist }}
         </div>
         <div class="text-xl text-dc truncate flex justify-center">
-          {{ item.location==1 ?"华语": item.location==2?"欧美":item.location==2?"韩国":"日本" }}
+          {{
+            item.location == 1
+              ? '华语'
+              : item.location == 2
+              ? '欧美'
+              : item.location == 2
+              ? '韩国'
+              : '日本'
+          }}
         </div>
       </div>
     </div>
@@ -35,14 +43,13 @@
 
 <script setup lang="ts">
 import MyTitle from '@/components/common/MyTitle.vue'
-import { Pages } from '@/router/pages';
+import { Pages } from '@/router/pages'
 import { useMusicStore } from '@/stores/music'
 import _ from 'lodash'
 
 const { personalizedArtists } = toRefs(useMusicStore())
 const { updatePersonalize: UpdatePersonalize } = useMusicStore()
 const router = useRouter()
-
 
 onMounted(async () => {
   await UpdatePersonalize(3)

@@ -165,13 +165,6 @@ const router = createRouter({
           meta: { keepAlive: true },
           component: () => import('@/views/user-center/AppUserCenter.vue'),
           children: [
-            /*--------------------编辑用户信息组件 ------------------*/
-            {
-              path: 'userEdit',
-              name: Pages.userEdit,
-              meta: { keepAlive: true },
-              component: () => import('@/views/user-center/EditPage.vue')
-            },
             /*--------------------显示用户信息组件 ------------------*/
             {
               path: 'userProfile',

@@ -1,9 +1,7 @@
 <template>
   <div class="p-5" v-if="mv">
     <div class="flex gap-x-5">
-      <div>
-
-      </div>
+      <div></div>
       <div class="flex-1">
         <div class="flex flex-col">
           <video class="aspect-video w-full" :src="mv.url" autoplay controls />
@@ -14,16 +12,11 @@
             <MvComment></MvComment>
           </div>
         </div>
-        
       </div>
       <div class="hidden w-80 flex-shrink-0 xl:block">
         <span class="text-2xl">大家都在看:</span>
         <div class="flex flex-col space-y-8 mx-8">
-          <div
-            v-for="(item, index) in mvs"
-            :key="index"
-            @click="toMv(item.movieId)"
-          >
+          <div v-for="(item, index) in mvs" :key="index" @click="toMv(item.movieId)">
             <!-- 封面组件 -->
             <MyCover
               :name="item.movie"
@@ -52,12 +45,12 @@ import MyCover from '@/components/common/MyCover.vue'
 import MvComment from './MvComment.vue'
 
 const { mvs } = storeToRefs(useMvStore())
-const {id} = storeToRefs(useMvStore())
+const { id } = storeToRefs(useMvStore())
 const { togglePlay } = usePlayerStore()
 const { isPlaying } = storeToRefs(usePlayerStore())
 const mv = ref()
 
-const toMv = (movieId:number)=>{
+const toMv = (movieId: number) => {
   id.value = movieId
   let index = _.findIndex(mvs.value, (o) => {
     return o.movieId == id.value
