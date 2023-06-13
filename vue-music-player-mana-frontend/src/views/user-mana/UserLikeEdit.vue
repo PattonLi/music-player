@@ -98,10 +98,9 @@
 import type { CustomerInfo } from '@/model/UserInfo'
 import type { SongInfo } from '@/model/SongInfo'
 import type { ArtistInfo } from '@/model/ArtistInfo'
-import type { AlbumInfo } from '@/model/AlbumInfo'
+import type { AlbumInfo } from '@/model/albumInfo'
 import { getACustomerInfo } from '@/utils/api/user'
 import { getUserLikeInfo } from '@/utils/api/like'
-import { AlertSuccess } from '@/utils/alert/AlertPop'
 
 const state = reactive({
   userData: {
@@ -124,14 +123,16 @@ const state = reactive({
 })
 
 //加载数据
-onMounted(() => {
+onMounted(async() => {
   state.currentPage = 1
-  getACustomerInfo(state.currentPage).then((data) => {
+  console.log('state.currentPage');
+  console.log(state.currentPage);
+  await getACustomerInfo(state.currentPage).then((data) => {
     if (data.code == 200) {
       state.userData = data.data
       state.totals = data.totals
+      console.log('state.totals')
       console.log(state.totals)
-      console.log(data.data)
       console.log('data')
       console.log(data.data)
       console.log('state.userData')
@@ -139,7 +140,7 @@ onMounted(() => {
     }
   })
   console.log('state.userData.userId' + state.userData.userId)
-  getUserLikeInfo(state.userData.userId).then((data) => {
+  await getUserLikeInfo(state.userData.userId).then((data) => {
     if (data.code == 200) {
       state.songData = data.songs
       state.albumData = data.albums
@@ -149,10 +150,10 @@ onMounted(() => {
     }
   })
 })
-const handleCurrentChange = (val: number) => {
+const handleCurrentChange = async(val: number) => {
   state.currentPage = val
   console.log(`current page: ${val}`)
-  getACustomerInfo(val).then((data) => {
+  await getACustomerInfo(val).then((data) => {
     if (data.code == 200) {
       state.userData = data.data
       state.totals = data.totals
@@ -165,7 +166,7 @@ const handleCurrentChange = (val: number) => {
     }
   })
   console.log('state.userData.userId' + state.userData.userId)
-  getUserLikeInfo(state.userData.userId).then((data) => {
+  await getUserLikeInfo(state.userData.userId).then((data) => {
     if (data.code == 200) {
       state.songData = data.songs
       state.albumData = data.albums
