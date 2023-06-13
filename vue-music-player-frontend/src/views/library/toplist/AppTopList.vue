@@ -98,43 +98,43 @@ const topListData = ref([
         topListId: 1,
         listeners: 123.3,
         name: '飙升榜',
-        picUrl: 'sss'
+        picUrl: '/src/assets/images/toplist/a1.png'
       },
       {
         topListId: 2,
         listeners: 1143.7,
         name: '热歌榜',
-        picUrl: 'sss'
+        picUrl: '/src/assets/images/toplist/a2.png'
       },
       {
         topListId: 3,
         listeners: 43.3,
         name: '新歌榜',
-        picUrl: 'sss'
+        picUrl: '/src/assets/images/toplist/a3.png'
       },
       {
         topListId: 4,
         listeners: 342.1,
         name: '流行指数榜',
-        picUrl: 'sss'
+        picUrl: '/src/assets/images/toplist/a4.png'
       },
       {
         topListId: 5,
         listeners: 626.2,
         name: '腾讯音乐人原创榜',
-        picUrl: 'sss'
+        picUrl: '/src/assets/images/toplist/a5.png'
       },
       {
         topListId: 6,
         listeners: 446.1,
         name: '听歌识曲榜',
-        picUrl: 'sss'
+        picUrl: '/src/assets/images/toplist/a6.png'
       },
       {
         topListId: 7,
         listeners: 935.5,
         name: 'MV榜',
-        picUrl: 'sss'
+        picUrl: '/src/assets/images/toplist/a7.png'
       }
     ]
   },
@@ -145,37 +145,37 @@ const topListData = ref([
         topListId: 1,
         listeners: 142.1,
         name: '内地榜',
-        picUrl: 'asdasdasd'
+        picUrl: '/src/assets/images/toplist/b1.png'
       },
       {
         topListId: 2,
         listeners: 56.2,
         name: '香港地区榜',
-        picUrl: 'asdasdasd'
+        picUrl: '/src/assets/images/toplist/b2.png'
       },
       {
         topListId: 3,
         listeners: 46.1,
         name: '台湾地区榜',
-        picUrl: 'asdasdasd'
+        picUrl: '/src/assets/images/toplist/b3.png'
       },
       {
         topListId: 4,
         listeners: 1443.2,
         name: '欧美榜',
-        picUrl: 'asdasdasd'
+        picUrl: '/src/assets/images/toplist/b4.png'
       },
       {
         topListId: 5,
         listeners: 123.8,
         name: '韩国榜',
-        picUrl: 'asdasdasd'
+        picUrl: '/src/assets/images/toplist/b5.png'
       },
       {
         topListId: 6,
         listeners: 64.3,
         name: '日本榜',
-        picUrl: 'asdasdasd'
+        picUrl: '/src/assets/images/toplist/b6.png'
       }
     ]
   },
@@ -186,31 +186,31 @@ const topListData = ref([
         topListId: 1,
         listeners: 1233.3,
         name: 'billboard',
-        picUrl: 'asdasdasd'
+        picUrl: '/src/assets/images/toplist/c1.png'
       },
       {
         topListId: 2,
         listeners: 155.7,
         name: 'melon',
-        picUrl: 'asdasdasd'
+        picUrl: '/src/assets/images/toplist/c2.png'
       },
       {
         topListId: 3,
         listeners: 331.4,
         name: 'UK',
-        picUrl: 'asdasdasd'
+        picUrl: '/src/assets/images/toplist/c3.png'
       },
       {
         topListId: 4,
         listeners: 166.2,
         name: '日本公信榜',
-        picUrl: 'asdasdasd'
+        picUrl: '/src/assets/images/toplist/c4.png'
       },
       {
         topListId: 5,
         listeners: 34.3,
         name: '香港TVB金曲榜',
-        picUrl: 'asdasdasd'
+        picUrl: '/src/assets/images/toplist/c5.png'
       }
     ]
   }
