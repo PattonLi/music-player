@@ -4,7 +4,7 @@ import { useAuthStore } from '@/stores/auth'
 import { AlertError } from '../alert/AlertPop'
 
 // todo 设置baseurl
-axios.defaults.baseURL = 'https://mock.apifox.cn/m1/2794549-0-default'
+axios.defaults.baseURL = 'http://127.0.0.1:4000'
 // 请求头，headers 信息
 // axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 
@@ -27,10 +27,10 @@ axios.interceptors.response.use(
     console.log(res)
     return res
   },
-  function (error:AxiosError) {
+  function (error: AxiosError) {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
-    AlertError('api错误'+error.config?.url+'---'+error.config?.data)
+    AlertError('api错误' + error.config?.url + '---' + error.config?.data)
     console.log(error)
     return Promise.reject(error)
   }

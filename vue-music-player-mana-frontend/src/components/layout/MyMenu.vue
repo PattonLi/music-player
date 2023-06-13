@@ -3,7 +3,7 @@
     <!--icon-->
     <div class="head">
       <div>
-        <span style="color: black;">~音乐管理端~</span>
+        <span style="color: black">~音乐管理端~</span>
         <img :src="cover" alt="logo" />
       </div>
     </div>
@@ -95,7 +95,7 @@ import cover from '@/assets/images/cover.jpeg'
 
 .aside {
   width: 250px;
-  background-color:white;
+  background-color: white;
 }
 
 .head {

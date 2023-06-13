@@ -7,7 +7,7 @@
             <span>今日登录用户数量</span>
           </div>
         </template>
-        <div class="item">11323</div>
+        <div class="item">23</div>
       </el-card>
 
       <el-card class="order-item">
@@ -16,7 +16,7 @@
             <span>今日播放歌曲总量</span>
           </div>
         </template>
-        <div class="item">36271</div>
+        <div class="item">65</div>
       </el-card>
 
       <el-card class="order-item">
@@ -25,7 +25,7 @@
             <span>今日新注册用户数量</span>
           </div>
         </template>
-        <div class="item">1242</div>
+        <div class="item">12</div>
       </el-card>
     </div>
     <!-- echart 表格-->

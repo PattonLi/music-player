@@ -1,12 +1,12 @@
 import axios from '@/utils/api/axios'
 import type { UserInfo, CustomerInfo } from '@/model/UserInfo'
 
-// 获取用户信息
-const getUserInfo = async () => {
-  let userInfo: UserInfo = { loginUserName: '', nickName: '' }
+// 获取管理员登录信息
+const getUserInfo = async (userId: number) => {
+  const userInfo: UserInfo = { loginUserName: '' }
   try {
-    const response = await axios.get('/adminUser/profile', {})
-    userInfo = response.data.userInfo
+    const response = await axios.get('/adminUser/profile', { params: { adminId: userId } })
+    userInfo.loginUserName = response.data.adminName
   } catch (error) {
     console.log(error)
   }
@@ -24,9 +24,9 @@ const getCustomerInfo = async (currentPage: number, pageSize: number) => {
       }
     }) // 替换成你的 API 接口地址
     console.log(response)
-    return response.data;
+    return response.data
   } catch (error) {
-    console.error('Failed to fetch customer info:', error);
+    console.error('Failed to fetch customer info:', error)
   }
 }
 
@@ -65,7 +65,7 @@ const deleteTheCustomerInfo = async (userId: number) => {
   try {
     const response = await axios.get('/User/deleteInfo', {
       params: {
-        userId: userId
+        user_id: userId
       }
     })
     console.log(response)
@@ -77,8 +77,8 @@ const deleteTheCustomerInfo = async (userId: number) => {
 // 修改用户信息
 const modifyTheCustomerInfo = async (data: CustomerInfo) => {
   try {
-    const jsonData = JSON.stringify(data); // 将对象转换为 JSON 字符串
-    const response = await axios.post('/User/modifyInfo', jsonData);
+    const jsonData = JSON.stringify(data) // 将对象转换为 JSON 字符串
+    const response = await axios.post('/User/modifyInfo', jsonData)
     // 处理响应
     console.log(response)
   } catch (error) {
@@ -90,8 +90,8 @@ const modifyTheCustomerInfo = async (data: CustomerInfo) => {
 // 添加用户信息
 const addTheCustomerInfo = async (data: CustomerInfo) => {
   try {
-    const jsonData = JSON.stringify(data); // 将对象转换为 JSON 字符串
-    const response = await axios.post('/User/addInfo', jsonData);
+    const jsonData = JSON.stringify(data) // 将对象转换为 JSON 字符串
+    const response = await axios.post('/User/addInfo', jsonData)
     // 处理响应
     console.log(response)
     return response.data
@@ -101,4 +101,12 @@ const addTheCustomerInfo = async (data: CustomerInfo) => {
   }
 }
 
-export { getUserInfo, getCustomerInfo, getTheCustomerInfo, deleteTheCustomerInfo, modifyTheCustomerInfo, addTheCustomerInfo, getACustomerInfo }
+export {
+  getUserInfo,
+  getCustomerInfo,
+  getTheCustomerInfo,
+  deleteTheCustomerInfo,
+  modifyTheCustomerInfo,
+  addTheCustomerInfo,
+  getACustomerInfo
+}

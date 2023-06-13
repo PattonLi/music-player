@@ -59,7 +59,8 @@ router.beforeEach((to, from, next) => {
 <style scoped>
 .content {
   display: flex;
-  max-height: 100vh;
+  height: 100%;
+
   overflow-y: hidden;
 }
 
@@ -68,5 +69,4 @@ router.beforeEach((to, from, next) => {
   overflow-y: auto;
   padding: 30px;
 }
-
 </style>
