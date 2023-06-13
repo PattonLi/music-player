@@ -19,6 +19,7 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.8",
     "element-plus": "^2.3.4",
+    "gsap": "^3.12.1",
     "js-file-download": "^0.4.12",
     "lodash": "^4.17.21",
     "music-metadata": "^8.1.4",
