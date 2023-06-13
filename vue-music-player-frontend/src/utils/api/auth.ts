@@ -1,3 +1,4 @@
+import axios from 'axios'
 import myAxios from './myAxios'
 import type { UserProfile, registerUser } from '@/models/user'
 
@@ -36,5 +37,25 @@ export async function apiRegister(ruleForm: registerUser) {
     phone: ruleForm.phone,
     email: ruleForm.email,
     password: ruleForm.password
+  })
+}
+
+
+export const apiUploadAction = async (file: File) => {
+  return await upload(file)
+}
+
+const upload=(file: File)=>{
+  const formData = new FormData()
+  formData.append('file', file)
+  return new Promise((resolve, reject) => {
+    axios
+      .post('user/profile/edit', JSON.stringify(formData))
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((err) => {
+        reject(err.data)
+      })
   })
 }

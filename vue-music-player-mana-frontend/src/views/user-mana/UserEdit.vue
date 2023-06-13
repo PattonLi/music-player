@@ -221,6 +221,7 @@ import type { CustomerInfo } from '@/model/UserInfo'
 import type { UploadProps } from 'element-plus'
 import { add, fill } from 'lodash'
 import axios from 'axios'
+import { AlertError, AlertSuccess } from '@/utils/alert/AlertPop'
 
 const input = reactive({ input: '' })
 
@@ -385,6 +386,13 @@ const muploadAction = (file: File) => {
         console.log(response)
         modifyDialog.data.picUrl = URL.createObjectURL(file)
         console.log(modifyDialog.data.picUrl)
+        if(response.data.code==200){
+          AlertSuccess('成功上传照片')
+          modifyDialog.data.picUrl=response.data.picUrl
+        }else{
+          AlertError('上传照片失败')
+        }
+        
       })
   } catch (error) {
     console.log(error)
