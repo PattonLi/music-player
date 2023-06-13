@@ -14,7 +14,9 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     SetToken(value: string) {
       this.isLogin = true
-      this.token = JSON.stringify(value)
+      this.token = value
+      console.log('token:'+value);
+      
     },
     removeToken() {
       this.isLogin = false

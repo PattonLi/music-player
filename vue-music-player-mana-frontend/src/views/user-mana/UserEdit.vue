@@ -367,11 +367,13 @@ const mbeforeAvatarUpload: UploadProps['beforeUpload'] = (file) => {
   return false
 }
 
-const url = 'http://127.0.0.1:4000/User/modifyUploadPic'
+const url = 'http://127.0.0.1:4000/User/uploadPic'
 // 照片上传请求
 const muploadAction = (file: File) => {
   let formData = new FormData()
   formData.append('file', file)
+  //加上userID传进来
+  formData.append('userId',modifyDialog.data.userId.toString())
   try {
     axios
       .post(url, formData, {
