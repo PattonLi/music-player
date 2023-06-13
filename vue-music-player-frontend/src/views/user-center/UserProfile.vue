@@ -148,9 +148,9 @@ import { storeToRefs } from 'pinia'
 import { Pages } from '@/router/pages'
 import type { UploadProps } from 'element-plus'
 import { AlertError, AlertSuccess } from '@/utils/alert/AlertPop'
-import { apiUploadAction } from '@/utils/api/auth'
 import myAxios from '@/utils/api/myAxios'
 import type { UserProfile } from '@/models/user'
+import axios from 'axios'
 
 const { profile, showModify,userId } = storeToRefs(useAuthStore())
 const { logout, checkLogin } = useAuthStore()
@@ -183,14 +183,33 @@ const mbeforeAvatarUpload: UploadProps['beforeUpload'] = async (file) => {
     AlertError('头像不能超过 2MB!')
     return false
   }
-  const res = (await apiUploadAction(file)) as { code: number; picUrl: string }
-  if (res.code == 200) {
-    AlertSuccess('上传图片成功！')
-    modifyDialog.value.data.picUrl = res.picUrl
-  } else {
-    AlertError('上传图片失败')
+  console.log('file：',file);
+  try {
+    let formData = new FormData()
+    formData.append('file', file)
+    axios
+      .post('user/profile/edit', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then((response) => {
+        console.log(response)
+        modifyDialog.value.data.picUrl = URL.createObjectURL(file)
+        console.log(modifyDialog.value.data.picUrl)
+        if(response.data.code==200){
+          AlertSuccess('成功上传照片')
+          modifyDialog.value.data.picUrl=response.data.picUrl
+          console.log('response.data.picUrl'+response.data.picUrl);
+          
+        }else{
+          AlertError('上传照片失败')
+        }
+        
+      })
+  } catch (error) {
+    console.log(error)
   }
-  return false
 }
 
 const confirmModify = () => {
@@ -215,10 +234,10 @@ const confirmModify = () => {
 const modifyTheCustomerInfo = async (data: CustomerInfo) => {
   const res = await myAxios.post<{
     code: number
-    picUrl: string
   }>('/User/modifyInfo', data)
   if (res.code == 200) {
     AlertSuccess('修改信息成功！')
+    checkLogin()
   } else {
     AlertError('上修改信息失败')
   }

@@ -17,12 +17,9 @@ declare module '@vue/runtime-core' {
     AppResgister: typeof import('./src/components/layout/auth/AppResgister.vue')['default']
     CommentItem: typeof import('./src/components/common/CommentItem.vue')['default']
     DarkMode: typeof import('./src/components/layout/header/DarkMode.vue')['default']
-    ElAffix: typeof import('element-plus/es')['ElAffix']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElButton: typeof import('element-plus/es')['ElButton']
-    ElCarousel: typeof import('element-plus/es')['ElCarousel']
-    ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElCollapse: typeof import('element-plus/es')['ElCollapse']
@@ -36,6 +33,7 @@ declare module '@vue/runtime-core' {
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']
+    ElImg: typeof import('element-plus/es')['ElImg']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElPageHeader: typeof import('element-plus/es')['ElPageHeader']
     ElPopover: typeof import('element-plus/es')['ElPopover']
@@ -69,8 +67,5 @@ declare module '@vue/runtime-core' {
     SongItem: typeof import('./src/components/common/SongItem.vue')['default']
     SongItemWithEdit: typeof import('./src/components/common/SongItemWithEdit.vue')['default']
     UserInfo: typeof import('./src/components/layout/header/UserInfo.vue')['default']
-  }
-  export interface ComponentCustomProperties {
-    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
