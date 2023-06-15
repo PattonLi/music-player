@@ -17,9 +17,12 @@ declare module '@vue/runtime-core' {
     AppResgister: typeof import('./src/components/layout/auth/AppResgister.vue')['default']
     CommentItem: typeof import('./src/components/common/CommentItem.vue')['default']
     DarkMode: typeof import('./src/components/layout/header/DarkMode.vue')['default']
+    ElAffix: typeof import('element-plus/es')['ElAffix']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCarousel: typeof import('element-plus/es')['ElCarousel']
+    ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElCollapse: typeof import('element-plus/es')['ElCollapse']
@@ -48,6 +51,7 @@ declare module '@vue/runtime-core' {
     ElText: typeof import('element-plus/es')['ElText']
     ElUpload: typeof import('element-plus/es')['ElUpload']
     IconPark: typeof import('./src/components/common/IconPark.vue')['default']
+    InfoEdit: typeof import('./src/components/layout/header/InfoEdit.vue')['default']
     MenuList: typeof import('./src/components/layout/sideBar/MenuList.vue')['default']
     MyCardSwiper: typeof import('./src/components/common/MyCardSwiper.vue')['default']
     MyCover: typeof import('./src/components/common/MyCover.vue')['default']
@@ -67,5 +71,8 @@ declare module '@vue/runtime-core' {
     SongItem: typeof import('./src/components/common/SongItem.vue')['default']
     SongItemWithEdit: typeof import('./src/components/common/SongItemWithEdit.vue')['default']
     UserInfo: typeof import('./src/components/layout/header/UserInfo.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

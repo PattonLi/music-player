@@ -12,7 +12,7 @@
       <div class="w-52 2xl:w-96 cursor-pointer truncate">
         <div class="flex">
           <span>{{ song.name || '云音乐' }}</span>
-          <span class="ml-2 text-dc">- {{ song.name || `unknow artist` }}</span>
+          <span class="ml-2 text-dc">- {{ song.artist || `unknow artist` }}</span>
         </div>
       </div>
       <!-- 功能区 -->

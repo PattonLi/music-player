@@ -39,4 +39,3 @@ export async function apiRegister(ruleForm: registerUser) {
     password: ruleForm.password
   })
 }
-

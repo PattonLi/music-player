@@ -9,7 +9,7 @@
           :name="item.movie"
           :pic-url="item.picUrl"
           :showPlayCount="true"
-          :movie="true"
+          :video="true"
           :play-count="item.duration"
         />
         <!-- MV名 -->

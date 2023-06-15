@@ -6,7 +6,7 @@
       maxlength="80"
       placeholder="期待你的神评论 !"
       type="textarea"
-      show-word-limit="true"
+      :show-word-limit="true"
       clearable:true
       rows="3"
       resize="none"

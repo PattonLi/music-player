@@ -9,10 +9,11 @@
     <div class="ml-2 text-xs h-10 flex flex-1 w-1">
       <div class="flex flex-1 flex-col justify-between truncate">
         <div class="truncate">{{ song.name }}</div>
+        <div class="truncate">{{ song.artist }}</div>
       </div>
       <div class="flex-shrink-0 ml-5 flex items-center justify-end">
         <div class="truncate">
-          <small>{{ numberToDuration(song.duration / 1000) }}</small>
+          <small>{{ numberToDuration(song.duration || 0) }}</small>
         </div>
       </div>
     </div>

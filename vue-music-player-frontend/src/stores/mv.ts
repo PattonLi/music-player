@@ -19,6 +19,5 @@ export const useMvStore = defineStore('mv', {
         AlertError('请求热门mv失败')
       }
     }
-  },
-  persist: true
+  }
 })
