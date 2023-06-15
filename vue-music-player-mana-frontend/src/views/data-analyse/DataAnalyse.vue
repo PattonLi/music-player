@@ -165,5 +165,7 @@ onUnmounted(() => {
 }
 #chart1 {
   min-height: 400px;
+  margin-top: 70px;
+  margin-bottom: 110px;
 }
 </style>

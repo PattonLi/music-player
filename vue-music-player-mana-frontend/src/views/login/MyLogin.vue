@@ -4,10 +4,10 @@
     <div class="login-container">
       <!--登录框头部logo部分-->
       <div class="head">
-        <img class="logo" src="https://s.weituibao.com/1582958061265/mlogo.png" />
+        <img class="logo" src="@/assets/images/login.jpeg" />
         <div class="name">
-          <div class="title">sysu 网页音乐</div>
-          <div class="tips">Vue3.2 后台管理系统</div>
+          <div class="title">音乐网站</div>
+          <div class="tips">后台管理系统</div>
         </div>
       </div>
       <el-form
@@ -129,12 +129,19 @@ const submitForm = async () => {
   font-weight: bold;
 }
 .head .tips {
-  font-size: 12px;
+  font-size: 14px;
   color: #999;
+  margin-top: 5px;
 }
 
 .login-form {
   width: 70%;
   margin: 0 auto;
+}
+
+.img{
+  width: 20px;
+  height: 20px;
+
 }
 </style>

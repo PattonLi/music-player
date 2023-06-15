@@ -67,7 +67,11 @@ const addArtistInfo = async (data: ArtistInfo) => {
 // 修改特定歌手
 const modifyArtistInfo = async (modiArtist: ArtistInfo) => {
   try {
-    const jsonData = JSON.stringify(modiArtist) // 将对象转换为 JSON 字符串
+    console.log('modiArtist.albumSize',modiArtist.albumSize);
+    const send={
+      data:modiArtist
+    }
+    const jsonData = JSON.stringify(send) // 将对象转换为 JSON 字符串
     const response = await axios.post('/admin/modifyArtist', jsonData)
     // 处理响应
     console.log(response)
