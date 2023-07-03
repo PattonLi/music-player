@@ -65,3 +65,16 @@ func (ac *AlbumController) GetAlbumPageHandler(c *gin.Context) ([]model.AlbumInf
 	albumpage, err0, err1, pagenum := ac.albumService.GetAlbumPage(artistId, currentPage, pageSize)
 	return albumpage, err0, err1, pagenum
 }
+
+// 根据关键词获取专辑
+func (ac *AlbumController) GetAlbumByKeyWordHandler(c *gin.Context) ([]model.AlbumInfo, error, error, int) {
+	keyword := c.Query("keyWord")
+	pagesize := c.Query("pageSize")
+	currentpage := c.Query("currentPage")
+
+	pageSize, _ := strconv.Atoi(pagesize)
+	currntPage, _ := strconv.Atoi(currentpage)
+
+	albumpage, err0, err1, pagetotal := ac.albumService.GetAlbumByKeyWord(pageSize, currntPage, keyword)
+	return albumpage, err0, err1, pagetotal
+}

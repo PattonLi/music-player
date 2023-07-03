@@ -44,3 +44,16 @@ func (ac *ArtistController) GetArtistDescribeHandler(c *gin.Context) (string, er
 	profile, err := ac.artistservice.GetArtistDescribe(Id)
 	return profile, err
 }
+
+// 根据关键词获取歌手
+func (ac *ArtistController) GetArtistByKeyWordHandler(c *gin.Context) ([]model.ArtistInfo, error, error, int) {
+	keyword := c.Query("keyWord")
+	pagesize := c.Query("pageSize")
+	currentpage := c.Query("currentPage")
+
+	pageSize, _ := strconv.Atoi(pagesize)
+	currntPage, _ := strconv.Atoi(currentpage)
+
+	artistpage, err0, err1, pagetotal := ac.artistservice.GetArtistByKeyWord(pageSize, currntPage, keyword)
+	return artistpage, err0, err1, pagetotal
+}

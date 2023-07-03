@@ -23,6 +23,35 @@
         <span class="ml-2">{{ menu.name }}</span>
       </div>
     </div>
+
+    <!-- 歌单显示 -->
+    <div class="mx-8">
+      <el-collapse :v-model="activeNames">
+        <el-collapse-item :name="1">
+          <template #title> 创建的歌单 </template>
+          <div v-if="isLogin">
+            <div>
+              <button @click="clickLikeList()" :class="{ active: currentKey1 == -1 }">
+                默认收藏
+              </button>
+            </div>
+          </div>
+        </el-collapse-item>
+        <el-collapse-item :name="2">
+          <template #title> 收藏的歌单 </template>
+          <div v-if="isLogin">
+            <div v-for="item in playlists" :key="item.playListId">
+              <button
+                @click="clickPlayList(item)"
+                :class="{ active: currentKey1 == item.playListId }"
+              >
+                {{ item.playList }}
+              </button>
+            </div>
+          </div>
+        </el-collapse-item>
+      </el-collapse>
+    </div>
   </ElScrollbar>
 </template>
 
@@ -41,6 +70,34 @@ import {
   DownloadThree,
   Time
 } from '@icon-park/vue-next'
+
+import { useLikeStore } from '@/stores/like'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
+import type { PlayList } from '@/models/playlist'
+import { routerPushByNameId } from '@/utils/navigator/router'
+const { updateLikes } = useLikeStore()
+const { userId, isLogin } = storeToRefs(useAuthStore())
+const { playlists } = storeToRefs(useLikeStore())
+
+const activeNames = ['0', '1']
+
+onMounted(async () => {
+  updateLikes(userId.value)
+})
+
+const currentKey1 = ref()
+
+const clickPlayList = (item: PlayList) => {
+  currentKey1.value = item.playListId
+  routerPushByNameId(Pages.playlistDetail, item.playListId)
+}
+const clickLikeList = () => {
+  currentKey1.value = -1
+  routerPushByNameId(Pages.like, userId.value)
+}
+
+/* ------------------------------------------------------------------------- */
 
 //menu接口类型
 interface IMenu {
@@ -132,6 +189,7 @@ watch(
 )
 
 const click = async (menu: IMenu) => {
+  currentKey1.value = 0
   await router.push({ name: menu.key })
 }
 </script>

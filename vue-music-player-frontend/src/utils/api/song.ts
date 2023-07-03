@@ -8,3 +8,9 @@ export async function apiGetSong(songId: number) {
   }>('detail/song', { songId: songId })
   return data
 }
+
+//获取歌词
+export async function apiGetLyric(url: string) {
+  const data = await myAxios.get(url)
+  return data
+}

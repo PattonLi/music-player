@@ -3,6 +3,43 @@ import { apiGetSong } from '@/utils/api/song'
 import type { Song } from '@/models/song'
 import { AlertError } from '@/utils/alert/AlertPop'
 import _ from 'lodash'
+import { useAuthStore } from './auth'
+import { apiLogPlay } from '@/utils/api/log'
+import { useRecentPlayStore } from './recentPlay'
+
+// 将00:00.00转换为秒数
+function timeStrToNum(str: string) {
+  const minute = Number(str.slice(0, 2))
+  const second = Number(str.slice(3, 5))
+  const minSec = Number(str.slice(6, 8))
+  return minute * 60 + second + minSec / 100
+}
+
+interface LineLrc {
+  time: number
+  content: string
+}
+
+// 将歌词字符串转换为对象，格式为{开始时间: 歌词, ...}
+function lyricToObj(lyricStr: string) {
+  const obj: LineLrc[] = []
+  let perLyric
+  let time
+  let index = 0
+  lyricStr.split('\n').forEach((item, idx) => {
+    perLyric = item.slice(item.indexOf(']') + 1)
+    if (perLyric) {
+      time = timeStrToNum(item.slice(1, 9))
+      obj[index] = {
+        time: time,
+        content: perLyric
+      }
+      index++
+    }
+  })
+  //删掉未定义的
+  return obj
+}
 
 export const usePlayerStore = defineStore('player', {
   state: () => ({
@@ -18,7 +55,14 @@ export const usePlayerStore = defineStore('player', {
     ended: false, //是否播放结束
     muted: false, //是否静音
     currentTime: 0, //当前播放时间
-    duration: 0 //总播放时长
+    duration: 0, //总播放时长
+
+    /* --------------------------------------------------------------- */
+    showPlayWindow: false, //是否展示播放窗口
+    // 原始歌词
+    lyric: [] as LineLrc[],
+    // 原始译词
+    tlyric: [] as LineLrc[]
   }),
   getters: {
     //播放列表歌曲数量
@@ -95,9 +139,15 @@ export const usePlayerStore = defineStore('player', {
       this.audio
         .play()
         .then((res) => {
+          const authStore = useAuthStore()
           //播放成功
           this.isPlaying = true
           this.pushPlayList(false, this.song)
+          //记录日志
+          apiLogPlay(authStore.userId, this.song.songId)
+          //添加到最近播放
+          const recentPlay = useRecentPlayStore()
+          recentPlay.addRecentSongs(this.song)
         })
         .catch((res) => {
           //播放失败
@@ -170,17 +220,30 @@ export const usePlayerStore = defineStore('player', {
     //修改进度条
     onSliderChange(val: any) {
       //待做转换成时间格式
-      this.currentTime = val
-      // this.audio.currentTime = val
+      if (this.song.songId) {
+        this.currentTime = val
+        this.audio.currentTime = val
+      } else {
+        console.log('song为空')
+      }
     },
     //定时器更新信息
     interval() {
       //如果在播放
       if (this.isPlaying) {
         this.currentTime = parseInt(this.audio.currentTime.toString())
-        this.duration = parseInt(this.audio.duration.toString())
+        this.duration = this.audio.duration
         this.ended = this.audio.ended
       }
+    },
+    /* ------------------------------------------------------------------- */
+
+    changePlayerShow() {
+      this.showPlayWindow = !this.showPlayWindow
+    },
+    updateLrc(lrc1: string, lrc2: string) {
+      this.lyric = lyricToObj(lrc1)
+      this.tlyric = lyricToObj(lrc2)
     }
   }
 })

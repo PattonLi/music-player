@@ -17,10 +17,10 @@
         <el-scrollbar>
           <PlayListItem
             v-for="item in playList"
-            :key="item.id"
+            :key="item.songId"
             :song="item"
-            :active="item.id === song.id"
-            @dblclick="play(item.id)"
+            :active="item.songId === song.songId"
+            @dblclick="play(item.songId)"
           />
         </el-scrollbar>
       </div>

@@ -61,7 +61,7 @@ const router = createRouter({
     //登录日志
     {
       path: '/loginHistory',
-      component: () => import('@/views/log-mana/LogInRegisterHistory.vue'),
+      component: () => import('@/views/log-mana/DownloadHistory.vue'),
       name: 'loginHistory'
     },
     //注册日志

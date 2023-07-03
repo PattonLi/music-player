@@ -51,3 +51,11 @@ func (a *AlbumDao) GetAlbumByArtistid(artist_id int) ([]model.AlbumInfo, error) 
 	result := DB.Where("artist_id = ?", artist_id).Find(&album)
 	return album, result.Error
 }
+
+// 根据关键词获取专辑
+func (a *AlbumDao) GetAlbumByKeyWord(keyword string) ([]model.AlbumInfo, error) {
+	var album []model.AlbumInfo
+	keyword = "%" + keyword + "%"
+	result := DB.Where("name  LIKE ?", keyword).Find(&album)
+	return album, result.Error
+}

@@ -3,7 +3,7 @@
     <el-row :gutter="20">
       <el-col :span="2">
         <span class="input-mention">用户名</span>
-     </el-col>
+      </el-col>
       <el-col :span="5">
         <el-input
           v-model="input.input"

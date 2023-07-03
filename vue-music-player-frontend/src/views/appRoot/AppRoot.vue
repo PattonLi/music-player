@@ -30,6 +30,8 @@
     </div>
     <!-- 播放列表popover -->
     <AppPlayList />
+    <!-- 播放界面 -->
+    <AppPlayer></AppPlayer>
   </div>
 </template>
 
@@ -38,6 +40,7 @@ import AppMenu from '@/components/layout/sideBar/AppMenu.vue'
 import AppHeader from '@/components/layout/header/AppHeader.vue'
 import AppFooter from '@/components/layout/footer/AppFooter.vue'
 import AppPlayList from '@/components/layout/playList/AppPlayList.vue'
+import AppPlayer from '@/views/player/AppPlayer.vue'
 </script>
 
 <style lang="scss"></style>
