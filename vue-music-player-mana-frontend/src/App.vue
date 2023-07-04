@@ -33,7 +33,7 @@ router.beforeEach((to, from, next) => {
 
 <template>
   <div id="app">
-    <div class="layout">
+    <div>
       <el-container v-if="authStore.getAuthStatus.isLogin" class="container">
         <MyMenu></MyMenu>
         <!--main container-->
@@ -56,17 +56,17 @@ router.beforeEach((to, from, next) => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .content {
   display: flex;
-  flex-direction: column;
-  max-height: 100vh;
-  overflow: auto;
+  height: 100%;
+
+  overflow-y: hidden;
 }
 
 .main {
-  height: 100vh;
-  overflow: auto;
-  padding: 10;
+  height: 100%;
+  overflow-y: auto;
+  padding: 30px;
 }
 </style>

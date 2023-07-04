@@ -34,7 +34,7 @@
           <span>播放全部</span>
         </button>
 
-        <button class="w-28 button-outline" v-if="isPlayListLike" @click="addPlayListLike">
+        <button class="w-28 button-outline" v-if="!isPlayListLike" @click="addPlayListLike">
           <IconPark :icon="Like" size="18" class="mr-1" theme="outline" />
           <span>收藏</span>
         </button>
@@ -85,7 +85,7 @@ const addPlayListLike = () => {
       userId: userId.value,
       songId: 0,
       artistId: 0,
-      playlistId: props.playlist.playListId,
+      playListId: props.playlist.playListId,
       type: 4 //歌单
     }
     addLike(likeForm, userId.value)
@@ -101,7 +101,7 @@ const delPlayListLike = () => {
       userId: userId.value,
       songId: 0,
       artistId: 0,
-      playlistId: props.playlist.playListId,
+      playListId: props.playlist.playListId,
       type: 4 //歌单
     }
     delLike(likeForm, userId.value)

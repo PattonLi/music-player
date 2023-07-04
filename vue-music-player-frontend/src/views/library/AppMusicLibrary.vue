@@ -82,7 +82,7 @@ const onTabClick = ({ props }: { props: Menu }) => {
 }
 
 onMounted(() => {
-  router.push({ name: 'select' })
+  router.push({ name: Pages.select })
 })
 </script>
 

@@ -7,7 +7,10 @@
           <el-avatar
             class="mr-3"
             :size="75"
-            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+            :src="
+              profile.picUrl ||
+              'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+            "
           />
           <!-- 用户名 -->
           <span class="text-3xl font-600 mx-3"> {{ profile.nickname }} </span>
@@ -21,10 +24,7 @@
       <template #extra>
         <div class="flex items-center">
           <div class="flex items-center">
-            <button
-              class="mr-3 button-outline w-28 h-10"
-              @click="routerPushByNameId(Pages.userEdit, userId)"
-            >
+            <button class="mr-3 button-outline w-28 h-10" @click="showModify = true">
               编辑信息
             </button>
           </div>
@@ -39,6 +39,7 @@
             </button>
           </div>
         </div>
+        <EditProfile></EditProfile>
       </template>
 
       <!-- 描述 -->
@@ -79,12 +80,15 @@ import { Logout } from '@icon-park/vue-next'
 import { useAuthStore } from '@/stores/auth'
 import { storeToRefs } from 'pinia'
 import { Pages } from '@/router/pages'
-import { routerPushByNameId } from '@/utils/navigator/router'
-const { profile, userId } = storeToRefs(useAuthStore())
-const { logout } = useAuthStore()
+
+const { profile, showModify } = storeToRefs(useAuthStore())
+const { logout, checkLogin } = useAuthStore()
 const router = useRouter()
 
 const onBack = () => {
   logout()
 }
+onMounted(() => {
+  checkLogin()
+})
 </script>

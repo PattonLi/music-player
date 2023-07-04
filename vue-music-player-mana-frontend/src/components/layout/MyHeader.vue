@@ -10,13 +10,12 @@
         <template #reference>
           <div class="author">
             <el-icon><Avatar /></el-icon>
-            <span class="tip">你好！{{ state.userInfo.nickName }}</span>
+            <span class="tip">你好！{{ state.userInfo.loginUserName }}</span>
             <el-icon><ArrowDown /></el-icon>
           </div>
         </template>
         <div class="nickname">
           <p>登录名：{{ state.userInfo.loginUserName }}</p>
-          <p>昵称：{{ state.userInfo.nickName }}</p>
           <el-tag size="small" effect="dark" class="logout" @click="logout">退出登录</el-tag>
         </div>
       </el-popover>
@@ -31,9 +30,11 @@ import { onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { getUserInfo } from '@/utils/api/user'
 import type { UserInfo } from '@/model/UserInfo'
+import { storeToRefs } from 'pinia'
 
 const authStore = useAuthStore()
 const router = useRouter()
+const { userId } = storeToRefs(useAuthStore())
 
 // watch router change,显示页面名称
 router.afterEach((to) => {
@@ -51,7 +52,7 @@ const state = reactive({
 onMounted(() => {
   const pathname = window.location.hash.split('/')[1] || ''
   if (!['login'].includes(pathname)) {
-    getUserInfo().then((userInfo) => {
+    getUserInfo(userId.value).then((userInfo) => {
       state.userInfo = userInfo
       console.log('Received userInfo:', userInfo)
     })
@@ -69,15 +70,15 @@ const logout = () => {
 <style scoped>
 .header {
   height: 50px;
-  border-bottom: 1px solid #e9e9e9;
+  border-bottom: 4px solid gray;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 10px;
 }
 
 .right > .author {
-  font-size: 18px;
+  font-size: 20px;
 }
 .author {
   margin-left: 10px;

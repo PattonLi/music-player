@@ -26,7 +26,7 @@ import { numberToDuration } from '@/utils/number/number'
 import IconPark from '@/components/common/IconPark.vue'
 
 defineProps<{
-  picUrl: string
+  picUrl?: string
   playCount?: number //mv时长或专辑歌曲数量
   name?: string
   showPlayCount?: boolean

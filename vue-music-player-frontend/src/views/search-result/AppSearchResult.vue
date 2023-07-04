@@ -34,11 +34,9 @@ const route = useRoute()
 const keyWord: string = String(route.query.keyWord)
 const tab = ref('song')
 
-onMounted(() => {
-  pageData.value[0].keyWord = keyWord
-  pageData.value[1].keyWord = keyWord
-  pageData.value[2].keyWord = keyWord
-})
+pageData.value[0].keyWord = keyWord
+pageData.value[1].keyWord = keyWord
+pageData.value[2].keyWord = keyWord
 
 onUnmounted(() => {
   clearPageData()

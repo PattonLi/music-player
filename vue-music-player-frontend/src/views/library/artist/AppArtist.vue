@@ -9,7 +9,7 @@
           class="hover-text px-4 py-0.5"
           :class="{
             active:
-              (item.key === pageData.type && option.key === 'type') ||
+              (item.key === pageData.gender && option.key === 'gender') ||
               (item.key === pageData.location && option.key === 'location') ||
               (item.key === pageData.firstLetter && option.key === 'firstLetter')
           }"
@@ -39,12 +39,7 @@
     </div>
     <!-- 加载按钮 -->
     <div class="flex justify-center pb-14 pt-8" v-if="artists.length > 0 && !pageData.noMore">
-      <el-button
-        :loading="pageData.loading"
-        link
-        size="large"
-        class="text-center"
-        @click="pageGet()"
+      <el-button :loading="pageData.loading" link size="large" class="text-center" @click="pageGet"
         >加载更多
       </el-button>
     </div>
@@ -68,9 +63,9 @@ onMounted(async () => {
 
 const optionChange = (keyName: string, keyValue: number | string) => {
   pageData.value.page = 0
-  pageData.value.pageTotal = 0
+  pageData.value.pageTotal = 1
   if (keyName === 'location') pageData.value.location = keyValue as number
-  if (keyName === 'type') pageData.value.type = keyValue as number
+  if (keyName === 'gender') pageData.value.gender = keyValue as number
   if (keyName === 'firstLetter') pageData.value.firstLetter = keyValue as string
   pageGet()
 }
@@ -96,7 +91,7 @@ const options: Option[] = [
     ]
   },
   {
-    key: 'type',
+    key: 'gender',
     list: [
       { key: 0, name: '全部' },
       { key: 1, name: '男' },

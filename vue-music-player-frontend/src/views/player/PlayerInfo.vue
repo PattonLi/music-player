@@ -4,8 +4,8 @@
       <!-- 左边专辑封面 -->
       <div class="w-1/2">
         <div class="flex justify-center">
-          <div class="w-1/2 h-1/2">
-            <img :src="albumLogo" alt="" />
+          <div class="w-1/2 h-1/2 rounded-full">
+            <img id="myImageAAAA" :src="song.picUrl || albumLogo" alt="" />
           </div>
         </div>
       </div>
@@ -46,7 +46,7 @@ const lyric = ref()
 const get = () => {
   lyric.value = apiGetLyric(song.value.lyricUrl!)
 }
-
+const { song } = storeToRefs(usePlayerStore())
 const songPos = computed(() => {
   return song.value.artist ? '歌手：' + song.value.artist : ''
 })
@@ -54,5 +54,36 @@ const artistPos = computed(() => {
   return song.value.album ? '专辑：' + song.value.album : ''
 })
 
-const { song } = storeToRefs(usePlayerStore())
+// //动画
+// import gsap, { Power0 } from 'gsap'
+// // 创建一个变量来保存 TweenLite 对象，方便以后操作
+// let tween;
+
+// // 页面加载后初始化动画效果
+// function initAnimation() {
+//   // 选取图片元素并旋转它
+//   const image = document.getElementById('myImageAAAA');
+//   tween = gsap.to(image, {
+//     rotate: 360,
+//     duration: 5,
+//     ease: Power0.easeNone,
+//     repeat: -1,
+//     paused: true
+//   });
+// }
+
+// // 暂停动画
+// function pauseAnimation() {
+//   tween.pause();
+// }
+
+// // 恢复动画
+// function resumeAnimation() {
+//   tween.resume();
+// }
+
+// onMounted(()=>{
+// // 初始化动画效果
+// initAnimation();
+// })
 </script>

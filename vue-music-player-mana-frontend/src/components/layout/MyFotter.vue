@@ -8,11 +8,8 @@
 
 <style scoped>
 .footer {
-  height: 50px;
-  border-top: 1px solid #e9e9e9;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
+  height: 20px;
+  padding-top: 20px;
+  border-top: 4px solid #e9e9e9;
 }
 </style>
