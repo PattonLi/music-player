@@ -45,7 +45,6 @@ func (*AlbumDao) GetAllAlbumInfo(page int, pagesize int) ([]model.AlbumInfo, int
 	totalPage := int64(math.Ceil(float64(totalrecord) / float64(pagesize)))
 	return albumlist, totalPage
 }
-
 // 根据歌手id获取歌手所有专辑
 func (a *AlbumDao) GetAlbumByArtistid(artist_id int) ([]model.AlbumInfo, error) {
 	var album []model.AlbumInfo

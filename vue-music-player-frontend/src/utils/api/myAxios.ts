@@ -5,8 +5,8 @@ import { storeToRefs } from 'pinia'
 import { AlertAxiosError } from '../alert/AlertPop'
 
 // 设置baseurl
-axios.defaults.baseURL = 'http://127.0.0.1:4000'
-// axios.defaults.baseURL = 'http://localhost:4000'
+// axios.defaults.baseURL = 'https://mock.apifox.cn/m1/2794549-0-default'
+axios.defaults.baseURL = 'http://localhost:4000'
 // 请求头，headers 信息
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 // 默认 post 请求，使用 application/json 形式

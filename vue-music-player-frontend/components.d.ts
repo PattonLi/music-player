@@ -17,7 +17,6 @@ declare module '@vue/runtime-core' {
     AppResgister: typeof import('./src/components/layout/auth/AppResgister.vue')['default']
     CommentItem: typeof import('./src/components/common/CommentItem.vue')['default']
     DarkMode: typeof import('./src/components/layout/header/DarkMode.vue')['default']
-    ElAffix: typeof import('element-plus/es')['ElAffix']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElButton: typeof import('element-plus/es')['ElButton']

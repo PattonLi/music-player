@@ -3,7 +3,7 @@ package main
 import (
 	"music-player/musicplayerserver/dao"
 	"music-player/musicplayerserver/router"
-	"music-player/musicplayerserver/utils/oss"
+	utils "music-player/musicplayerserver/utils/oss"
 	"time"
 
 	"github.com/gin-gonic/gin"

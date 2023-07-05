@@ -3,8 +3,7 @@ package router
 import (
 	"fmt"
 	"music-player/musicplayerserver/controller"
-	"music-player/musicplayerserver/model"
-	utils "music-player/musicplayerserver/utils/jwt"
+	"music-player/musicplayerserver/utils/jwt"
 	"net/http"
 	"strconv"
 
@@ -18,27 +17,19 @@ func Posts(r *gin.Engine) {
 	authorized.Use(utils.AuthMiddleware)
 	//添加用户
 	r.POST("/User/addInfo", func(c *gin.Context) {
-		user, err := controller.NewUserController().AddUserHandler(c)
-		var code string
+		totals, currentPage, userlist, err := controller.NewUserController().AddUserHandler(c)
+		var code int
 		if err != nil {
 			fmt.Print(err.Error())
-			code = "300"
+			code = 300
 		} else {
-			code = "200"
+			code = 200
 		}
 		c.JSON(http.StatusOK, gin.H{
 			"code": code,
-			"data": []gin.H{
-				{
-					"user_id":  user.ID,
-					"username": user.Username,
-					"gender":   user.Gender,
-					"age":      user.Age,
-					"email":    user.Email,
-					"password": user.Password,
-					"nickname": user.Nickname,
-					"phone":    user.Phone,
-				}},
+			"totals":totals,
+			"currentPage": currentPage,
+			"data": userlist,
 		})
 	})
 
@@ -56,20 +47,37 @@ func Posts(r *gin.Engine) {
 		}
 	})
 
-	//修改用户头像上传照片
-	authorized.POST("/User/modifyUploadPic", func(c *gin.Context) {
-		err := controller.NewUserController().UploadUserPicHandler(c)
+	//管理员修改用户头像
+	r.POST("/User/uploadPic", func(c *gin.Context){
+		url, err := controller.NewUserController().AdminUploadUserPicHandler(c)
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 300,
+				"picUrl":url,
 			})
 		} else {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 200,
+				"picUrl":url,
 			})
 		}
 	})
 
+	//用户自行修改头像
+	authorized.POST("/user/profile/edit", func(c *gin.Context){
+		url, err := controller.NewUserController().UploadUserPicHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+				"picUrl":url,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"picUrl": url,
+			})
+		}
+	})
 	//修改管理员信息
 	r.POST("/adminUser/modifyInfo", func(c *gin.Context) {
 		err := controller.NewAdminUserController().ModifyAdminUserInfoHandler(c)
@@ -86,16 +94,19 @@ func Posts(r *gin.Engine) {
 
 	//添加管理员信息
 	r.POST("/adminUser/addInfo", func(c *gin.Context) {
-		err := controller.NewAdminUserController().AddAdminUserHandler(c)
+		totals, currentPage, adminlist, err := controller.NewAdminUserController().AddAdminUserHandler(c)
+		var code int
 		if err != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"code": 300,
-			})
+			code = 300
 		} else {
-			c.JSON(http.StatusOK, gin.H{
-				"code": 200,
-			})
+			code = 200
 		}
+		c.JSON(200,gin.H{
+			"code": code,
+			"totals": totals,
+			"currentPage": currentPage,
+			"data": adminlist,
+		})
 	})
 
 	//用户手机号注册
@@ -104,8 +115,8 @@ func Posts(r *gin.Engine) {
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code":   300,
-				"userId": nil,
-				"token":  nil,
+				"userId": 0,
+				"token":  "",
 			})
 		} else {
 			c.JSON(http.StatusOK, gin.H{
@@ -116,24 +127,10 @@ func Posts(r *gin.Engine) {
 		}
 	})
 
-	//管理员登录（未修改）
-	/*r.POST("/admin/login", func(c *gin.Context) {
-		adminname, adminID, err := controller.NewAdminUserController().AdminLoginHandler(c)
-		tokenString := ""
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error(), "token": tokenString, "adminid": adminID})
-		} else {
-			tokenString, err = utils.CreateToken(adminname, "true")
-			if err != nil {
-				c.JSON(http.StatusBadRequest, gin.H{"message": err.Error(), "token": tokenString, "adminid": adminID})
-			} else {
-				c.JSON(http.StatusOK, gin.H{"message": "登录成功！", "token": tokenString, "adminid": adminID})
-			}
-		}
-	})*/
+
 
 	//添加歌曲
-	r.POST("/admin/addsong", func(c *gin.Context) {
+	r.POST("/admin/addSong", func(c *gin.Context) {
 		result := controller.NewSongController().AddSongHandler(c)
 		if result {
 			c.JSON(http.StatusOK, gin.H{
@@ -201,6 +198,20 @@ func Posts(r *gin.Engine) {
 			})
 		}
 	})
+
+	//发表评论
+	r.POST("/song/comment/publish", func(c *gin.Context) {
+		err := controller.NewCommentController().PublishCommentHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
 }
 
 func GETs(r *gin.Engine) {
@@ -210,11 +221,11 @@ func GETs(r *gin.Engine) {
 
 	//获得特定页所有用户信息
 	r.GET("/User/pageAllInfo", func(c *gin.Context) {
-		users, totalPage := controller.NewUserController().AllUserInfoHandler(c)
+		users, totalrecord := controller.NewUserController().AllUserInfoHandler(c)
 		c.JSON(http.StatusOK, gin.H{
 			"code":      200,
 			"data":      users,
-			"totalPage": totalPage,
+			"totals": totalrecord,
 		},
 		)
 	})
@@ -225,7 +236,7 @@ func GETs(r *gin.Engine) {
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 300,
-				"data": nil,
+				"data": users,
 			},
 			)
 		} else {
@@ -251,35 +262,46 @@ func GETs(r *gin.Engine) {
 		}
 	})
 
+	//获得表中第index个用户信息
+	r.GET("/User/aInfo", func(c *gin.Context) {
+		totals, user, err := controller.NewUserController().GetAInfoHandler(c)
+		code := 0;
+		if(err != nil){
+			code = 300
+		} else {
+			code = 200
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code": code,
+			"totals": totals,
+			"data": user,
+		})
+
+	})
+
 	//获得所有管理员信息
-	r.GET("/adminUser/allInfo", func(c *gin.Context) {
-		adminusers := controller.NewAdminUserController().AllAdminInfoHandler()
+	r.GET("/adminUser/pageAllInfo", func(c *gin.Context) {
+		totals, adminusers := controller.NewAdminUserController().AllAdminInfoHandler(c)
 		c.JSON(http.StatusOK, gin.H{
 			"code": 200,
+			"totals": totals,
 			"data": adminusers,
 		})
 	})
 
 	//获得特定管理员信息
 	r.GET("/adminUser/theInfo", func(c *gin.Context) {
-		adminuser, err := controller.NewAdminUserController().AdminInfoHandler(c)
+		adminlist, err := controller.NewAdminUserController().AdminInfoHandler(c)
+		var code int
 		if err != nil {
-			c.JSON(http.StatusOK, struct {
-				*model.AdminUserInfo
-				Code int `json:"code"`
-			}{
-				adminuser,
-				300,
-			})
+			code = 300
 		} else {
-			c.JSON(http.StatusOK, struct {
-				*model.AdminUserInfo
-				Code int `json:"code"`
-			}{
-				adminuser,
-				200,
-			})
+			code = 200
 		}
+		c.JSON(200, gin.H{
+			"code":code,
+			"data": adminlist,
+		})
 	})
 
 	//删除管理员信息
@@ -334,6 +356,45 @@ func GETs(r *gin.Engine) {
 				"profile": userprofile,
 			})
 		}
+	})
+
+	//管理员登录
+	r.GET("/adminUser/login", func(c *gin.Context) {
+		adminID, token, err := controller.NewAdminUserController().AdminLoginHandler(c)
+		if err == nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":   200,
+				"adminId": adminID,
+				"token":  token,
+			})
+		} else if err.Error() == "账号输入错误！" {
+			c.JSON(http.StatusOK, gin.H{
+				"code":   300,
+				"adminId": 0,
+				"token":  "",
+			})
+		} else if err.Error() == "密码输入错误！" {
+			c.JSON(http.StatusOK, gin.H{
+				"code":   301,
+				"adminId": 0,
+				"token":  "",
+			})
+		}
+	})
+
+	//获取单个管理员信息
+	r.GET("/adminUser/profile", func(c *gin.Context) {
+		adminname, err := controller.NewAdminUserController().AdminProfileHandler(c)
+		var code int
+		if err != nil{
+			code = 300
+		} else {
+			code = 200
+		}
+		c.JSON(200, gin.H{
+			"code": code,
+			"adminName": adminname,
+		})
 	})
 
 	r.GET("/song/lyric", func(c *gin.Context) {

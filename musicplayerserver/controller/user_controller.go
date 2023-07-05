@@ -13,21 +13,24 @@ import (
 
 type UserController struct {
 	userservice *service.UserService
+	logservice *service.LogService
 }
 
 func NewUserController() *UserController {
 	uss := service.NewUserService()
+	l := service.LogService{}
 	return &UserController{
 		userservice: uss,
+		logservice: &l,
 	}
 }
 
 // 添加用户
-func (usc *UserController) AddUserHandler(c *gin.Context) (*model.UserInfo, error) {
+func (usc *UserController) AddUserHandler(c *gin.Context) (int64, int64, []model.UserInfo, error) {
 	user := model.UserInfo{}
 	c.BindJSON(&user)
-	err := usc.userservice.AddUserInfo(&user)
-	return &user, err
+	totals, currentPage, userlist, err := usc.userservice.AddUserInfo(&user)
+	return totals, currentPage, userlist, err
 }
 
 // 用户信息修改
@@ -40,7 +43,7 @@ func (usc *UserController) ModifyUserInfoHandler(c *gin.Context) error {
 
 // 删除用户信息
 func (usc *UserController) DeleteUserInfoHandler(c *gin.Context) error {
-	userID, _ := strconv.Atoi(c.Query("userId"))
+	userID, _ := strconv.Atoi(c.Query("user_id"))
 	err := usc.userservice.DeleteUserInfo(userID)
 	return err
 }
@@ -56,8 +59,8 @@ func (usc *UserController) UserInfoHandler(c *gin.Context) ([]model.UserInfo, er
 func (usc *UserController) AllUserInfoHandler(c *gin.Context) ([]model.UserInfo, int64) {
 	page, _ := strconv.Atoi(c.Query("currentPage"))
 	pagesize, _ := strconv.Atoi(c.Query("pageSize"))
-	userlist, totalPage := usc.userservice.AllUserInfo(page, pagesize)
-	return userlist, totalPage
+	userlist, totalrecord := usc.userservice.AllUserInfo(page, pagesize)
+	return userlist, totalrecord
 }
 
 // 根据ID获取单个用户信息
@@ -70,10 +73,17 @@ func (usc *UserController) UserProfileHandler(c *gin.Context) (*gin.H, error) {
 		"picUrl":   user.Pic_url,
 		"phone":    user.Phone,
 		"email":    user.Email,
-		"age":      strconv.Itoa(user.Age),
+		"age":      user.Age,
 		"gender":   user.Gender,
 	}
 	return &userprofile, err
+}
+
+//g根据index获取单个用户信息
+func (usc *UserController) GetAInfoHandler(c *gin.Context) (int64, *model.UserInfo, error) {
+	index,_ := strconv.Atoi(c.Query("index"))
+	totals, user, err := usc.userservice.AUserInfo(index)
+	return totals, user, err
 }
 
 // 用户手机号登录
@@ -88,6 +98,7 @@ func (usc *UserController) UserLoginHandler(c *gin.Context) (int, string, error)
 	var token string = ""
 	if err == nil {
 		token, _ = utils.CreateToken(userID)
+		token, _ = utils.CreateToken(userID)
 	}
 	return userID, token, err
 }
@@ -101,22 +112,41 @@ func (usc *UserController) UserRegisterHandler(c *gin.Context) (int, string, err
 	if err == nil {
 		token, _ = utils.CreateToken(userID)
 	}
+	err = usc.logservice.AddRegisterLog(userID,user.Username)
 	return userID, token, err
 }
 
-// 上传用户头像
-func (usc *UserController) UploadUserPicHandler(c *gin.Context) error {
+// 用户自行上传头像
+func (usc *UserController) UploadUserPicHandler(c *gin.Context) (string, error) {
 	fileHeader, err := c.FormFile("file")
+	var url string = ""
 	if err != nil {
 		err = errors.New("照片上传失败！")
-		return err
+		return url, err
 	}
 	if !strings.HasPrefix(fileHeader.Header.Get("Content-Type"), "image/") {
 		err = errors.New("上传文件非图片！")
-		return err
+		return url, err
 	}
 	temp, _ := c.Get("id")
 	userID, _ := temp.(int)
-	err = usc.userservice.UploadUserPic(userID, fileHeader)
-	return err
+	url, err = usc.userservice.UploadUserPic(userID, fileHeader)
+	return url, err
+}
+
+//管理员上传用户头像
+func (usc *UserController) AdminUploadUserPicHandler(c *gin.Context) (string, error) {
+	fileHeader, err := c.FormFile("file")
+	var url string = ""
+	if err != nil {
+		err = errors.New("照片上传失败！")
+		return url, err
+	}
+	if !strings.HasPrefix(fileHeader.Header.Get("Content-Type"), "image/") {
+		err = errors.New("上传文件非图片！")
+		return url, err
+	}
+	userID,_ := strconv.Atoi(c.PostForm("userId"))
+	url, err = usc.userservice.UploadUserPic(userID, fileHeader)
+	return url, err
 }
