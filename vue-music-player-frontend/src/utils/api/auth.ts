@@ -1,3 +1,4 @@
+import axios from 'axios'
 import myAxios from './myAxios'
 import type { UserProfile, registerUser } from '@/models/user'
 
@@ -13,7 +14,7 @@ export async function apiLoginStatus(id: number) {
   return await myAxios.get<{
     code: number
     profile: UserProfile
-  }>('user/profile', { id: id })
+  }>('user/profile', { userId: id })
 }
 
 //去除repassword

@@ -12,7 +12,7 @@ var DB *gorm.DB
 
 func Init() {
 	// DSN stands for "Data Source Name". It is a string that contains the necessary information to establish a database connection
-	dsn := "lpt:Lpt123456.@tcp(47.120.38.64:3306)/music?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "lpt:Lpt123456.@tcp(47.120.38.64:3306)/music-go?charset=utf8mb4&parseTime=True&loc=Local"
 	// 打开连接数据库，默认配置
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {

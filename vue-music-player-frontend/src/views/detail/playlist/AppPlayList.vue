@@ -10,7 +10,7 @@
           <PlatListSongs :songs="songs" />
         </el-tab-pane>
         <!-- 评论 -->
-        <el-tab-pane lazy :label="`歌曲 ${playlist.mark}`" name="comments"> </el-tab-pane>
+        <el-tab-pane lazy :label="`评论 ${playlist.mark}`" name="comments"> </el-tab-pane>
       </el-tabs>
     </div>
   </div>

@@ -31,7 +31,7 @@
           <span>播放全部</span>
         </button>
 
-        <button class="w-28 button-outline" v-if="isAlbumLike" @click="addAlbumLike">
+        <button class="w-28 button-outline" v-if="!isAlbumLike" @click="addAlbumLike">
           <IconPark :icon="Like" size="18" class="mr-1" theme="outline" />
           <span>收藏</span>
         </button>

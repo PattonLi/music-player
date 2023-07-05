@@ -1,7 +1,10 @@
 <template>
   <div>
     <MyTitle title="专辑推荐" />
-    <div class="mt-4 mb-10 grid grid-flow-row gap-x-20 grid-cols-3 2xl:grid-cols-5 gap-y-9">
+    <div
+      class="mt-4 mb-10 grid grid-flow-row gap-x-20 grid-cols-3 2xl:grid-cols-5 gap-y-9"
+      v-if="personalizedAlbums"
+    >
       <!-- 循环 -->
       <div
         v-for="(item, index) in _.sampleSize(personalizedAlbums, 20)"

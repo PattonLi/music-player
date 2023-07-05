@@ -31,6 +31,8 @@
       <DarkMode />
       <IconPark :icon="HamburgerButton" :size="iconSize" :stroke-width="2" class="icon-button" />
     </div>
+
+    <InfoEdit></InfoEdit>
   </div>
 </template>
 
@@ -41,6 +43,7 @@ import IconPark from '@/components/common/IconPark.vue'
 import UserInfo from '@/components/layout/header/UserInfo.vue'
 import SearchPop from '@/components/layout/header/SearchPop.vue'
 import DarkMode from '@/components/layout/header/DarkMode.vue'
+import InfoEdit from './InfoEdit.vue'
 
 const iconSize = 28
 

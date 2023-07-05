@@ -11,6 +11,7 @@ export const useAuthStore = defineStore('auth', {
     token: '',
     //是否显示登录注册框
     showRegister: false,
+    showModify: false,
     showLogin: false,
     //用户信息
     profile: {} as UserProfile,
@@ -29,6 +30,7 @@ export const useAuthStore = defineStore('auth', {
         AlertSuccess('你已成功登录')
         this.token = res.token
         this.userId = res.userId
+        this.isLogin = true
         await this.checkLogin()
         this.isLogin = true
       } else if (res.code == 300) {

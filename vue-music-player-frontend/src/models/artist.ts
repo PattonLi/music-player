@@ -5,7 +5,7 @@ export interface Artist {
   songSize: number
   albumSize: number
   profile: string //简短介绍
-  location: string
+  location: number
 }
 
 export interface ArtistDesc {

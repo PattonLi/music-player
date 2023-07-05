@@ -50,8 +50,8 @@ const getTheSongInfo = async (songName: string) => {
 // 添加歌曲
 const addSongInfo = async (newSong: SongInfo) => {
   try {
-    const jsonData = JSON.stringify(newSong); // 将对象转换为 JSON 字符串
-    const response = await axios.post('/admin/addSong', jsonData);
+    const jsonData = JSON.stringify(newSong) // 将对象转换为 JSON 字符串
+    const response = await axios.post('/admin/addSong', jsonData)
     // 处理响应
     console.log(response)
     return response.data
@@ -64,8 +64,11 @@ const addSongInfo = async (newSong: SongInfo) => {
 // 修改歌曲
 const modifySongInfo = async (modiSong: SongInfo) => {
   try {
-    const jsonData = JSON.stringify(modiSong); // 将对象转换为 JSON 字符串
-    const response = await axios.post('/admin/modifySong', jsonData);
+    const send = {
+      data:modiSong
+    }
+    const jsonData = JSON.stringify(send) // 将对象转换为 JSON 字符串
+    const response = await axios.post('/admin/modifySong', jsonData)
     // 处理响应
     console.log(response)
     return response.data
@@ -105,4 +108,12 @@ const getSongByAlbum = async (albumId: number) => {
   }
 }
 
-export { getSongInfo, addSongInfo, modifySongInfo, getTheSongInfo, deleteTheSongInfo, getArtistAllSong, getSongByAlbum }
+export {
+  getSongInfo,
+  addSongInfo,
+  modifySongInfo,
+  getTheSongInfo,
+  deleteTheSongInfo,
+  getArtistAllSong,
+  getSongByAlbum
+}

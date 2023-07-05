@@ -24,13 +24,9 @@ declare module '@vue/runtime-core' {
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
     ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
-<<<<<<< HEAD
-=======
+    ElCol: typeof import('element-plus/es')['ElCol']
     ElCollapse: typeof import('element-plus/es')['ElCollapse']
     ElCollapseItem: typeof import('element-plus/es')['ElCollapseItem']
-    ElDescriptions: typeof import('element-plus/es')['ElDescriptions']
-    ElDescriptionsItem: typeof import('element-plus/es')['ElDescriptionsItem']
->>>>>>> 7f455b923f828e475d21fc8b580bc23a8ae70811
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
     ElEmpty: typeof import('element-plus/es')['ElEmpty']
@@ -40,15 +36,17 @@ declare module '@vue/runtime-core' {
     ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElPopover: typeof import('element-plus/es')['ElPopover']
+    ElRadio: typeof import('element-plus/es')['ElRadio']
+    ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSlider: typeof import('element-plus/es')['ElSlider']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElText: typeof import('element-plus/es')['ElText']
-    ElTree: typeof import('element-plus/es')['ElTree']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     IconPark: typeof import('./src/components/common/IconPark.vue')['default']
-    LyricScroll: typeof import('./src/components/common/LyricScroll.vue')['default']
+    InfoEdit: typeof import('./src/components/layout/header/InfoEdit.vue')['default']
     MenuList: typeof import('./src/components/layout/sideBar/MenuList.vue')['default']
     MyCardSwiper: typeof import('./src/components/common/MyCardSwiper.vue')['default']
     MyCover: typeof import('./src/components/common/MyCover.vue')['default']
@@ -60,7 +58,6 @@ declare module '@vue/runtime-core' {
     PlayerSlider: typeof import('./src/components/layout/footer/PlayerSlider.vue')['default']
     PlayerSong: typeof import('./src/components/layout/footer/PlayerSong.vue')['default']
     PlayerVolumeSlider: typeof import('./src/components/layout/footer/PlayerVolumeSlider.vue')['default']
-    PlayList: typeof import('./src/components/layout/sideBar/PlayList.vue')['default']
     PlayListItem: typeof import('./src/components/layout/playList/PlayListItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -69,8 +66,5 @@ declare module '@vue/runtime-core' {
     SongItem: typeof import('./src/components/common/SongItem.vue')['default']
     SongItemWithEdit: typeof import('./src/components/common/SongItemWithEdit.vue')['default']
     UserInfo: typeof import('./src/components/layout/header/UserInfo.vue')['default']
-  }
-  export interface ComponentCustomProperties {
-    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

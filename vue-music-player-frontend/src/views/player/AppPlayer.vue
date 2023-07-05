@@ -3,7 +3,6 @@
     <el-drawer
       v-model="showPlayWindow"
       :direction="direction"
-      :before-close="handleClose"
       :append-to-body="true"
       :show-close="false"
       size="100%"
@@ -39,9 +38,6 @@ import { storeToRefs } from 'pinia'
 const { showPlayWindow } = storeToRefs(usePlayerStore())
 const { changePlayerShow } = usePlayerStore()
 const direction = ref('btt')
-
-//关闭前的回调
-const handleClose = (done: () => void) => {}
 </script>
 
 <style lang="scss">

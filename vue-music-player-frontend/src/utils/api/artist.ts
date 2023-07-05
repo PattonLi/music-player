@@ -45,7 +45,7 @@ export async function apiArtistList(
   currentPage: number,
   //查询信息
   firstLetter: string,
-  type: number,
+  gender: number,
   location: number
 ) {
   return await myAxios.get<{
@@ -57,7 +57,7 @@ export async function apiArtistList(
     currentPage: currentPage,
     //查询信息
     firstLetter: firstLetter,
-    type: type,
+    gender: gender,
     location: location
   })
 }

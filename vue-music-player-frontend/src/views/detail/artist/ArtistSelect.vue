@@ -70,7 +70,8 @@ const props = defineProps<{
 const listAlbums = ref<Album[]>([])
 const listSongs = ref<Song[]>([])
 const pageData = reactive({
-  page: 0,
+  page1: 0,
+  page2: 0,
   pageSize: 18,
   pageTotal: 1,
 
@@ -90,12 +91,12 @@ const pageGet = async () => {
   const res2 = await apiArtistSongs(props.id, 12, 1, 'hot')
   if (res1.code == 200) {
     //判断是否已经没有页数了
-    if (pageData.page >= pageData.pageTotal) {
+    if (pageData.page1 >= pageData.pageTotal) {
       //所有数据已经取完
       pageData.noMore = true
       return
     }
-    if (pageData.page == 0) {
+    if (pageData.page1 == 0) {
       //初始时设置数据
       listAlbums.value = res1.albums
     } else {
@@ -103,7 +104,7 @@ const pageGet = async () => {
       listAlbums.value.push(...res1.albums)
     }
     //当前位置页数加1
-    pageData.page++
+    pageData.page1++
     //更新pageSize
     pageData.pageTotal = res1.pageTotal
   } else {
@@ -112,12 +113,13 @@ const pageGet = async () => {
 
   if (res2.code == 200) {
     //判断是否已经没有页数了
-    if (pageData.page >= pageData.pageTotal) {
+
+    if (pageData.page2 >= pageData.pageTotal) {
       //所有数据已经取完
       pageData.noMore = true
       return
     }
-    if (pageData.page == 0) {
+    if (pageData.page2 == 0) {
       //初始时设置数据
       listSongs.value = res2.songs
     } else {
@@ -125,7 +127,7 @@ const pageGet = async () => {
       listSongs.value.push(...res2.songs)
     }
     //当前位置页数加1
-    pageData.page++
+    pageData.page2++
     //更新pageSize
     pageData.pageTotal = res2.pageTotal
   } else {

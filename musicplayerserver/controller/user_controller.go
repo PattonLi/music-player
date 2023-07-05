@@ -2,10 +2,14 @@ package controller
 
 import (
 	"errors"
+	"errors"
 	"music-player/musicplayerserver/model"
 	"music-player/musicplayerserver/service"
 	utils "music-player/musicplayerserver/utils/jwt"
+	utils "music-player/musicplayerserver/utils/jwt"
 	"strconv"
+	"strings"
+
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -39,6 +43,7 @@ func (usc *UserController) ModifyUserInfoHandler(c *gin.Context) error {
 }
 
 // 删除用户信息
+// 删除用户信息
 func (usc *UserController) DeleteUserInfoHandler(c *gin.Context) error {
 	userID, _ := strconv.Atoi(c.Query("user_id"))
 	err := usc.userservice.DeleteUserInfo(userID)
@@ -61,7 +66,9 @@ func (usc *UserController) AllUserInfoHandler(c *gin.Context) ([]model.UserInfo,
 }
 
 // 根据ID获取单个用户信息
+// 根据ID获取单个用户信息
 func (usc *UserController) UserProfileHandler(c *gin.Context) (*gin.H, error) {
+	userID, _ := strconv.Atoi(c.Query("userId"))
 	userID, _ := strconv.Atoi(c.Query("userId"))
 	user, err := usc.userservice.UserProfile(userID)
 	userprofile := gin.H{
@@ -70,7 +77,7 @@ func (usc *UserController) UserProfileHandler(c *gin.Context) (*gin.H, error) {
 		"picUrl":   user.Pic_url,
 		"phone":    user.Phone,
 		"email":    user.Email,
-		"age":      user.Age,
+		"age":      strconv.Itoa(user.Age),
 		"gender":   user.Gender,
 	}
 	return &userprofile, err
@@ -89,18 +96,20 @@ func (usc *UserController) UserLoginHandler(c *gin.Context) (int, string, error)
 	password := c.Query("password")
 	user := model.UserInfo{
 		Phone:    phone,
+		Phone:    phone,
 		Password: password,
 	}
 	userID, err := usc.userservice.UserLogin(&user)
 	var token string = ""
 	if err == nil {
 		token, _ = utils.CreateToken(userID)
+		token, _ = utils.CreateToken(userID)
 	}
 	return userID, token, err
 }
 
 // 用户手机号注册
-/*func (usc *UserController) UserRegisterHandler(c *gin.Context) (int, string, error) {
+func (usc *UserController) UserRegisterHandler(c *gin.Context) (int, string, error) {
 	user := model.UserInfo{}
 	c.BindJSON(&user)
 	userID, err := usc.userservice.UserRegister(&user)

@@ -40,7 +40,7 @@
                     <span class="mr-1">{{ index + 1 }}.</span>
                     <span>{{ item.searchWord }}</span>
                   </div>
-                  <div class="text-red-300 text-xs">{{ item.type }}</div>
+                  <div class="text-red-300 text-xs">{{ getType(item.type) }}</div>
                 </div>
               </div>
             </div>
@@ -80,6 +80,16 @@ const hotClick = (text: string) => {
   searchKeyword.value = text
   updateSuggest()
   showSearchView.value = true
+}
+
+const getType = (type: string) => {
+  if (type == '1') {
+    return '歌曲'
+  } else if (type == '2') {
+    return '专辑'
+  } else {
+    return '歌手'
+  }
 }
 
 //搜索

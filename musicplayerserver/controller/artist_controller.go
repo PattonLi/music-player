@@ -57,3 +57,20 @@ func (ac *ArtistController) GetArtistByKeyWordHandler(c *gin.Context) ([]model.A
 	artistpage, err0, err1, pagetotal := ac.artistservice.GetArtistByKeyWord(pageSize, currntPage, keyword)
 	return artistpage, err0, err1, pagetotal
 }
+
+// 获取对应筛选条件的歌手
+func (ac *ArtistController) GetAtistByCHanddler(c *gin.Context) ([]model.ArtistInfo, error, error, int) {
+	pagesize := c.Query("pageSize")
+	currentpage := c.Query("currentPage")
+	first_letter := c.Query("firstLetter")
+	gender := c.Query("gender")
+	location := c.Query("location")
+
+	pageSize, _ := strconv.Atoi(pagesize)
+	currentPage, _ := strconv.Atoi(currentpage)
+	Gender, _ := strconv.Atoi(gender)
+	Location, _ := strconv.Atoi(location)
+
+	artistpage, err0, err1, pagetotal := ac.artistservice.GetAtrtistByContition(pageSize, currentPage, first_letter, Gender, Location)
+	return artistpage, err0, err1, pagetotal
+}

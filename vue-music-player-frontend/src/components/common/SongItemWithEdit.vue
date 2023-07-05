@@ -13,7 +13,7 @@
       <!-- 喜欢按钮 -->
       <div class="items-center flex flex-1 flex-shrink-0">
         <IconPark
-          v-if="isSongLike"
+          v-if="!isSongLike"
           :icon="Like"
           size="20"
           :stroke-width="3"
@@ -131,10 +131,12 @@ const addSongLike = () => {
       userId: userId.value,
       songId: props.propSong.songId,
       artistId: 0,
-      playlistId: 0,
+      playListId: 0,
       type: 1 //歌曲
     }
-    addLike(likeForm, userId.value)
+    if (likeForm.songId != null) {
+      addLike(likeForm, userId.value)
+    }
   } else {
     AlertError('请先登录！')
   }
@@ -147,7 +149,7 @@ const delSongListLike = () => {
       userId: userId.value,
       songId: props.propSong.songId,
       artistId: 0,
-      playlistId: 0,
+      playListId: 0,
       type: 1 //歌曲
     }
     delLike(likeForm, userId.value)

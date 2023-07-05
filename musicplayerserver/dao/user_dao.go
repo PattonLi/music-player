@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"music-player/musicplayerserver/model"
+
 	"gorm.io/gorm"
 )
 
@@ -24,8 +25,6 @@ func (*UserDao) CreateUserTable() {
 	}
 }
 
-
-
 // 根据用户名或昵称查询用户信息
 func (*UserDao) GetUserInfoByName(name string) ([]model.UserInfo, error) {
 	var user []model.UserInfo
@@ -35,7 +34,6 @@ func (*UserDao) GetUserInfoByName(name string) ([]model.UserInfo, error) {
 	}
 	return user, err
 }
-
 
 // 添加用户
 func (*UserDao) AddUser(user *model.UserInfo) (int64, int64, []model.UserInfo,error) {
@@ -73,7 +71,7 @@ func (*UserDao) ModifyUser(user *model.UserInfo) error {
 	return err
 }
 
-//删除用户信息
+// 删除用户信息
 func (*UserDao) DeleteUser(userID int) error {
 	err := DB.Delete(&model.UserInfo{}, userID).Error
 	return err
@@ -81,7 +79,7 @@ func (*UserDao) DeleteUser(userID int) error {
 
 
 // 用户登录验证
-func (*UserDao) UserLoginCheck(u *model.UserInfo) (int,error) {
+func (*UserDao) UserLoginCheck(u *model.UserInfo) (int, error) {
 	phone := u.Phone
 	password := u.Password
 	user := model.UserInfo{}
@@ -97,7 +95,7 @@ func (*UserDao) UserPhoneCheck(u *model.UserInfo) (int, error) {
 	phone := u.Phone
 	user := model.UserInfo{}
 	err := DB.Take(&user, "phone = ?", phone).Error
-	if errors.Is(err, gorm.ErrRecordNotFound){
+	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("查找不到记录！")
 	} else {
 		err = nil
@@ -106,35 +104,19 @@ func (*UserDao) UserPhoneCheck(u *model.UserInfo) (int, error) {
 }
 
 // 返回特定页所有普通用户信息
-func (*UserDao) GetAllUserInfo(page int, pagesize int) ([]model.UserInfo,int64) {
+func (*UserDao) GetAllUserInfo(page int, pagesize int) ([]model.UserInfo, int64) {
 	var userlist []model.UserInfo
 	var totalrecord int64
 	offset := (page-1)*pagesize
-	fmt.Println(offset)
-	fmt.Println(pagesize)
 	DB.Offset(offset).Limit(pagesize).Find(&userlist).Offset(-1).Limit(-1).Count(&totalrecord)
 	return userlist,totalrecord
 }
 
-//根据ID获取单个用户信息
-func (*UserDao) GetUserProfile (userID int) (*model.UserInfo, error) {
+// 根据ID获取单个用户信息
+func (*UserDao) GetUserProfile(userID int) (*model.UserInfo, error) {
 	user := model.UserInfo{}
-	err := DB.Take(&user, "user_id = ?",userID).Error
-	return &user, 
-	err
-}
-
-//根据index获取单个用户信息
-func (*UserDao) GetAUserInfo (index int) (int64, *model.UserInfo, error) {
-	user := model.UserInfo{}
-	var totals int64
-	DB.Offset(index-1).Limit(1).Find(&user).Offset(-1).Limit(-1).Count(&totals)
-	if(user.ID == 0){
-		err := errors.New("查找不到用户信息！")
-		return totals, &user, err
-	} else {
-		return totals, &user, nil
-	}
+	err := DB.First(&user, userID).Error
+	return &user, err
 }
 
 //更新头像url
@@ -145,4 +127,3 @@ func (*UserDao) UpdateUserPicUrl (userID int, url string) error {
 	}
 	return err
 }
-

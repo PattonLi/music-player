@@ -4,6 +4,7 @@ import type { Artist } from '@/models/artist'
 import type { Song } from '@/models/song'
 import type { LikeForm } from '@/models/like'
 import type { PlayList } from '@/models/playlist'
+import { AlertSuccess } from '../alert/AlertPop'
 
 //获取用户收藏
 export async function apiUserLike(userId: number) {
@@ -28,7 +29,7 @@ export async function apiAddLike(likeForm: LikeForm) {
     songId: likeForm.songId,
     albumId: likeForm.albumId,
     artistId: likeForm.artistId,
-    playlistId: likeForm.playlistId,
+    playListId: likeForm.playListId,
     type: likeForm.type
   })
   return data
@@ -43,7 +44,7 @@ export async function apiDelLike(likeForm: LikeForm) {
     songId: likeForm.songId,
     albumId: likeForm.albumId,
     artistId: likeForm.artistId,
-    playlistId: likeForm.playlistId,
+    playListId: likeForm.playListId,
     type: likeForm.type
   })
   return data

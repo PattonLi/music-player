@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     isLogin: false,
-    token: ''
+    token: '',
+    userId: 0
   }),
   getters: {
     getAuthStatus(state) {
@@ -13,7 +14,9 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     SetToken(value: string) {
       this.isLogin = true
-      this.token = JSON.stringify(value)
+      this.token = value
+      console.log('token:'+value);
+      
     },
     removeToken() {
       this.isLogin = false

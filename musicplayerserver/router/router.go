@@ -5,6 +5,7 @@ import (
 	"music-player/musicplayerserver/controller"
 	"music-player/musicplayerserver/utils/jwt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -328,7 +329,7 @@ func GETs(r *gin.Engine) {
 	})
 
 	//获取登录用户信息
-	authorized.GET("/user/profile", func(c *gin.Context) {
+	r.GET("/user/profile", func(c *gin.Context) { //authorized
 		userprofile, err := controller.NewUserController().UserProfileHandler(c)
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
@@ -621,7 +622,7 @@ func GETs(r *gin.Engine) {
 		type swiper struct {
 			TargetId   int    `json:"targetId"`
 			PicUrl     string `json:"picUrl"`
-			TargetType string `json:"targetType"`
+			TargetType int    `json:"targetType"`
 			TypeTitle  string `json:"typeTitle"`
 		}
 
@@ -636,12 +637,12 @@ func GETs(r *gin.Engine) {
 
 			s1.TargetId = songs[i].Song_ID
 			s1.PicUrl = songs[i].Pic_url
-			s1.TargetType = songs[i].Type
+			s1.TargetType, _ = strconv.Atoi(songs[i].Type)
 			s1.TypeTitle = songs[i].Name
 
 			s2.TargetId = albums[i].AlbumID
 			s2.PicUrl = albums[i].Pic_url
-			s2.TargetType = albums[i].Type
+			s2.TargetType, _ = strconv.Atoi(albums[i].Type)
 			s2.TypeTitle = albums[i].Name
 
 			swipers = append(swipers, s1)
@@ -869,4 +870,20 @@ func GETs(r *gin.Engine) {
 		}
 	})
 
+	r.GET("/library/artist", func(c *gin.Context) {
+		atrtists, err0, err1, pagetotal := controller.NewArtistController().GetAtistByCHanddler(c)
+		if err0 != nil || err1 != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      300,
+				"pageTotal": nil,
+				"artists":   nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":      200,
+				"pageTotal": pagetotal,
+				"artists":   atrtists,
+			})
+		}
+	})
 }

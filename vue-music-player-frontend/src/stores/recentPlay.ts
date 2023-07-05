@@ -23,5 +23,6 @@ export const useRecentPlayStore = defineStore('recentPlay', {
     clearRecent() {
       this.rSongs = []
     }
-  }
+  },
+  persist: true
 })

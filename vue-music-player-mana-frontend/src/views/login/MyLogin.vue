@@ -4,10 +4,10 @@
     <div class="login-container">
       <!--登录框头部logo部分-->
       <div class="head">
-        <img class="logo" src="https://s.weituibao.com/1582958061265/mlogo.png" />
+        <img class="logo" src="@/assets/images/login.jpeg" />
         <div class="name">
-          <div class="title">sysu 网页音乐</div>
-          <div class="tips">Vue3.2 后台管理系统</div>
+          <div class="title">音乐网站</div>
+          <div class="tips">后台管理系统</div>
         </div>
       </div>
       <el-form
@@ -46,8 +46,11 @@ import axios from 'axios'
 import { Md5 } from 'ts-md5'
 import { useAuthStore } from '@/stores/auth'
 import type { FormRules } from 'element-plus'
+import { storeToRefs } from 'pinia'
+import { AlertError } from '@/utils/alert/AlertPop'
 
 const authStore = useAuthStore()
+const { userId } = storeToRefs(useAuthStore())
 const loginForm = ref()
 const rules = reactive<FormRules>({
   username: [{ required: true, message: '账户不能为空', trigger: 'blur' }],
@@ -68,15 +71,22 @@ const submitForm = async () => {
     //表示表单是否通过了上面 rules 的规则。
     if (valid) {
       axios
-        .post('/adminUser/login', {
-          userName: state.ruleForm.username || '',
-          passwordMd5: Md5.hashStr(state.ruleForm.password)
+        .get('/adminUser/login', {
+          params: {
+            adminName: state.ruleForm.username || '',
+            password: state.ruleForm.password
+          }
         })
         .then((res) => {
           // 返回一个 token
-          authStore.SetToken(res.data['token'])
-          // 刷新页面
-          window.location.href = '/'
+          if (res.data.code == 200) {
+            authStore.SetToken(res.data['token'])
+            userId.value = res.data['adminId']
+            // 刷新页面
+            window.location.href = '/'
+          } else {
+            AlertError('登陆失败')
+          }
         })
     } else {
       console.log('登录表单不符合规则！')
@@ -119,12 +129,19 @@ const submitForm = async () => {
   font-weight: bold;
 }
 .head .tips {
-  font-size: 12px;
+  font-size: 14px;
   color: #999;
+  margin-top: 5px;
 }
 
 .login-form {
   width: 70%;
   margin: 0 auto;
+}
+
+.img{
+  width: 20px;
+  height: 20px;
+
 }
 </style>

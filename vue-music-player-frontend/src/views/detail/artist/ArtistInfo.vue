@@ -32,12 +32,13 @@
       <div class="mt-3 gap-x-5 flex items-center">
         <button
           v-if="!isArtistLike"
+          @click="addArtistLike"
           class="w-28 button rounded-full bg-gradient-to-r to-teal-400 from-emerald-300 text-slate-50"
         >
           <IconPark :icon="Plus" size="18" class="mr-1" />
           <span>关注</span>
         </button>
-        <button v-else class="w-28 button rounded-full text-teal-600">
+        <button v-else class="w-28 button rounded-full text-teal-600" @click="delArtistLike">
           <IconPark :icon="Dislike" size="18" class="mr-1" />
           <span>取消关注</span>
         </button>

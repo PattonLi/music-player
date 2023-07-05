@@ -25,23 +25,27 @@
     </div>
 
     <!-- 歌单显示 -->
-    <div class="mx-8">
-      <el-collapse :v-model="activeNames">
-        <el-collapse-item :name="1">
-          <template #title> 创建的歌单 </template>
+    <div class="mx-8 mt-3">
+      <el-collapse v-model="activeNames" class="my_collapse">
+        <el-collapse-item name="1" >
+          <template #title> <span class="text-sm">创建的歌单</span> </template>
           <div v-if="isLogin">
-            <div>
-              <button @click="clickLikeList()" :class="{ active: currentKey1 == -1 }">
+            <div class="flex justify-center button-outline w-24 ml-4 my-1">
+              <button 
+                class="rounded-md" 
+                @click="clickLikeList()" 
+                :class="{ active: currentKey1 == -1 }">
                 默认收藏
               </button>
             </div>
           </div>
         </el-collapse-item>
-        <el-collapse-item :name="2">
-          <template #title> 收藏的歌单 </template>
-          <div v-if="isLogin">
+        <el-collapse-item name="2" class="mt-1">
+          <template #title> <span class="text-sm">收藏的歌单</span> </template>
+          <div v-if="isLogin" class="flex flex-col items-center">
             <div v-for="item in playlists" :key="item.playListId">
-              <button
+              <button 
+                class=" button-outline w-24 mr-4 my-1"
                 @click="clickPlayList(item)"
                 :class="{ active: currentKey1 == item.playListId }"
               >
@@ -80,7 +84,7 @@ const { updateLikes } = useLikeStore()
 const { userId, isLogin } = storeToRefs(useAuthStore())
 const { playlists } = storeToRefs(useLikeStore())
 
-const activeNames = ['0', '1']
+const activeNames = ['1', '2']
 
 onMounted(async () => {
   updateLikes(userId.value)
@@ -194,7 +198,7 @@ const click = async (menu: IMenu) => {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .menu-title {
   @apply text-sm pl-5 pr-4 pb-2 text-gray-500;
 }
@@ -206,5 +210,18 @@ const click = async (menu: IMenu) => {
 // 当选中菜单时 TODO
 .active {
   @apply bg-gradient-to-r from-teal-500 to-emerald-300 text-slate-50 cursor-default;
+}
+
+//播放列表样式
+.my_collapse{
+  --el-collapse-content-bg-color:@apply dark:bg-neutral-950 bg-gray-50;
+  @apply border-none;
+  --el-collapse-header-bg-color:@apply dark:bg-neutral-950 bg-gray-50;
+  --el-collapse-header-height:@apply;
+  .el-collapse-item{
+    .el-collapse-item__wrap{
+      border-bottom: 0px solid #18409b;
+    }
+  }
 }
 </style>
