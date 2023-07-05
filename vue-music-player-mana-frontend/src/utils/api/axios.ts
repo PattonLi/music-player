@@ -4,7 +4,7 @@ import { useAuthStore } from '@/stores/auth'
 import { AlertError } from '../alert/AlertPop'
 
 // todo 设置baseurl
-axios.defaults.baseURL = 'http://127.0.0.1:4000'
+axios.defaults.baseURL = 'https://mock.apifox.cn/m1/2794549-0-default' //'http://127.0.0.1:4000'
 // 请求头，headers 信息
 // axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 

@@ -59,6 +59,9 @@
           <el-menu-item index="/singerEdit">
             <el-icon> <DataLine /> </el-icon>歌手配置
           </el-menu-item>
+          <el-menu-item index="/commentEdit">
+            <el-icon> <DataLine /> </el-icon>评论配置
+          </el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
 

@@ -75,6 +75,15 @@ const router = createRouter({
       path: '/playHistory',
       component: () => import('@/views/log-mana/PlayHistory.vue'),
       name: 'playHistory'
+    },
+
+    //评论相关
+
+    //评论管理
+    {
+      path: '/commentEdit',
+      component: () => import('@/views/song-mana/CommentEdit.vue'),
+      name: 'commentEdit'
     }
   ]
 })
