@@ -27,14 +27,15 @@
     <!-- 歌单显示 -->
     <div class="mx-8 mt-3">
       <el-collapse v-model="activeNames" class="my_collapse">
-        <el-collapse-item name="1" >
+        <el-collapse-item name="1">
           <template #title> <span class="text-sm">创建的歌单</span> </template>
           <div v-if="isLogin">
             <div class="flex justify-center button-outline w-24 ml-4 my-1">
-              <button 
-                class="rounded-md" 
-                @click="clickLikeList()" 
-                :class="{ active: currentKey1 == -1 }">
+              <button
+                class="rounded-md"
+                @click="clickLikeList()"
+                :class="{ active: currentKey1 == -1 }"
+              >
                 默认收藏
               </button>
             </div>
@@ -44,8 +45,8 @@
           <template #title> <span class="text-sm">收藏的歌单</span> </template>
           <div v-if="isLogin" class="flex flex-col items-center">
             <div v-for="item in playlists" :key="item.playListId">
-              <button 
-                class=" button-outline w-24 mr-4 my-1"
+              <button
+                class="button-outline w-24 mr-4 my-1"
                 @click="clickPlayList(item)"
                 :class="{ active: currentKey1 == item.playListId }"
               >

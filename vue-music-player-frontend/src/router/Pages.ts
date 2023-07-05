@@ -27,6 +27,8 @@ export const Pages = {
   albumDetail: 'albumDetail',
   playlistDetail: 'playlistDetail',
   mvDetail: 'mvDetail',
+  /* 评论页 */
+  songComment: 'songComment',
   /* 播放组件 */
   mvPlayer: 'mvPlayer',
   player: 'player',
@@ -48,5 +50,7 @@ export const PagesAuth = {
   userEdit: 'userEdit',
   userProfile: 'userProfile',
   //我喜欢
-  like: 'like'
+  like: 'like',
+  //评论
+  songComment: 'songComment'
 }
