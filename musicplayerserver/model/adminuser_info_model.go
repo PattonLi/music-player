@@ -12,5 +12,5 @@ type AdminUserInfo struct {
 
 // 获取表名，gorm创建表时会自己获取这个表名
 func (a *AdminUserInfo) TableName() string {
-	return "adminuser"
+	return "admin_user"
 }
