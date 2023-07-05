@@ -2,14 +2,10 @@ package controller
 
 import (
 	"errors"
-	"errors"
 	"music-player/musicplayerserver/model"
 	"music-player/musicplayerserver/service"
 	utils "music-player/musicplayerserver/utils/jwt"
-	utils "music-player/musicplayerserver/utils/jwt"
 	"strconv"
-	"strings"
-
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -17,12 +13,15 @@ import (
 
 type UserController struct {
 	userservice *service.UserService
+	logservice *service.LogService
 }
 
 func NewUserController() *UserController {
 	uss := service.NewUserService()
+	l := service.LogService{}
 	return &UserController{
 		userservice: uss,
+		logservice: &l,
 	}
 }
 
@@ -42,7 +41,6 @@ func (usc *UserController) ModifyUserInfoHandler(c *gin.Context) error {
 	return err
 }
 
-// 删除用户信息
 // 删除用户信息
 func (usc *UserController) DeleteUserInfoHandler(c *gin.Context) error {
 	userID, _ := strconv.Atoi(c.Query("user_id"))
@@ -66,9 +64,7 @@ func (usc *UserController) AllUserInfoHandler(c *gin.Context) ([]model.UserInfo,
 }
 
 // 根据ID获取单个用户信息
-// 根据ID获取单个用户信息
 func (usc *UserController) UserProfileHandler(c *gin.Context) (*gin.H, error) {
-	userID, _ := strconv.Atoi(c.Query("userId"))
 	userID, _ := strconv.Atoi(c.Query("userId"))
 	user, err := usc.userservice.UserProfile(userID)
 	userprofile := gin.H{
@@ -77,7 +73,7 @@ func (usc *UserController) UserProfileHandler(c *gin.Context) (*gin.H, error) {
 		"picUrl":   user.Pic_url,
 		"phone":    user.Phone,
 		"email":    user.Email,
-		"age":      strconv.Itoa(user.Age),
+		"age":      user.Age,
 		"gender":   user.Gender,
 	}
 	return &userprofile, err
@@ -95,7 +91,6 @@ func (usc *UserController) UserLoginHandler(c *gin.Context) (int, string, error)
 	phone := c.Query("phone")
 	password := c.Query("password")
 	user := model.UserInfo{
-		Phone:    phone,
 		Phone:    phone,
 		Password: password,
 	}
@@ -117,8 +112,9 @@ func (usc *UserController) UserRegisterHandler(c *gin.Context) (int, string, err
 	if err == nil {
 		token, _ = utils.CreateToken(userID)
 	}
+	err = usc.logservice.AddRegisterLog(userID,user.Username)
 	return userID, token, err
-}*/
+}
 
 // 用户自行上传头像
 func (usc *UserController) UploadUserPicHandler(c *gin.Context) (string, error) {

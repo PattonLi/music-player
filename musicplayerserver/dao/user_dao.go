@@ -35,7 +35,7 @@ func (*UserDao) GetUserInfoByName(name string) ([]model.UserInfo, error) {
 	return user, err
 }
 
-// 添加用户
+// 管理端添加用户
 func (*UserDao) AddUser(user *model.UserInfo) (int64, int64, []model.UserInfo,error) {
 	newuser := model.UserInfo{}
 	var userlist []model.UserInfo
@@ -59,6 +59,15 @@ func (*UserDao) AddUser(user *model.UserInfo) (int64, int64, []model.UserInfo,er
 	}
 	DB.Offset(int(offset)).Limit(10).Find(&userlist)
 	return totalrecord, currentPage, userlist, err
+}
+
+// 用户自行注册
+func (*UserDao) CellPhoneRegister(user *model.UserInfo) int {
+	DB.Create(user)
+	newuser := model.UserInfo{}
+	DB.Take(&newuser, "phone = ?", user.Phone)
+	fmt.Println(newuser.ID)
+	return newuser.ID
 }
 
 // 修改用户信息
@@ -117,6 +126,14 @@ func (*UserDao) GetUserProfile(userID int) (*model.UserInfo, error) {
 	user := model.UserInfo{}
 	err := DB.First(&user, userID).Error
 	return &user, err
+}
+
+//根据index获取单个用户信息
+func (*UserDao) GetAUserInfo(index int) (int64, *model.UserInfo, error) {
+	user := model.UserInfo{}
+	var totals int64
+	err := DB.Offset(index-1).Limit(1).Find(&user).Offset(-1).Limit(-1).Count(&totals).Error
+	return totals, &user, err
 }
 
 //更新头像url

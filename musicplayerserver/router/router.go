@@ -110,13 +110,13 @@ func Posts(r *gin.Engine) {
 	})
 
 	//用户手机号注册
-	/*r.POST("/register", func(c *gin.Context) {
+	r.POST("/register", func(c *gin.Context) {
 		userID, token, err := controller.NewUserController().UserRegisterHandler(c)
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code":   300,
-				"userId": nil,
-				"token":  nil,
+				"userId": 0,
+				"token":  "",
 			})
 		} else {
 			c.JSON(http.StatusOK, gin.H{
@@ -125,12 +125,12 @@ func Posts(r *gin.Engine) {
 				"token":  token,
 			})
 		}
-	})*/
+	})
 
 
 
 	//添加歌曲
-	r.POST("/admin/addsong", func(c *gin.Context) {
+	r.POST("/admin/addSong", func(c *gin.Context) {
 		result := controller.NewSongController().AddSongHandler(c)
 		if result {
 			c.JSON(http.StatusOK, gin.H{

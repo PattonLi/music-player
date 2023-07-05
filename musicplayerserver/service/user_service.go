@@ -65,17 +65,17 @@ func (us *UserService) UserLogin(user *model.UserInfo) (int, error) {
 }
 
 // 用户手机号注册
-/*func (us *UserService) UserRegister(user *model.UserInfo) (int,error) {
+func (us *UserService) UserRegister(user *model.UserInfo) (int,error) {
 	_, err := us.userdao.UserPhoneCheck(user)
 	var userID int
 	if err != nil {
-		userID = us.userdao.AddUser(user)
+		userID = us.userdao.CellPhoneRegister(user)
 		err = nil
 	} else {
 		err = errors.New("手机号已被注册！")
 	}
 	return userID,err
-}*/
+}
 
 //根据ID获取单个用户信息
 func (us *UserService) UserProfile(userID int) (*model.UserInfo, error) {
