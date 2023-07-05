@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-6 mb-3">
+  <div class="mx-8 mb-3 mt-6">
     <!-- 输入框 -->
     <el-input
       v-model="comment"
@@ -15,53 +15,63 @@
     />
   </div>
   <!-- 发布按钮 -->
-  <div class="flex justify-end mr-7 justify-between">
-    <button @click="ifEmoji=!ifEmoji">
-      <IconPark :icon="SlightlySmilingFace" size="22" :stroke-width="3.5"/>
+  <div class="flex justify-end mr-7 items-center">
+    <button @click="ifEmoji = !ifEmoji" class="mr-4 hover-text">
+      <IconPark :icon="SlightlySmilingFace" size="26" :stroke-width="3.5" />
     </button>
-    <button class="button-outline w-16 h-8">发布</button>
+    <button class="button-outline w-16 h-8" @click="pubulish">发布</button>
   </div>
   <!-- 表情包 -->
   <div class="row" v-if="ifEmoji">
-    <Picker 
-      :data="emojiIndex" 
+    <Picker
+      :data="emojiIndex"
       set="apple"
-      :showSearch="false" 
+      :showSearch="false"
       :showSkinTones="false"
-      title=''
+      title=""
       :emojiSize="22"
       :perLine="8"
       :showPreview="false"
-      @select="showEmoji" 
+      @select="showEmoji"
     />
   </div>
-  <!-- 评论标题 -->
-  <div class="text-xl text-main mt-0.5 mt-2 flex items-center">
-    <div>精彩评论</div>
-    <IconPark :icon="MessageEmoji" size="22" :stroke-width="3" class="ml-1" />
-  </div>
-  
-  
 </template>
 
 <script setup lang="ts">
 import data from 'emoji-mart-vue-fast/data/all.json'
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
+import { SlightlySmilingFace } from '@icon-park/vue-next'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
-import { ref } from 'vue';
+import { ref } from 'vue'
+import { AlertError, AlertSuccess } from '@/utils/alert/AlertPop'
+import { apiPublishComment } from '@/utils/api/comment'
+import { useAuthStore } from '@/stores/auth'
+import { storeToRefs } from 'pinia'
+const { userId } = storeToRefs(useAuthStore())
 // Create emoji data index.
 const emojiIndex = new EmojiIndex(data)
 const comment = ref('')
 const ifEmoji = ref(false)
-import { MessageEmoji,SlightlySmilingFace } from '@icon-park/vue-next'
-import IconPark from '@/components/common/IconPark.vue'
 
-defineProps<{
+const props = defineProps<{
   songId: number
 }>()
 
-const showEmoji = (emoji:any) => {
+const showEmoji = (emoji: any) => {
   comment.value = comment.value + emoji.native
+}
+const pubulish = async () => {
+  if (comment.value == '') {
+    AlertError('输入不得为空')
+  } else {
+    const data = await apiPublishComment(comment.value, userId.value, props.songId)
+    if (data.code == 200) {
+      AlertSuccess('评论成功')
+      comment.value = ''
+    } else {
+      AlertError('评论失败，请稍后再试')
+    }
+  }
 }
 </script>
 
@@ -76,7 +86,6 @@ const showEmoji = (emoji:any) => {
   }
 }
 
-.row{
-  
+.row {
 }
 </style>
