@@ -15,6 +15,7 @@ func (l *LogService) AddPlayLog(log model.LogInfo) error {
 	return err
 }
 
+//添加注册日志
 func (l *LogService) AddRegisterLog(userID int, username string) error {
 	var log model.LogInfo
 	log.User_id = userID
@@ -23,4 +24,10 @@ func (l *LogService) AddRegisterLog(userID int, username string) error {
 	log.Type = 1
 	err := l.logdao.AddPlayLog(log)
 	return err
+}
+
+//根据type获得日志
+func (l *LogService) GetLog(logtype int) ([]model.LogInfo, error) {
+	loglist, err := l.logdao.GetLogByType(logtype)
+	return loglist, err
 }

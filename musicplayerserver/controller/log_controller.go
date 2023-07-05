@@ -4,6 +4,7 @@ import (
 	"errors"
 	"music-player/musicplayerserver/model"
 	"music-player/musicplayerserver/service"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -82,4 +83,11 @@ func (lc *LogController) AddDownloadLog(c *gin.Context) error {
 	} else {
 		return errors.New("数据库操作有误")
 	}
+}
+
+//根据type获得日志
+func (lc *LogController) GetLogHandler(c *gin.Context) ([]model.LogInfo,  error) {
+	logtype,_ := strconv.Atoi(c.Query("type"))
+	loglist, err := lc.logservice.GetLog(logtype)
+	return loglist, err
 }
