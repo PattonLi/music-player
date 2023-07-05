@@ -45,6 +45,7 @@ func (*AlbumDao) GetAllAlbumInfo(page int, pagesize int) ([]model.AlbumInfo, int
 	totalPage := int64(math.Ceil(float64(totalrecord) / float64(pagesize)))
 	return albumlist, totalPage
 }
+
 // 根据歌手id获取歌手所有专辑
 func (a *AlbumDao) GetAlbumByArtistid(artist_id int) ([]model.AlbumInfo, error) {
 	var album []model.AlbumInfo
@@ -58,4 +59,40 @@ func (a *AlbumDao) GetAlbumByKeyWord(keyword string) ([]model.AlbumInfo, error) 
 	keyword = "%" + keyword + "%"
 	result := DB.Where("name  LIKE ?", keyword).Find(&album)
 	return album, result.Error
+}
+
+// 添加专辑
+func (*AlbumDao) AddAlbum(album *model.AlbumInfo) (int64, int64, []model.AlbumInfo, error) {
+	var albumlist []model.AlbumInfo
+	var totalrecord int64
+	var offset int64
+	var err error
+	var currentPage int64
+	DB.Create(album)
+	DB.Table("album").Count(&totalrecord)
+	if totalrecord%10 == 0 {
+		offset = totalrecord - 10
+		currentPage = totalrecord / 10
+	} else {
+		offset = totalrecord - (totalrecord % 10)
+		currentPage = totalrecord/10 + 1
+	}
+	DB.Offset(int(offset)).Limit(10).Find(&albumlist)
+	return totalrecord, currentPage, albumlist, err
+}
+
+// 修改专辑信息
+func (*AlbumDao) ModifyAlbum(album *model.AlbumInfo) error {
+	result := DB.Save(album)
+	var err error = nil
+	if result.Error != nil {
+		err = errors.New("修改失败！")
+	}
+	return err
+}
+
+// 删除专辑信息
+func (*AlbumDao) DeleteAlbum(albumID int) error {
+	err := DB.Delete(&model.AlbumInfo{}, albumID).Error
+	return err
 }

@@ -33,9 +33,9 @@ func (s *SongService) GetSongLyric(id string) (string, error) {
 }*/
 
 // 添加歌曲
-func (s *SongService) AddSong(song model.SongInfo) bool {
-	result := s.songdao.AddSong(&song)
-	return result
+func (ss *SongService) AddSongInfo(song *model.SongInfo) (int64, int64, []model.SongInfo, error) {
+	totals, currentPage, songlist, err := ss.songdao.AddSong(song)
+	return totals, currentPage, songlist, err
 }
 
 // 获取十首歌曲
@@ -118,4 +118,34 @@ func (s *SongService) GetSongByKeyWord(pagesize int, currentpage int, keyword st
 
 	songpage = songs[(currentpage-1)*pagesize : (currentpage)*pagesize]
 	return songpage, err, nil, pagenum
+}
+
+// 特定歌曲信息获取
+func (ss *SongService) SongInfo(Name string) ([]model.SongInfo, error) {
+	song, err := ss.songdao.GetSongbyName(Name)
+	return song, err
+}
+
+// 特定页所有歌曲信息获取
+func (ss *SongService) AllSongInfo(page int, pagesize int) ([]model.SongInfo, int64) {
+	songlist, totalPage := ss.songdao.GetAllSongInfo(page, pagesize)
+	return songlist, totalPage
+}
+
+// 歌曲信息修改
+func (ss *SongService) ModifySongInfo(song *model.SongInfo) error {
+	err := ss.songdao.ModifySong(song)
+	return err
+}
+
+// 删除歌曲信息
+func (ss *SongService) DeleteSongInfo(songID int) error {
+	err := ss.songdao.DeleteSong(songID)
+	return err
+}
+
+// 根据歌手id获取歌曲
+func (as *SongService) GetSongByArtistid(artist_id int) ([]model.SongInfo, error) {
+	songlist, err := as.songdao.GetSongByArtistid(artist_id)
+	return songlist, err
 }

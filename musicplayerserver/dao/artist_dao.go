@@ -1,6 +1,8 @@
 package dao
 
 import (
+	"errors"
+	"math"
 	"music-player/musicplayerserver/model"
 )
 
@@ -66,5 +68,68 @@ func (a *ArtistDao) GetArtistByCondition(firstletter string, gender int, locatio
 	}
 
 	result := DB.Where("first_letter = ? AND gender = ? AND location = ?", firstletter, gender, location).Find(&artist)
+	return artist, result.Error
+}
+
+// 返回特定页歌手信息
+func (*ArtistDao) GetAllArtistInfo(page int, pagesize int) ([]model.ArtistInfo, int64) {
+	var artistlist []model.ArtistInfo
+	var totalrecord int64
+	offset := (page - 1) * pagesize
+	DB.Offset(offset).Limit(pagesize).Find(&artistlist).Offset(-1).Limit(-1).Count(&totalrecord)
+	totalPage := int64(math.Ceil(float64(totalrecord) / float64(pagesize)))
+	return artistlist, totalPage
+}
+
+// 根据名字获取歌手信息
+func (*ArtistDao) GetArtistbyName(name string) ([]model.ArtistInfo, error) {
+	song := []model.ArtistInfo{}
+	err := DB.Where(&song, "name=?", name).Find(&song).Error
+	if err != nil {
+		err = errors.New("查询歌曲信息出错！")
+	}
+	return song, err
+}
+
+// 添加歌手
+func (*ArtistDao) AddArtist(artist *model.ArtistInfo) (int64, int64, []model.ArtistInfo, error) {
+	var artistlist []model.ArtistInfo
+	var totalrecord int64
+	var offset int64
+	var err error
+	var currentPage int64
+	DB.Create(artist)
+	DB.Table("artist").Count(&totalrecord)
+	if totalrecord%10 == 0 {
+		offset = totalrecord - 10
+		currentPage = totalrecord / 10
+	} else {
+		offset = totalrecord - (totalrecord % 10)
+		currentPage = totalrecord/10 + 1
+	}
+	DB.Offset(int(offset)).Limit(10).Find(&artistlist)
+	return totalrecord, currentPage, artistlist, err
+}
+
+// 删除歌手信息
+func (*ArtistDao) DeleteArtist(artistID int) error {
+	err := DB.Delete(&model.ArtistInfo{}, artistID).Error
+	return err
+}
+
+// 修改歌手信息
+func (*ArtistDao) ModifyArtist(artist *model.ArtistInfo) error {
+	result := DB.Save(artist)
+	var err error = nil
+	if result.Error != nil {
+		err = errors.New("修改失败！")
+	}
+	return err
+}
+
+// 根据专辑id获取特定歌手
+func (s *ArtistDao) GetArtistByAlbumid(album_id int) (model.ArtistInfo, error) {
+	var artist model.ArtistInfo
+	result := DB.First(&artist, album_id)
 	return artist, result.Error
 }
