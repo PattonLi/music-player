@@ -3,7 +3,8 @@ package router
 import (
 	"fmt"
 	"music-player/musicplayerserver/controller"
-	"music-player/musicplayerserver/utils/jwt"
+	"music-player/musicplayerserver/model"
+	utils "music-player/musicplayerserver/utils/jwt"
 	"net/http"
 	"strconv"
 
@@ -26,10 +27,10 @@ func Posts(r *gin.Engine) {
 			code = 200
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"code": code,
-			"totals":totals,
+			"code":        code,
+			"totals":      totals,
 			"currentPage": currentPage,
-			"data": userlist,
+			"data":        userlist,
 		})
 	})
 
@@ -48,32 +49,32 @@ func Posts(r *gin.Engine) {
 	})
 
 	//管理员修改用户头像
-	r.POST("/User/uploadPic", func(c *gin.Context){
+	r.POST("/User/uploadPic", func(c *gin.Context) {
 		url, err := controller.NewUserController().AdminUploadUserPicHandler(c)
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
-				"code": 300,
-				"picUrl":url,
+				"code":   300,
+				"picUrl": url,
 			})
 		} else {
 			c.JSON(http.StatusOK, gin.H{
-				"code": 200,
-				"picUrl":url,
+				"code":   200,
+				"picUrl": url,
 			})
 		}
 	})
 
 	//用户自行修改头像
-	authorized.POST("/user/profile/edit", func(c *gin.Context){
+	authorized.POST("/user/profile/edit", func(c *gin.Context) {
 		url, err := controller.NewUserController().UploadUserPicHandler(c)
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
-				"code": 300,
-				"picUrl":url,
+				"code":   300,
+				"picUrl": url,
 			})
 		} else {
 			c.JSON(http.StatusOK, gin.H{
-				"code": 200,
+				"code":   200,
 				"picUrl": url,
 			})
 		}
@@ -101,11 +102,11 @@ func Posts(r *gin.Engine) {
 		} else {
 			code = 200
 		}
-		c.JSON(200,gin.H{
-			"code": code,
-			"totals": totals,
+		c.JSON(200, gin.H{
+			"code":        code,
+			"totals":      totals,
 			"currentPage": currentPage,
-			"data": adminlist,
+			"data":        adminlist,
 		})
 	})
 
@@ -126,8 +127,6 @@ func Posts(r *gin.Engine) {
 			})
 		}
 	})
-
-
 
 	//添加歌曲
 	r.POST("/admin/addSong", func(c *gin.Context) {
@@ -212,6 +211,33 @@ func Posts(r *gin.Engine) {
 			})
 		}
 	})
+
+	// 点赞评论
+	r.POST("/song/comment/like", func(c *gin.Context) {
+		err := controller.NewCommentController().LikeCommentHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
+
+	r.POST("/song/comment/unlike", func(c *gin.Context) {
+		err := controller.NewCommentController().DeleLike(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
 }
 
 func GETs(r *gin.Engine) {
@@ -223,8 +249,8 @@ func GETs(r *gin.Engine) {
 	r.GET("/User/pageAllInfo", func(c *gin.Context) {
 		users, totalrecord := controller.NewUserController().AllUserInfoHandler(c)
 		c.JSON(http.StatusOK, gin.H{
-			"code":      200,
-			"data":      users,
+			"code":   200,
+			"data":   users,
 			"totals": totalrecord,
 		},
 		)
@@ -265,16 +291,16 @@ func GETs(r *gin.Engine) {
 	//获得表中第index个用户信息
 	r.GET("/User/aInfo", func(c *gin.Context) {
 		totals, user, err := controller.NewUserController().GetAInfoHandler(c)
-		code := 0;
-		if(err != nil){
+		code := 0
+		if err != nil {
 			code = 300
 		} else {
 			code = 200
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"code": code,
+			"code":   code,
 			"totals": totals,
-			"data": user,
+			"data":   user,
 		})
 
 	})
@@ -283,9 +309,9 @@ func GETs(r *gin.Engine) {
 	r.GET("/adminUser/pageAllInfo", func(c *gin.Context) {
 		totals, adminusers := controller.NewAdminUserController().AllAdminInfoHandler(c)
 		c.JSON(http.StatusOK, gin.H{
-			"code": 200,
+			"code":   200,
 			"totals": totals,
-			"data": adminusers,
+			"data":   adminusers,
 		})
 	})
 
@@ -299,7 +325,7 @@ func GETs(r *gin.Engine) {
 			code = 200
 		}
 		c.JSON(200, gin.H{
-			"code":code,
+			"code": code,
 			"data": adminlist,
 		})
 	})
@@ -363,21 +389,21 @@ func GETs(r *gin.Engine) {
 		adminID, token, err := controller.NewAdminUserController().AdminLoginHandler(c)
 		if err == nil {
 			c.JSON(http.StatusOK, gin.H{
-				"code":   200,
+				"code":    200,
 				"adminId": adminID,
-				"token":  token,
+				"token":   token,
 			})
 		} else if err.Error() == "账号输入错误！" {
 			c.JSON(http.StatusOK, gin.H{
-				"code":   300,
+				"code":    300,
 				"adminId": 0,
-				"token":  "",
+				"token":   "",
 			})
 		} else if err.Error() == "密码输入错误！" {
 			c.JSON(http.StatusOK, gin.H{
-				"code":   301,
+				"code":    301,
 				"adminId": 0,
-				"token":  "",
+				"token":   "",
 			})
 		}
 	})
@@ -386,13 +412,13 @@ func GETs(r *gin.Engine) {
 	r.GET("/adminUser/profile", func(c *gin.Context) {
 		adminname, err := controller.NewAdminUserController().AdminProfileHandler(c)
 		var code int
-		if err != nil{
+		if err != nil {
 			code = 300
 		} else {
 			code = 200
 		}
 		c.JSON(200, gin.H{
-			"code": code,
+			"code":      code,
 			"adminName": adminname,
 		})
 	})
@@ -897,6 +923,40 @@ func GETs(r *gin.Engine) {
 				"code":      200,
 				"pageTotal": pagetotal,
 				"artists":   atrtists,
+			})
+		}
+	})
+
+	// 获取歌曲所有评论
+	r.GET("/song/comment", func(c *gin.Context) {
+		comments, err := controller.NewCommentController().GetAllCommentHandler(c)
+		empty_arr := []model.Comments{}
+		if err != nil || comments == nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":     300,
+				"comments": empty_arr,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":     200,
+				"comments": comments,
+			})
+		}
+	})
+
+	// 获取用户所有点赞评论
+	r.GET("/user/comment/like", func(c *gin.Context) {
+		like_ids, err := controller.NewCommentController().GetAllLikeHandler(c)
+		empty_arr := []int{}
+		if err != nil || like_ids == nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":         300,
+				"commentLikes": empty_arr,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":         200,
+				"commentLikes": like_ids,
 			})
 		}
 	})

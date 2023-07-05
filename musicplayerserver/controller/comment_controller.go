@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"music-player/musicplayerserver/model"
 	"music-player/musicplayerserver/service"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,7 +22,6 @@ func NewCommentController() *CommentController {
 
 // 发表评论
 func (cc *CommentController) PublishCommentHandler(c *gin.Context) error {
-	println("exec comment conteoller")
 	var err error
 	var comment model.CommentInfo
 	err = c.ShouldBind(&comment)
@@ -30,5 +30,41 @@ func (cc *CommentController) PublishCommentHandler(c *gin.Context) error {
 		return err
 	}
 	err = cc.commentService.PublishComment(comment.Comment, comment.User_id, comment.Song_id)
+	return err
+}
+
+// 获取歌曲所有评论
+func (cc *CommentController) GetAllCommentHandler(c *gin.Context) ([]model.Comments, error) {
+	songid := c.Query("songId")
+	songId, _ := strconv.Atoi(songid)
+	comments, err := cc.commentService.GetAllComment(songId)
+	return comments, err
+}
+
+// 点赞评论
+func (cc *CommentController) LikeCommentHandler(c *gin.Context) error {
+
+	var comment model.CommentInfo
+	c.ShouldBind(&comment)
+
+	err := cc.commentService.LikeComment(comment.Comment_id, comment.User_id)
+	return err
+}
+
+// 获取用户所有点赞评论
+func (cc *CommentController) GetAllLikeHandler(c *gin.Context) ([]int, error) {
+	userid := c.Query("userId")
+	userId, _ := strconv.Atoi(userid)
+
+	like_ids, err := cc.commentService.GetAllLike(userId)
+	return like_ids, err
+}
+
+// 取消点赞评论
+func (cc *CommentController) DeleLike(c *gin.Context) error {
+	var comment model.CommentInfo
+	c.ShouldBind(&comment)
+
+	err := cc.commentService.DeleLike(comment.User_id, comment.Comment_id)
 	return err
 }
