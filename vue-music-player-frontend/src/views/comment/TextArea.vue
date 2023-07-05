@@ -22,8 +22,9 @@
     <button class="button-outline w-16 h-8" @click="pubulish">发布</button>
   </div>
   <!-- 表情包 -->
-  <div class="row" v-if="ifEmoji">
-    <Picker
+  <div class="flex justify-end" v-if="ifEmoji">
+    <Picker 
+      class="emoji"
       :data="emojiIndex"
       set="apple"
       :showSearch="false"
@@ -85,7 +86,10 @@ const pubulish = async () => {
     @apply dark:bg-zinc-900;
   }
 }
-
-.row {
+.emoji {
+  @apply relative top-6 mr-8;
+  z-index: 1;
+  margin-bottom: -27rem;
 }
+
 </style>

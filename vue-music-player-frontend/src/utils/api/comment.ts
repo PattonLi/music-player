@@ -32,7 +32,7 @@ export const apiPublishComment = async (comment: string, userId: number, songId:
 }
 //获取已经点赞评论
 export const apiGetCommentLikes = async (userId: number) => {
-  return await myAxios.post<{
+  return await myAxios.get<{
     code: number
     commentLikes:number[]
   }>('/user/comment/like', {userId: userId })
