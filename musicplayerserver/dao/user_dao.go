@@ -3,8 +3,9 @@ package dao
 import (
 	"errors"
 	"fmt"
-	"music-player/musicplayerserver/model"
 	"math"
+	"music-player/musicplayerserver/model"
+
 	"gorm.io/gorm"
 )
 
@@ -25,8 +26,6 @@ func (*UserDao) CreateUserTable() {
 	}
 }
 
-
-
 // 根据用户名或昵称查询用户信息
 func (*UserDao) GetUserInfoByName(name string) ([]model.UserInfo, error) {
 	var user []model.UserInfo
@@ -37,12 +36,11 @@ func (*UserDao) GetUserInfoByName(name string) ([]model.UserInfo, error) {
 	return user, err
 }
 
-
 // 添加用户
-func (*UserDao) AddUser(user *model.UserInfo) (int) {
+func (*UserDao) AddUser(user *model.UserInfo) int {
 	DB.Create(user)
 	newuser := model.UserInfo{}
-	DB.Take(&newuser, "phone = ?",user.Phone)
+	DB.Take(&newuser, "phone = ?", user.Phone)
 	fmt.Println(newuser.ID)
 	return newuser.ID
 }
@@ -57,14 +55,14 @@ func (*UserDao) ModifyUser(user *model.UserInfo) error {
 	return err
 }
 
-//删除用户信息
+// 删除用户信息
 func (*UserDao) DeleteUser(userID int) error {
 	err := DB.Delete(&model.UserInfo{}, userID).Error
 	return err
 }
 
 // 用户登录验证
-func (*UserDao) UserLoginCheck(u *model.UserInfo) (int,error) {
+func (*UserDao) UserLoginCheck(u *model.UserInfo) (int, error) {
 	phone := u.Phone
 	password := u.Password
 	user := model.UserInfo{}
@@ -80,7 +78,7 @@ func (*UserDao) UserPhoneCheck(u *model.UserInfo) (int, error) {
 	phone := u.Phone
 	user := model.UserInfo{}
 	err := DB.Take(&user, "phone = ?", phone).Error
-	if errors.Is(err, gorm.ErrRecordNotFound){
+	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("查找不到记录！")
 	} else {
 		err = nil
@@ -89,29 +87,27 @@ func (*UserDao) UserPhoneCheck(u *model.UserInfo) (int, error) {
 }
 
 // 返回特定页所有普通用户信息
-func (*UserDao) GetAllUserInfo(page int, pagesize int) ([]model.UserInfo,int64) {
+func (*UserDao) GetAllUserInfo(page int, pagesize int) ([]model.UserInfo, int64) {
 	var userlist []model.UserInfo
 	var totalrecord int64
-	offset := (page-1)*pagesize
+	offset := (page - 1) * pagesize
 	DB.Offset(offset).Limit(pagesize).Find(&userlist).Offset(-1).Limit(-1).Count(&totalrecord)
-	totalPage := int64(math.Ceil(float64(totalrecord)/float64(pagesize)))
-	return userlist,totalPage
+	totalPage := int64(math.Ceil(float64(totalrecord) / float64(pagesize)))
+	return userlist, totalPage
 }
 
-//根据ID获取单个用户信息
-func (*UserDao) GetUserProfile (userID int) (*model.UserInfo, error) {
+// 根据ID获取单个用户信息
+func (*UserDao) GetUserProfile(userID int) (*model.UserInfo, error) {
 	user := model.UserInfo{}
-	err := DB.Take(&user, "user_id = ?",userID).Error
-	return &user, 
-	err
+	err := DB.First(&user, userID).Error
+	return &user, err
 }
 
-//更新头像url
-func (*UserDao) UpdateUserPicUrl (userID int, url string) error {
-	err :=DB.Model(&model.UserInfo{ID: userID}).UpdateColumn("pic_url", url).Error
-	if err != nil{
+// 更新头像url
+func (*UserDao) UpdateUserPicUrl(userID int, url string) error {
+	err := DB.Model(&model.UserInfo{ID: userID}).UpdateColumn("pic_url", url).Error
+	if err != nil {
 		err = errors.New("更新数据库头像url失败！")
 	}
 	return err
 }
-

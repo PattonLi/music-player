@@ -66,3 +66,36 @@ func (a *ArtistService) GetArtistByKeyWord(pagesize int, currentpage int, keywor
 	artistpage = artists[(currentpage-1)*pagesize : currentpage*pagesize]
 	return artistpage, err, nil, pagenum
 }
+
+// 获取对应筛选条件的歌手
+func (a *ArtistService) GetAtrtistByContition(pagesize int, currentpage int, firstletter string, gender int, location int) ([]model.ArtistInfo, error, error, int) {
+	artists, err := a.artistdao.GetArtistByCondition(firstletter, gender, location)
+	l := len(artists)
+	n := l / pagesize
+	remainder := l % pagesize
+	var pagenum int
+	var remainder_flag bool
+	if remainder == 0 {
+		pagenum = n
+		remainder_flag = false
+	} else {
+		pagenum = n + 1
+		remainder_flag = true
+	}
+
+	if currentpage > pagenum {
+		err1 := errors.New("当前要获取的歌手分页过大！")
+		return nil, err, err1, pagenum
+	}
+
+	var artistpage []model.ArtistInfo
+
+	if currentpage == pagenum && remainder_flag {
+		artistpage = artists[(currentpage-1)*pagesize : l]
+		return artistpage, err, nil, pagenum
+	}
+
+	artistpage = artists[(currentpage-1)*pagesize : currentpage*pagesize]
+	return artistpage, err, nil, pagenum
+
+}
