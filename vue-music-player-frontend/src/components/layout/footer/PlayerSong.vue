@@ -43,8 +43,14 @@
           @click="dwld"
         />
         <IconPark :icon="MoreTwo" size="18" :stroke-width="3" class="text-slate-400 hover-text" />
-        <el-badge :value="1000" :max="999" class="badge">
-          <IconPark :icon="Comment" size="18" :stroke-width="3" class="text-slate-400 hover-text" />
+        <el-badge :value="song.mark" :max="999" class="badge">
+          <IconPark
+            :icon="Comment"
+            size="18"
+            :stroke-width="3"
+            class="text-slate-400 hover-text"
+            @click="commentDetail"
+          />
         </el-badge>
       </div>
     </div>
@@ -63,6 +69,8 @@ import { AlertError } from '@/utils/alert/AlertPop'
 import { storeToRefs } from 'pinia'
 import { useLikeStore } from '@/stores/like'
 import type { LikeForm } from '@/models/like'
+import { routerPushByNameId } from '@/utils/navigator/router'
+import { Pages } from '@/router/pages'
 const { userId, isLogin } = storeToRefs(useAuthStore())
 const { songs } = storeToRefs(useLikeStore())
 const { addLike, delLike } = useLikeStore()
@@ -119,6 +127,14 @@ const delSongListLike = () => {
     AlertError('请先登录！')
   }
 }
+
+const commentDetail=()=>{
+  if(song.value.songId!=undefined){
+    routerPushByNameId(Pages.songComment, song.value.songId)
+  }else{
+    AlertError('没有歌曲被选中')
+  }
+}
 </script>
 
 <style lang="scss">
@@ -130,7 +146,7 @@ const delSongListLike = () => {
   .badge {
     //评论数量样式
     .el-badge__content {
-      @apply scale-75 left-1 bg-stone-100 text-slate-500 bg-opacity-80 right-auto;
+      @apply scale-100 left-4 bg-stone-100 text-slate-500 bg-opacity-80 right-auto;
       @apply dark:bg-stone-900;
     }
   }

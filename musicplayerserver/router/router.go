@@ -198,6 +198,20 @@ func Posts(r *gin.Engine) {
 			})
 		}
 	})
+
+	//发表评论
+	r.POST("/song/comment/publish", func(c *gin.Context) {
+		err := controller.NewCommentController().PublishCommentHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
 }
 
 func GETs(r *gin.Engine) {

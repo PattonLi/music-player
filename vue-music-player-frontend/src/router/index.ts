@@ -221,6 +221,12 @@ const router = createRouter({
             menu: Pages.recentPlay
           },
           component: () => import('@/views/recent-play/AppRecentPlay.vue')
+        },
+        /*--------------------歌曲评论------------------*/
+        {
+          path: 'comment/song',
+          name: 'songComment',
+          component: () => import('@/views/comment/AppComment.vue')
         }
       ]
     },
