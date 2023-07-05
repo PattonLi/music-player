@@ -41,6 +41,7 @@ func (als *AlbumService) AllAlbumInfo(page int, pagesize int) ([]model.AlbumInfo
 	albumlist, totalPage := als.albumdao.GetAllAlbumInfo(page, pagesize)
 	return albumlist, totalPage
 }
+
 // 分页获取歌手专辑
 func (al *AlbumService) GetAlbumPage(artist_id int, currentpage int, pagesize int) ([]model.AlbumInfo, error, error, int) {
 	albums, err := al.albumdao.GetAlbumByArtistid(artist_id)
@@ -103,4 +104,28 @@ func (al *AlbumService) GetAlbumByKeyWord(pagesize int, currentpage int, keyword
 
 	albumpage = albums[(currentpage-1)*pagesize : currentpage*pagesize]
 	return albumpage, err, nil, pagenum
+}
+
+// 添加专辑信息
+func (as *AlbumService) AddAlbumInfo(album *model.AlbumInfo) (int64, int64, []model.AlbumInfo, error) {
+	totals, currentPage, albumlist, err := as.albumdao.AddAlbum(album)
+	return totals, currentPage, albumlist, err
+}
+
+// 专辑信息修改
+func (as *AlbumService) ModifyAlbumInfo(album *model.AlbumInfo) error {
+	err := as.albumdao.ModifyAlbum(album)
+	return err
+}
+
+// 删除专辑信息
+func (as *AlbumService) DeleteAlbumInfo(albumID int) error {
+	err := as.albumdao.DeleteAlbum(albumID)
+	return err
+}
+
+// 根据歌手id获取专辑
+func (as *AlbumService) GetAlbumByArtistid(artist_id int) ([]model.AlbumInfo, error) {
+	albumlist, err := as.albumdao.GetAlbumByArtistid(artist_id)
+	return albumlist, err
 }

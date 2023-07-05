@@ -49,12 +49,12 @@ func (sc *SongController) GetSongDetailHandler(c *gin.Context) (string, string, 
 	return songname, singer, err
 }*/
 
-// 添加歌曲的控制器
-func (sc *SongController) AddSongHandler(c *gin.Context) bool {
-	var song model.SongInfo
-	c.ShouldBind(&song)
-	result := sc.songservice.AddSong(song)
-	return result
+// 添加歌曲
+func (sc *SongController) AddSongHandler(c *gin.Context) (int64, int64, []model.SongInfo, error) {
+	song := model.SongInfo{}
+	c.BindJSON(&song)
+	totals, currentPage, songlist, err := sc.songservice.AddSongInfo(&song)
+	return totals, currentPage, songlist, err
 }
 
 // 获取十首歌曲
@@ -109,4 +109,56 @@ func (sc *SongController) GetSongByKeyWordHandler(c *gin.Context) ([]model.SongI
 
 	songpage, err0, err1, pagetotal := sc.songservice.GetSongByKeyWord(pageSize, currntPage, keyword)
 	return songpage, err0, err1, pagetotal
+}
+
+// 获取特定名称歌曲信息
+func (sc *SongController) SongInfoHandler(c *gin.Context) ([]model.SongInfo, error) {
+	name := c.Query("name")
+	songlist, err := sc.songservice.SongInfo(name)
+	return songlist, err
+}
+
+// 获取特定页所有歌曲信息
+func (sc *SongController) AllSongInfoHandler(c *gin.Context) ([]model.SongInfo, int64) {
+	page, _ := strconv.Atoi(c.Query("currentPage"))
+	pagesize, _ := strconv.Atoi(c.Query("pageSize"))
+	songlist, totalPage := sc.songservice.AllSongInfo(page, pagesize)
+	return songlist, totalPage
+}
+
+// 歌曲信息修改
+func (sc *SongController) ModifySongInfoHandler(c *gin.Context) error {
+	song := model.SongInfo{}
+	c.BindJSON(&song)
+	err := sc.songservice.ModifySongInfo(&song)
+	return err
+}
+
+// 删除歌曲信息
+func (sc *SongController) DeleteSongInfoHandler(c *gin.Context) error {
+	songID, _ := strconv.Atoi(c.Query("songId"))
+	err := sc.songservice.DeleteSongInfo(songID)
+	return err
+}
+
+// 根据歌手id获取歌曲
+func (sc *SongController) GetSongInfoByartistIdHanderler(c *gin.Context) ([]model.SongInfo, error) {
+	artist_id := c.Query("artist_id")
+	artistIDInt, err := strconv.Atoi(artist_id)
+	if err != nil {
+		fmt.Println("字符串转换错误")
+	}
+	songlist, err := sc.songservice.GetSongByArtistid(artistIDInt)
+	return songlist, err
+}
+
+// 根据专辑id获取歌曲
+func (sc *SongController) GetSongInfoByalbumIdHanderler(c *gin.Context) ([]model.SongInfo, error) {
+	album_id := c.Query("album_id")
+	albumIDInt, err := strconv.Atoi(album_id)
+	if err != nil {
+		fmt.Println("字符串转换错误")
+	}
+	songlist, err := sc.songservice.GetSongByArtistid(albumIDInt)
+	return songlist, err
 }
