@@ -903,6 +903,50 @@ func GETs(r *gin.Engine) {
 		}
 	})
 
+	//获取特定歌曲评论
+	r.GET("/comment/getComment", func(c *gin.Context) {
+		frontendcommentlist, err := controller.NewCommentController().GetSongCommentHandler(c)
+		var code int
+		if err != nil {
+			code = 300
+		} else {
+			code = 200
+		}
+		c.JSON(200, gin.H{
+			"code": code,
+			"data": frontendcommentlist,
+		})
+	})
+
+	//删除特定评论
+	r.GET("/comment/deleteComment", func(c *gin.Context) {
+		err := controller.NewCommentController().DeltetCommentHandler(c)
+		var code int
+		if err != nil {
+			code = 300
+		} else {
+			code = 200
+		}
+		c.JSON(200, gin.H{
+			"code": code,
+		})
+	})
+
+	//根据type获得日志
+	r.GET("/admin/getLog", func(c *gin.Context) {
+		loglist, err := controller.NewLogController().GetLogHandler(c)
+		var code int
+		if err != nil {
+			code = 300
+		} else {
+			code = 200
+		}
+		c.JSON(200, gin.H{
+			"code": code,
+			"data": loglist,
+		})
+	})
+
 	//添加专辑信息
 	r.POST("/admin/addAlbum", func(c *gin.Context) {
 		totals, currentPage, albumlist, err := controller.NewAlbumController().AddAlbumHandler(c)
@@ -914,10 +958,10 @@ func GETs(r *gin.Engine) {
 			code = 200
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"code":      code,
-			"totals":    totals,
-			"totalPage": currentPage,
-			"data":      albumlist,
+			"code":        code,
+			"totals":      totals,
+			"currentPage": currentPage,
+			"data":        albumlist,
 		})
 	})
 

@@ -29,3 +29,15 @@ func (cs *CommentService) PublishComment(comment string, userId int, songId int)
 	})
 	return err
 }
+
+//获取特定歌曲评论
+func (cs *CommentService) GetSongComment(songID int) ([]model.CommentInfo,error) {
+	commentlist, err := cs.commentDao.GetCommentBySongID(songID)
+	return commentlist, err
+}
+
+//删除特定评论
+func (cs *CommentService) DeleteComment(commentID int) error {
+	err := cs.commentDao.DeleteCommentByID(commentID)
+	return err
+}
