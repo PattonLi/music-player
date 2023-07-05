@@ -8,7 +8,7 @@ type UserInfo struct {
 	ID   	   int    `json:"userId" gorm:"column:user_id;primaryKey;autoIncrement"`
 	Username   string `json:"username" gorm:"column:username"`
 	Gender     string `json:"gender" gorm:"column:gender"`
-	Age        int    `json:"age" gorm:"column:age"`
+	Age        string `json:"age" gorm:"column:age"`
 	Email      string `json:"email" gorm:"column:email"`
 	Password   string `json:"password" gorm:"column:password"`
 	Nickname   string `json:"nickname" gorm:"column:nickname"`

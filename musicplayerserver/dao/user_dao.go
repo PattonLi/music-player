@@ -30,7 +30,7 @@ func (*UserDao) CreateUserTable() {
 func (*UserDao) GetUserInfoByName(name string) ([]model.UserInfo, error) {
 	var user []model.UserInfo
 	err := DB.Find(&user, "username LIKE ? OR nickname LIKE ?", "%"+name+"%", "%"+name+"%").Error
-	if errors.Is(err, gorm.ErrRecordNotFound) {
+	if errors.Is(err, gorm.ErrRecordNotFound) || DB.RowsAffected == 0 {
 		err = errors.New("查找不到用户信息！")
 	}
 	return user, err
@@ -38,12 +38,29 @@ func (*UserDao) GetUserInfoByName(name string) ([]model.UserInfo, error) {
 
 
 // 添加用户
-func (*UserDao) AddUser(user *model.UserInfo) (int) {
-	DB.Create(user)
+func (*UserDao) AddUser(user *model.UserInfo) (int64, int64, []model.UserInfo,error) {
 	newuser := model.UserInfo{}
+	var userlist []model.UserInfo
+	var totalrecord int64
+	var offset int64
+	var err error
+	var currentPage int64
 	DB.Take(&newuser, "phone = ?",user.Phone)
-	fmt.Println(newuser.ID)
-	return newuser.ID
+	if(newuser.ID != 0){
+		err = errors.New("手机号已注册！")
+		return 0, 0, userlist, err
+	}
+	DB.Create(user)
+	DB.Table("user").Count(&totalrecord)
+	if(totalrecord % 10 == 0){
+		offset = totalrecord - 10
+		currentPage = totalrecord / 10
+	} else {
+		offset = totalrecord - (totalrecord % 10)
+		currentPage = totalrecord / 10 + 1
+	}
+	DB.Offset(int(offset)).Limit(10).Find(&userlist)
+	return totalrecord, currentPage, userlist, err
 }
 
 // 修改用户信息
@@ -61,6 +78,7 @@ func (*UserDao) DeleteUser(userID int) error {
 	err := DB.Delete(&model.UserInfo{}, userID).Error
 	return err
 }
+
 
 // 用户登录验证
 func (*UserDao) UserLoginCheck(u *model.UserInfo) (int,error) {
@@ -92,6 +110,8 @@ func (*UserDao) GetAllUserInfo(page int, pagesize int) ([]model.UserInfo,int64) 
 	var userlist []model.UserInfo
 	var totalrecord int64
 	offset := (page-1)*pagesize
+	fmt.Println(offset)
+	fmt.Println(pagesize)
 	DB.Offset(offset).Limit(pagesize).Find(&userlist).Offset(-1).Limit(-1).Count(&totalrecord)
 	return userlist,totalrecord
 }
@@ -102,6 +122,19 @@ func (*UserDao) GetUserProfile (userID int) (*model.UserInfo, error) {
 	err := DB.Take(&user, "user_id = ?",userID).Error
 	return &user, 
 	err
+}
+
+//根据index获取单个用户信息
+func (*UserDao) GetAUserInfo (index int) (int64, *model.UserInfo, error) {
+	user := model.UserInfo{}
+	var totals int64
+	DB.Offset(index-1).Limit(1).Find(&user).Offset(-1).Limit(-1).Count(&totals)
+	if(user.ID == 0){
+		err := errors.New("查找不到用户信息！")
+		return totals, &user, err
+	} else {
+		return totals, &user, nil
+	}
 }
 
 //更新头像url
