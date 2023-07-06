@@ -37,7 +37,7 @@ func (l *LikeDao) DeleteUserLikes(like model.LikesInfo) error {
 		return result.Error
 	}
 
-	result := DB.Where("user_id = ? AND playlist_id ? ", like.User_id, like.Playlist_id).Delete(&like)
+	result := DB.Where("user_id = ? AND playlist_id = ? ", like.User_id, like.Playlist_id).Delete(&like)
 	return result.Error
 
 }
