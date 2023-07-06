@@ -128,9 +128,41 @@ func (sc *SongController) AllSongInfoHandler(c *gin.Context) ([]model.SongInfo, 
 
 // 歌曲信息修改
 func (sc *SongController) ModifySongInfoHandler(c *gin.Context) error {
-	song := model.SongInfo{}
-	c.BindJSON(&song)
-	err := sc.songservice.ModifySongInfo(&song)
+	songData := struct {
+		SongId      int    `json:"songId"`
+		Name        string `json:"name"`
+		Artist      string `json:"artist"`
+		Album       string `json:"album"`
+		Duration    int    `json:"duration"`
+		AlbumId     int    `json:"albumId"`
+		ArtistId    int    `json:"artistId"`
+		Pop         int    `json:"pop"`
+		Mark        int    `json:"mark"`
+		PublishTime string `json:"publishTime"`
+		Url         string `json:"url"`
+		LyricUrl    string `json:"lyricUrl"`
+		PicUrl      string `json:"picUrl"`
+		Type        string `json:"type"`
+	}{
+		// 通过解析 JSON 数据将相应字段赋值给结构体中的字段
+	}
+	c.BindJSON(&songData)
+
+	// 创建一个新的 SongInfo 结构体对象，并将需要插入到数据库的字段赋值
+	songToSave := model.SongInfo{
+		Name:         songData.Name,
+		Artist:       songData.Artist,
+		Pop:          songData.Pop,
+		Publish_time: songData.PublishTime,
+		Type:         songData.Type,
+		Lyric_url:    songData.LyricUrl,
+		Pic_url:      songData.PicUrl,
+		Duration:     songData.Duration,
+		Mark:         songData.Mark,
+		Url:          songData.Url,
+	}
+
+	var err error = sc.songservice.ModifySongInfo(&songToSave)
 	return err
 }
 

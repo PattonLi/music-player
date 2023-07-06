@@ -2,7 +2,6 @@ package dao
 
 import (
 	"errors"
-	"math"
 	"music-player/musicplayerserver/model"
 
 	"gorm.io/gorm"
@@ -46,8 +45,7 @@ func (*AlbumDao) GetAllAlbumInfo(page int, pagesize int) ([]model.AlbumInfo, int
 	var totalrecord int64
 	offset := (page - 1) * pagesize
 	DB.Offset(offset).Limit(pagesize).Find(&albumlist).Offset(-1).Limit(-1).Count(&totalrecord)
-	totalPage := int64(math.Ceil(float64(totalrecord) / float64(pagesize)))
-	return albumlist, totalPage
+	return albumlist, totalrecord
 }
 
 // 根据歌手id获取歌手所有专辑

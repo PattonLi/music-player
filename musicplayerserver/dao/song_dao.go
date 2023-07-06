@@ -2,7 +2,6 @@ package dao
 
 import (
 	"errors"
-	"math"
 	"music-player/musicplayerserver/model"
 
 	"gorm.io/gorm"
@@ -125,8 +124,7 @@ func (*Songdao) GetAllSongInfo(page int, pagesize int) ([]model.SongInfo, int64)
 	var totalrecord int64
 	offset := (page - 1) * pagesize
 	DB.Offset(offset).Limit(pagesize).Find(&songlist).Offset(-1).Limit(-1).Count(&totalrecord)
-	totalPage := int64(math.Ceil(float64(totalrecord) / float64(pagesize)))
-	return songlist, totalPage
+	return songlist, totalrecord
 }
 
 // 修改歌曲信息
