@@ -77,8 +77,7 @@ func (cd *CommentDao) DeleLike(userid int, comment_id int) error {
 	likes := c.Like
 	result3 := DB.Model(&model.CommentInfo{}).Where("comment_id = ?", comment_id).Update("like", likes-1)
 
-	result1 := DB.Where("comment = ? AND user_id = ?", comment_id, userid).Delete(&model.CommentInfo{})
-
+	result1 := DB.Where("comment = ? AND user_id = ? AND type = ?", comment_id, userid, 2).Delete(&model.CommentInfo{})
 	if result1.Error != nil {
 		return result1.Error
 	}
@@ -94,17 +93,17 @@ func (cd *CommentDao) DeleLike(userid int, comment_id int) error {
 	return nil
 }
 
-//获取特定歌曲评论
-func (cd *CommentDao) GetSongCommentById(songID int)([]model.CommentInfo, error) {
+// 获取特定歌曲评论
+func (cd *CommentDao) GetSongCommentById(songID int) ([]model.CommentInfo, error) {
 	var commentlist []model.CommentInfo
 	err := DB.Where("song_id = ? ", songID).Where("type = ?", 1).Find(&commentlist).Error
-	if err != nil && !errors.Is(err,gorm.ErrRecordNotFound){
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("数据库查找错误！")
 	}
 	return commentlist, err
 }
 
-//删除特定评论
+// 删除特定评论
 func (cd *CommentDao) DeleteCommentById(commentID int) error {
 	err := DB.Delete(&model.CommentInfo{}, commentID).Error
 	return err
