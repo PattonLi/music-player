@@ -57,13 +57,13 @@
           />
           <IconPark :icon="Add" size="20" class="hover-text" />
           <IconPark :icon="DownTwo" size="20" class="hover-text" @click="dwld" />
-          <el-badge :value="song.mark" :min="0" :max="999" class="badge">
+          <el-badge :value="song.mark" :max="999" class="badge">
             <IconPark
               :icon="Comment"
               size="18"
               :stroke-width="3"
               class="text-slate-400 hover-text"
-              @click="routerPushByNameId(Pages.songComment, song.songId)"
+              @click="routerPushByNameId(Pages.songComment, propSong.songId)"
             />
           </el-badge>
           <IconPark :icon="MoreTwo" size="20" class="hover-text" />
