@@ -233,7 +233,7 @@ func Posts(r *gin.Engine) {
 		err := controller.NewCommentController().DeleLike(c)
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
-				"code": 300,
+				"code": 200,
 			})
 		} else {
 			c.JSON(http.StatusOK, gin.H{
