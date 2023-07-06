@@ -17,6 +17,7 @@ declare module '@vue/runtime-core' {
     AppResgister: typeof import('./src/components/layout/auth/AppResgister.vue')['default']
     CommentItem: typeof import('./src/components/common/CommentItem.vue')['default']
     DarkMode: typeof import('./src/components/layout/header/DarkMode.vue')['default']
+    ElAffix: typeof import('element-plus/es')['ElAffix']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -26,6 +27,7 @@ declare module '@vue/runtime-core' {
     ElCollapseItem: typeof import('element-plus/es')['ElCollapseItem']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
+    ElEmpty: typeof import('element-plus/es')['ElEmpty']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElIcon: typeof import('element-plus/es')['ElIcon']
@@ -39,6 +41,7 @@ declare module '@vue/runtime-core' {
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
+    ElText: typeof import('element-plus/es')['ElText']
     ElUpload: typeof import('element-plus/es')['ElUpload']
     IconPark: typeof import('./src/components/common/IconPark.vue')['default']
     InfoEdit: typeof import('./src/components/layout/header/InfoEdit.vue')['default']
@@ -61,5 +64,8 @@ declare module '@vue/runtime-core' {
     SongItem: typeof import('./src/components/common/SongItem.vue')['default']
     SongItemWithEdit: typeof import('./src/components/common/SongItemWithEdit.vue')['default']
     UserInfo: typeof import('./src/components/layout/header/UserInfo.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
