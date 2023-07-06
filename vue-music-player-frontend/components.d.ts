@@ -67,4 +67,7 @@ declare module '@vue/runtime-core' {
     SongItemWithEdit: typeof import('./src/components/common/SongItemWithEdit.vue')['default']
     UserInfo: typeof import('./src/components/layout/header/UserInfo.vue')['default']
   }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
+  }
 }
