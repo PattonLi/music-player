@@ -23,7 +23,7 @@
   </div>
   <!-- 表情包 -->
   <div class="flex justify-end" v-if="ifEmoji">
-    <Picker 
+    <Picker
       class="emoji"
       :data="emojiIndex"
       set="apple"
@@ -57,6 +57,7 @@ const ifEmoji = ref(false)
 const props = defineProps<{
   songId: number
 }>()
+const refresh = inject('refreshComment') as any
 
 const showEmoji = (emoji: any) => {
   comment.value = comment.value + emoji.native
@@ -69,6 +70,7 @@ const pubulish = async () => {
     if (data.code == 200) {
       AlertSuccess('评论成功')
       comment.value = ''
+      await refresh()
     } else {
       AlertError('评论失败，请稍后再试')
     }
@@ -91,5 +93,4 @@ const pubulish = async () => {
   z-index: 1;
   margin-bottom: -27rem;
 }
-
 </style>

@@ -26,6 +26,11 @@ router.beforeEach((to, from, next) => {
       next()
     }
   }
+  //如果跳转到相同路径，刷新界面
+  // else if(from.path==to.path){
+  //   console.log('from.path==to.path');
+  //   router.go(to.fullPath)
+  // }
   //放行
   else next()
 })

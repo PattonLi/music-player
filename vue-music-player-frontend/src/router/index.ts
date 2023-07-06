@@ -118,18 +118,21 @@ const router = createRouter({
               //歌手详情页
               path: 'artistDetail',
               name: Pages.artistDetail,
+              meta: { keepAlive: true },
               component: () => import('@/views/detail/artist/AppArtistDetail.vue')
             },
             {
               //专辑详情页
               path: 'albumDetail',
               name: Pages.albumDetail,
+              meta: { keepAlive: true },
               component: () => import('@/views/detail/album/AppAlbumDetail.vue')
             },
             {
               //播放列表详情页
               path: 'playlistDetail',
               name: Pages.playlistDetail,
+              meta: { keepAlive: true },
               component: () => import('@/views/detail/playlist/AppPlayList.vue')
             }
           ]
@@ -141,6 +144,7 @@ const router = createRouter({
           //搜索结果页
           path: 'search/result',
           name: Pages.searchResult,
+          meta: { keepAlive: true },
           component: () => import('@/views/search-result/AppSearchResult.vue')
         },
 
@@ -226,6 +230,7 @@ const router = createRouter({
         {
           path: 'comment/song',
           name: 'songComment',
+          meta: { keepAlive: true },
           component: () => import('@/views/comment/AppComment.vue')
         }
       ]
@@ -234,12 +239,14 @@ const router = createRouter({
     {
       path: '/page404',
       name: 'page404',
+      meta: { keepAlive: true },
       component: () => import('@/views/404page/PageNotFound.vue')
     },
     /*--------------------404 contact------------------*/
     {
       path: '/page404/contact',
       name: 'contact',
+      meta: { keepAlive: true },
       component: () => import('@/views/404page/ContactPage.vue')
     }
   ]

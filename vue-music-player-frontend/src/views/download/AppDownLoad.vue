@@ -13,7 +13,7 @@
         </button>
         <button class="w-40 button-outline" @click="clearDwld">
           <IconPark :icon="Delete" class="mr-1" size="17" />
-          清除最近播放
+          清除下载记录
         </button>
       </div>
     </div>

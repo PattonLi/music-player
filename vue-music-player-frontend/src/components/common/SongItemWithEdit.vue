@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex song-item items-center w-full hover-bg-main"
-    :class="{ playing: id == propSong.songId }"
+    :class="{ active: song.songId == propSong.songId }"
     @dblclick="play(propSong.songId)"
   >
     <!-- 左部 -->
@@ -179,7 +179,7 @@ const delSongListLike = () => {
   }
 }
 //在播放时
-.playing {
-  @apply bg-emerald-50 dark:bg-stone-800;
+.active {
+  @apply border-l-emerald-300 text-emerald-200 rounded-xl;
 }
 </style>

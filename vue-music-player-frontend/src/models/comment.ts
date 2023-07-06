@@ -9,6 +9,6 @@ export interface Comment {
    * 点赞数
    */
   like: number | null
-  nickname: string| null
-  picUrl:string
+  nickname: string | null
+  picUrl: string
 }

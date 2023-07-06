@@ -4,7 +4,7 @@
     :class="{ active: active }"
   >
     <!-- 歌曲封面 -->
-    <el-image lazy :src="song.picUrl" class="aspect-square w-10 flex-shrink-0" />
+    <el-image :src="song.picUrl" class="aspect-square w-10 flex-shrink-0" />
     <!-- 歌曲信息 -->
     <div class="ml-2 text-xs h-10 flex flex-1 w-1">
       <div class="flex flex-1 flex-col justify-between truncate">
@@ -31,6 +31,6 @@ defineProps<{
 </script>
 <style lang="scss" scoped>
 .active {
-  @apply border-l-2 border-l-emerald-400 text-emerald-400;
+  @apply border-l-2 border-l-emerald-400 text-emerald-900;
 }
 </style>
