@@ -25,6 +25,5 @@ const refreshComment = async () => {
     AlertError('获取歌曲评论失败')
   }
 }
-provide('refreshComment',refreshComment)
-
+provide('refreshComment', refreshComment)
 </script>
