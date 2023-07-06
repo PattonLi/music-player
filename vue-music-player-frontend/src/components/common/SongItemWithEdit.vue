@@ -62,7 +62,7 @@
               size="18"
               :stroke-width="3"
               class="text-slate-400 hover-text"
-              @click="routerPushByNameId(Pages.songComment, song.songId)"
+              @click="routerPushByNameId(Pages.songComment, propSong.songId)"
             />
           </el-badge>
           <IconPark :icon="MoreTwo" size="20" class="hover-text" />
