@@ -99,3 +99,39 @@ func (a *ArtistService) GetAtrtistByContition(pagesize int, currentpage int, fir
 	return artistpage, err, nil, pagenum
 
 }
+
+// 特定页歌手信息获取
+func (as *ArtistService) AllArtistInfo(page int, pagesize int) ([]model.ArtistInfo, int64) {
+	artistlist, totalPage := as.artistdao.GetAllArtistInfo(page, pagesize)
+	return artistlist, totalPage
+}
+
+// 特定歌手信息获取
+func (as *ArtistService) ArtistInfo(Name string) ([]model.ArtistInfo, error) {
+	artist, err := as.artistdao.GetArtistbyName(Name)
+	return artist, err
+}
+
+// 添加歌手信息
+func (as *ArtistService) AddArtistInfo(artist *model.ArtistInfo) (int64, int64, []model.ArtistInfo, error) {
+	totals, currentPage, artistlist, err := as.artistdao.AddArtist(artist)
+	return totals, currentPage, artistlist, err
+}
+
+// 删除歌手信息
+func (as *ArtistService) DeleteArtistInfo(artistID int) error {
+	err := as.artistdao.DeleteArtist(artistID)
+	return err
+}
+
+// 歌手信息修改
+func (as *ArtistService) ModifyArtistInfo(artist *model.ArtistInfo) error {
+	err := as.artistdao.ModifyArtist(artist)
+	return err
+}
+
+// 根据专辑id获取歌手
+func (as *ArtistService) GetArtistByAlbumid(album_id int) (model.ArtistInfo, error) {
+	artist, err := as.artistdao.GetArtistByAlbumid(album_id)
+	return artist, err
+}

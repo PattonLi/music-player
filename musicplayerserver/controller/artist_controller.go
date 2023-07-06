@@ -74,3 +74,52 @@ func (ac *ArtistController) GetAtistByCHanddler(c *gin.Context) ([]model.ArtistI
 	artistpage, err0, err1, pagetotal := ac.artistservice.GetAtrtistByContition(pageSize, currentPage, first_letter, Gender, Location)
 	return artistpage, err0, err1, pagetotal
 }
+
+// 获取特定页歌手信息
+func (ac *ArtistController) AllArtistInfoHandler(c *gin.Context) ([]model.ArtistInfo, int64) {
+	page, _ := strconv.Atoi(c.Query("currentPage"))
+	pagesize, _ := strconv.Atoi(c.Query("pageSize"))
+	artistlist, totalPage := ac.artistservice.AllArtistInfo(page, pagesize)
+	return artistlist, totalPage
+}
+
+// 获取特定名称歌手信息
+func (ac *ArtistController) ArtistInfoHandler(c *gin.Context) ([]model.ArtistInfo, error) {
+	name := c.Query("name")
+	artistlist, err := ac.artistservice.ArtistInfo(name)
+	return artistlist, err
+}
+
+// 添加歌手
+func (ac *ArtistController) AddArtistHandler(c *gin.Context) (int64, int64, []model.ArtistInfo, error) {
+	artist := model.ArtistInfo{}
+	c.BindJSON(&artist)
+	totals, currentPage, artistlist, err := ac.artistservice.AddArtistInfo(&artist)
+	return totals, currentPage, artistlist, err
+}
+
+// 删除歌手信息
+func (ac *ArtistController) DeleteArtistInfoHandler(c *gin.Context) error {
+	artistID, _ := strconv.Atoi(c.Query("artistId"))
+	err := ac.artistservice.DeleteArtistInfo(artistID)
+	return err
+}
+
+// 歌手信息修改
+func (ac *ArtistController) ModifyArtistInfoHandler(c *gin.Context) error {
+	artist := model.ArtistInfo{}
+	c.BindJSON(&artist)
+	err := ac.artistservice.ModifyArtistInfo(&artist)
+	return err
+}
+
+// 根据专辑id获取歌手
+func (ac *ArtistController) GetArtistInfoByalbumIdHanderler(c *gin.Context) (model.ArtistInfo, error) {
+	album_id := c.Query("album_id")
+	albumIDInt, err := strconv.Atoi(album_id)
+	if err != nil {
+		fmt.Println("字符串转换错误")
+	}
+	artist, err := ac.artistservice.GetArtistByAlbumid(albumIDInt)
+	return artist, err
+}

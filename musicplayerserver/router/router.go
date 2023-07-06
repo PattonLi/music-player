@@ -3,7 +3,6 @@ package router
 import (
 	"fmt"
 	"music-player/musicplayerserver/controller"
-	"music-player/musicplayerserver/model"
 	utils "music-player/musicplayerserver/utils/jwt"
 	"net/http"
 	"strconv"
@@ -130,16 +129,20 @@ func Posts(r *gin.Engine) {
 
 	//添加歌曲
 	r.POST("/admin/addSong", func(c *gin.Context) {
-		result := controller.NewSongController().AddSongHandler(c)
-		if result {
-			c.JSON(http.StatusOK, gin.H{
-				"code": 200,
-			})
+		totals, currentPage, songlist, err := controller.NewSongController().AddSongHandler(c)
+		var code int
+		if err != nil {
+			fmt.Print(err.Error())
+			code = 300
 		} else {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"code": 300,
-			})
+			code = 200
 		}
+		c.JSON(http.StatusOK, gin.H{
+			"code":        code,
+			"totals":      totals,
+			"currentPage": currentPage,
+			"data":        songlist,
+		})
 	})
 
 	//发送播放歌曲日志
@@ -630,11 +633,11 @@ func GETs(r *gin.Engine) {
 	})
 	//获得特定页所有专辑信息
 	r.GET("/admin/pageAllAlbum", func(c *gin.Context) {
-		albums, totalPage := controller.NewAlbumController().AllAlbumInfoHandler(c)
+		albums, totals := controller.NewAlbumController().AllAlbumInfoHandler(c)
 		c.JSON(http.StatusOK, gin.H{
-			"code":      200,
-			"data":      albums,
-			"totalPage": totalPage,
+			"code":   200,
+			"data":   albums,
+			"totals": totals,
 		},
 		)
 	})
@@ -645,7 +648,7 @@ func GETs(r *gin.Engine) {
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 300,
-				"data": nil,
+				"data": albums,
 			},
 			)
 		} else {
@@ -923,40 +926,6 @@ func GETs(r *gin.Engine) {
 				"code":      200,
 				"pageTotal": pagetotal,
 				"artists":   atrtists,
-			})
-		}
-	})
-
-	// 获取歌曲所有评论
-	r.GET("/song/comment", func(c *gin.Context) {
-		comments, err := controller.NewCommentController().GetAllCommentHandler(c)
-		empty_arr := []model.Comments{}
-		if err != nil || comments == nil {
-			c.JSON(http.StatusOK, gin.H{
-				"code":     300,
-				"comments": empty_arr,
-			})
-		} else {
-			c.JSON(http.StatusOK, gin.H{
-				"code":     200,
-				"comments": comments,
-			})
-		}
-	})
-
-	// 获取用户所有点赞评论
-	r.GET("/user/comment/like", func(c *gin.Context) {
-		like_ids, err := controller.NewCommentController().GetAllLikeHandler(c)
-		empty_arr := []int{}
-		if err != nil || like_ids == nil {
-			c.JSON(http.StatusOK, gin.H{
-				"code":         300,
-				"commentLikes": empty_arr,
-			})
-		} else {
-			c.JSON(http.StatusOK, gin.H{
-				"code":         200,
-				"commentLikes": like_ids,
 			})
 		}
 	})

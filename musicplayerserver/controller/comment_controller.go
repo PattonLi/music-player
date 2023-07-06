@@ -11,12 +11,15 @@ import (
 
 type CommentController struct {
 	commentService *service.CommentService
+	userService    *service.UserService
 }
 
 func NewCommentController() *CommentController {
 	a := service.CommentService{}
+	u := service.UserService{}
 	return &CommentController{
 		commentService: &a,
+		userService:    &u,
 	}
 }
 
@@ -29,6 +32,9 @@ func (cc *CommentController) PublishCommentHandler(c *gin.Context) error {
 		fmt.Printf("err: %v\n", err)
 		return err
 	}
+	fmt.Println(comment.Comment)
+	fmt.Println(comment.User_id)
+	fmt.Println(comment.Song_id)
 	err = cc.commentService.PublishComment(comment.Comment, comment.User_id, comment.Song_id)
 	return err
 }
