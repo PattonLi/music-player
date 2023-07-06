@@ -20,10 +20,9 @@
             <span>{{ playlist.tag }}</span>
           </span>
         </div>
-
         <!-- 描述 -->
-        <div class="text-xs text-gray-500 leading-normal">
-          <span :text="playlist.profile" :end="90" />
+        <div class="text-sm text-dc leading-normal mt-7 ml-2">
+          <span :end="90">{{ playlist.profile }}</span>
         </div>
       </div>
 
