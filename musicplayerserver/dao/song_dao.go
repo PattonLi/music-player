@@ -98,8 +98,10 @@ func (s *Songdao) GetSongByKeyWord(keyword string) ([]model.SongInfo, error) {
 func (*Songdao) GetSongbyName(name string) ([]model.SongInfo, error) {
 	song := []model.SongInfo{}
 	err := DB.Where("name LIKE ?", "%"+name+"%").Find(&song).Error
-	if errors.Is(err, gorm.ErrRecordNotFound) || DB.RowsAffected == 0 {
+	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("查找不到歌曲信息！")
+	} else {
+		err = nil
 	}
 	return song, err
 }

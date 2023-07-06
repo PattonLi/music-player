@@ -31,8 +31,10 @@ func (a *AlbumDao) GetAlbumById(id int) (model.AlbumInfo, error) {
 func (dao *AlbumDao) GetAlbumbyName(name string) ([]model.AlbumInfo, error) {
 	album := []model.AlbumInfo{}
 	err := DB.Where("name LIKE ?", "%"+name+"%").Find(&album).Error
-	if errors.Is(err, gorm.ErrRecordNotFound) || DB.RowsAffected == 0 {
+	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("查找不到专辑信息！")
+	} else {
+		err = nil
 	}
 	return album, err
 }
