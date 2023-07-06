@@ -6,7 +6,6 @@ import (
 	"music-player/musicplayerserver/model"
 	utils "music-player/musicplayerserver/utils/jwt"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -688,25 +687,33 @@ func GETs(r *gin.Engine) {
 
 		songs := controller.NewSongController().GetTenSongsHandler(c)
 		albums := controller.NewAlbumController().GetTenAlbumsHandler(c)
+		artists := controller.NewArtistController().GetTenArtistHandler(c)
 
 		var swipers []swiper
 
 		for i := 0; i < 3; i++ {
 			var s1 swiper
 			var s2 swiper
+			var s3 swiper
 
 			s1.TargetId = songs[i].Song_ID
 			s1.PicUrl = songs[i].Pic_url
-			s1.TargetType, _ = strconv.Atoi(songs[i].Type)
+			s1.TargetType = 1
 			s1.TypeTitle = songs[i].Name
 
 			s2.TargetId = albums[i].AlbumID
 			s2.PicUrl = albums[i].Pic_url
-			s2.TargetType, _ = strconv.Atoi(albums[i].Type)
+			s2.TargetType = 2
 			s2.TypeTitle = albums[i].Name
+
+			s3.TargetId = artists[i].ArtistID
+			s3.PicUrl = artists[i].Pic_url
+			s3.TargetType = 3
+			s3.TypeTitle = artists[i].Name
 
 			swipers = append(swipers, s1)
 			swipers = append(swipers, s2)
+			swipers = append(swipers, s3)
 		}
 
 		c.JSON(http.StatusOK, gin.H{
@@ -792,9 +799,9 @@ func GETs(r *gin.Engine) {
 		} else {
 			var describe Describe
 			describe.Profile = profile
-			describe.BasicInfo = "test"
-			describe.TimeLine = "test"
-			describe.Award = "test"
+			describe.BasicInfo = "1月25日出生于内蒙古自治区,中国女歌手,2001年毕业于解放军艺术学院,师从音乐家李双江老师。2002年又考入中央民族大学音乐系"
+			describe.TimeLine = "2004年首支打榜歌曲由内蒙古音乐人新吉乐图量身创作《爱在草原》,MV已全国热播。第二首打榜歌曲由著名音乐人卞留念量身创作《最远的永远》\n2005年5月,担任TOP网广告形象代言人"
+			describe.Award = "5次获得MTV亚洲大奖"
 			c.JSON(http.StatusOK, gin.H{
 				"code":     200,
 				"describe": describe,

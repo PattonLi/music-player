@@ -13,6 +13,12 @@ type CommentDao struct {
 
 // 发表评论,点赞评论
 func (cd *CommentDao) InsertComment(comment model.CommentInfo) error {
+	var song model.SongInfo
+	songid := comment.Song_id
+	DB.First(&song, songid)
+	mark := song.Mark
+	DB.Model(&song).Update("mark", mark+1)
+
 	result := DB.Create(&comment)
 	return result.Error
 }

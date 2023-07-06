@@ -15,7 +15,7 @@ func (a *ArtistDao) GetTenArtist() []model.ArtistInfo {
 	var artist []model.ArtistInfo
 	var artists []model.ArtistInfo
 	DB.Find(&artist)
-	artists = artist[:10]
+	artists = artist[:30]
 	return artists
 }
 

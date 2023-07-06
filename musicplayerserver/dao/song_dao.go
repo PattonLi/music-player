@@ -56,8 +56,17 @@ func (*Songdao) AddSong(song *model.SongInfo) (int64, int64, []model.SongInfo, e
 func (s *Songdao) GetTenSongs() []model.SongInfo {
 	var song []model.SongInfo
 	var songs []model.SongInfo
+	count := 0
 	DB.Find(&song)
-	songs = song[:10]
+
+	for i := 0; i < len(song); i += 10 {
+		songs = append(songs, song[i])
+		count++
+
+		if count == 30 {
+			break
+		}
+	}
 	return songs
 }
 
@@ -75,6 +84,10 @@ func NewSongDao() *Songdao {
 // 根据热度或者时间对歌手歌曲进行排序
 func (s *Songdao) SortSongsByOrder(id int, order string) ([]model.SongInfo, error) {
 	var song []model.SongInfo
+
+	if order == "hot" {
+		order = "pop"
+	}
 	result := DB.Order(order).Where("artist_id = ?", id).Find(&song)
 	return song, result.Error
 }
