@@ -30,9 +30,9 @@
         <el-collapse-item name="1">
           <template #title> <span class="text-sm">创建的歌单</span> </template>
           <div v-if="isLogin">
-            <div class="flex justify-center button-outline w-24 ml-4 my-1">
+            <div class="flex justify-center ">
               <button
-                class="rounded-md"
+                class=" button-outline my-1 mr-4 w-24"
                 @click="clickLikeList()"
                 :class="{ active: currentKey1 == -1 }"
               >
