@@ -1,8 +1,11 @@
 package dao
 
 import (
+	"errors"
 	"music-player/musicplayerserver/model"
 	"strconv"
+
+	"gorm.io/gorm"
 )
 
 type CommentDao struct {
@@ -83,4 +86,20 @@ func (cd *CommentDao) DeleLike(userid int, comment_id int) error {
 	}
 
 	return nil
+}
+
+//获取特定歌曲评论
+func (cd *CommentDao) GetSongCommentById(songID int)([]model.CommentInfo, error) {
+	var commentlist []model.CommentInfo
+	err := DB.Where("song_id = ? ", songID).Where("type = ?", 1).Find(&commentlist).Error
+	if err != nil && !errors.Is(err,gorm.ErrRecordNotFound){
+		err = errors.New("数据库查找错误！")
+	}
+	return commentlist, err
+}
+
+//删除特定评论
+func (cd *CommentDao) DeleteCommentById(commentID int) error {
+	err := DB.Delete(&model.CommentInfo{}, commentID).Error
+	return err
 }

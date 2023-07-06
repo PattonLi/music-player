@@ -1216,4 +1216,34 @@ func GETs(r *gin.Engine) {
 			})
 		}
 	})
+
+	    //获取特定歌曲评论
+		r.GET("/comment/getComment", func(c *gin.Context) {
+			frontendcommentlist, err := controller.NewCommentController().GetSongCommentHandler(c)
+			var code int
+			if err != nil {
+				code = 300
+			} else {
+				code = 200
+			}
+			c.JSON(200, gin.H{
+				"code": code,
+				"data": frontendcommentlist,
+			})
+		})
+	
+		//删除特定评论
+		r.GET("/comment/deleteComment", func(c *gin.Context) {
+			err := controller.NewCommentController().DeleteCommentHandler(c)
+			var code int
+			if err != nil {
+				code = 300
+			} else {
+				code = 200
+			}
+			c.JSON(200, gin.H{
+				"code": code,
+			})
+		})
+	
 }

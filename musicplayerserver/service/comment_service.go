@@ -85,3 +85,15 @@ func (cs *CommentService) DeleLike(userid int, comment_id int) error {
 	err := cs.commentDao.DeleLike(userid, comment_id)
 	return err
 }
+
+//获取特定歌曲评论
+func (cs *CommentService) GetSongComment(songID int) ([]model.CommentInfo, error) {
+	commentlist, err := cs.commentDao.GetSongCommentById(songID)
+	return commentlist, err
+}
+
+//删除特定评论
+func (cs *CommentService) DeleteComment(commentID int) error {
+	err :=  cs.commentDao.DeleteCommentById(commentID)
+	return err
+}
