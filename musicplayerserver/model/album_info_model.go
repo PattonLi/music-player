@@ -3,7 +3,7 @@ package model
 type AlbumInfo struct {
 	AlbumID      int    `json:"albumId" gorm:"primarykey"`
 	Size         int    `json:"size"`
-	Name         string `json:"name"`
+	Name         string `json:"album"`
 	Artist       string `json:"artist"`
 	Artist_ID    int    `json:"artistId"`
 	Profile      string `json:"profile"`
