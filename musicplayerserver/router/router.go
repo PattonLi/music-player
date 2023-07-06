@@ -233,7 +233,7 @@ func Posts(r *gin.Engine) {
 		err := controller.NewCommentController().DeleLike(c)
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
-				"code": 300,
+				"code": 200,
 			})
 		} else {
 			c.JSON(http.StatusOK, gin.H{
@@ -745,7 +745,7 @@ func GETs(r *gin.Engine) {
 		songpage, err0, err1, pagetotal := controller.NewSongController().GetSongsPageHandler(c)
 		if err0 != nil || err1 != nil {
 			c.JSON(http.StatusOK, gin.H{
-				"code":      300,
+				"code":      200,
 				"songs":     nil,
 				"pageTotal": nil,
 			})
