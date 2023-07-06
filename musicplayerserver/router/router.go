@@ -214,6 +214,33 @@ func Posts(r *gin.Engine) {
 			})
 		}
 	})
+
+	// 点赞评论
+	r.POST("/song/comment/like", func(c *gin.Context) {
+		err := controller.NewCommentController().LikeCommentHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
+
+	r.POST("/song/comment/unlike", func(c *gin.Context) {
+		err := controller.NewCommentController().DeleLike(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
 }
 
 func GETs(r *gin.Engine) {
@@ -903,21 +930,6 @@ func GETs(r *gin.Engine) {
 		}
 	})
 
-	//获取特定歌曲评论
-	r.GET("/comment/getComment", func(c *gin.Context) {
-		frontendcommentlist, err := controller.NewCommentController().GetSongCommentHandler(c)
-		var code int
-		if err != nil {
-			code = 300
-		} else {
-			code = 200
-		}
-		c.JSON(200, gin.H{
-			"code": code,
-			"data": frontendcommentlist,
-		})
-	})
-
 	//删除特定评论
 	r.GET("/comment/deleteComment", func(c *gin.Context) {
 		err := controller.NewCommentController().DeltetCommentHandler(c)
@@ -958,10 +970,10 @@ func GETs(r *gin.Engine) {
 			code = 200
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"code":      code,
-			"totals":    totals,
-			"totalPage": currentPage,
-			"data":      albumlist,
+			"code":        code,
+			"totals":      totals,
+			"currentPage": currentPage,
+			"data":        albumlist,
 		})
 	})
 

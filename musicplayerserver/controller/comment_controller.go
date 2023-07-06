@@ -11,7 +11,7 @@ import (
 
 type CommentController struct {
 	commentService *service.CommentService
-	userService *service.UserService
+	userService    *service.UserService
 }
 
 func NewCommentController() *CommentController {
@@ -19,13 +19,12 @@ func NewCommentController() *CommentController {
 	u := service.UserService{}
 	return &CommentController{
 		commentService: &a,
-		userService: &u,
+		userService:    &u,
 	}
 }
 
 // 发表评论
 func (cc *CommentController) PublishCommentHandler(c *gin.Context) error {
-	println("exec comment conteoller")
 	var err error
 	var comment model.CommentInfo
 	err = c.ShouldBind(&comment)
@@ -40,39 +39,38 @@ func (cc *CommentController) PublishCommentHandler(c *gin.Context) error {
 	return err
 }
 
-
-//获取特定歌曲评论
-func (cc *CommentController) GetSongCommentHandler(c *gin.Context) ([]gin.H, error) {
-	songID,_ := strconv.Atoi(c.Query("songId"))
-	var frontendcommentlist []gin.H
-	commentlist, err := cc.commentService.GetSongComment(songID)
-	if err != nil {
-		return frontendcommentlist,err
-	} else {
-		err = nil
-		for _, comment := range commentlist {
-			err = nil
-			user,err := cc.userService.UserProfile(comment.User_id)
-			if err == nil {
-				frontendcomment := gin.H{
-					"nickname": user.Nickname,
-					"picUrl": user.Pic_url,
-					"comment": comment.Comment,
-					"commentId": comment.Comment_id,
-					"commentTime": comment.Comment_time,
-					"like": strconv.Itoa(comment.Like),
-				}
-				frontendcommentlist = append(frontendcommentlist, frontendcomment)
-			}
-		}
-		err = nil
-		return frontendcommentlist, err
-	}
+// 获取歌曲所有评论
+func (cc *CommentController) GetAllCommentHandler(c *gin.Context) ([]model.Comments, error) {
+	songid := c.Query("songId")
+	songId, _ := strconv.Atoi(songid)
+	comments, err := cc.commentService.GetAllComment(songId)
+	return comments, err
 }
 
-//删除特定评论
-func (cc *CommentController) DeltetCommentHandler(c *gin.Context) error {
-	commentID,_ := strconv.Atoi(c.Query("commentId"))
-	err := cc.commentService.DeleteComment(commentID)
+// 点赞评论
+func (cc *CommentController) LikeCommentHandler(c *gin.Context) error {
+
+	var comment model.CommentInfo
+	c.ShouldBind(&comment)
+
+	err := cc.commentService.LikeComment(comment.Comment_id, comment.User_id)
+	return err
+}
+
+// 获取用户所有点赞评论
+func (cc *CommentController) GetAllLikeHandler(c *gin.Context) ([]int, error) {
+	userid := c.Query("userId")
+	userId, _ := strconv.Atoi(userid)
+
+	like_ids, err := cc.commentService.GetAllLike(userId)
+	return like_ids, err
+}
+
+// 取消点赞评论
+func (cc *CommentController) DeleLike(c *gin.Context) error {
+	var comment model.CommentInfo
+	c.ShouldBind(&comment)
+
+	err := cc.commentService.DeleLike(comment.User_id, comment.Comment_id)
 	return err
 }
