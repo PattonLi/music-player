@@ -931,6 +931,53 @@ func GETs(r *gin.Engine) {
 		}
 	})
 
+	//根据type获得日志
+	r.GET("/admin/getLog", func(c *gin.Context) {
+		loglist, err := controller.NewLogController().GetLogHandler(c)
+		var code int
+		if err != nil {
+			code = 300
+		} else {
+			code = 200
+		}
+		c.JSON(200, gin.H{
+			"code": code,
+			"data": loglist,
+		})
+	})
+
+	//添加专辑信息
+	r.POST("/admin/addAlbum", func(c *gin.Context) {
+		totals, currentPage, albumlist, err := controller.NewAlbumController().AddAlbumHandler(c)
+		var code int
+		if err != nil {
+			fmt.Print(err.Error())
+			code = 300
+		} else {
+			code = 200
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code":      code,
+			"totals":    totals,
+			"totalPage": currentPage,
+			"data":      albumlist,
+		})
+	})
+
+	//修改专辑信息
+	r.POST("/admin/modifyAlbum", func(c *gin.Context) {
+		err := controller.NewAlbumController().ModifyAlbumInfoHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
+
 	// 获取歌曲所有评论
 	r.GET("/song/comment", func(c *gin.Context) {
 		comments, err := controller.NewCommentController().GetAllCommentHandler(c)
@@ -948,6 +995,211 @@ func GETs(r *gin.Engine) {
 		}
 	})
 
+	//删除专辑信息
+	r.GET("/admin/deleteAlbum", func(c *gin.Context) {
+		err := controller.NewAlbumController().DeleteAlbumInfoHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
+
+	//根据歌手id获取专辑
+	r.GET("/admin/getAlbumByArtist", func(c *gin.Context) {
+		albums, err := controller.NewAlbumController().GetAlbumInfoByartistIdHanderler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+				"data": nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"data": albums,
+			})
+		}
+	})
+
+	//获得特定名称歌曲信息
+	r.GET("/admin/getSongByName", func(c *gin.Context) {
+		songs, err := controller.NewSongController().SongInfoHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+				"data": songs,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"data": songs,
+			})
+		}
+	})
+
+	//获得特定页所有歌曲信息
+	r.GET("/admin/getPageSong", func(c *gin.Context) {
+		songs, totals := controller.NewSongController().AllSongInfoHandler(c)
+		c.JSON(http.StatusOK, gin.H{
+			"code":   200,
+			"data":   songs,
+			"totals": totals,
+		},
+		)
+	})
+
+	//修改歌曲信息
+	r.POST("/admin/modifySong", func(c *gin.Context) {
+		err := controller.NewSongController().ModifySongInfoHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
+
+	//删除歌曲信息
+	r.GET("/admin/deleteSong", func(c *gin.Context) {
+		err := controller.NewSongController().DeleteSongInfoHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
+
+	//根据歌手id获取歌曲
+	r.GET("/admin/getSongByArtist", func(c *gin.Context) {
+		songs, err := controller.NewSongController().GetSongInfoByartistIdHanderler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+				"data": nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"data": songs,
+			})
+		}
+	})
+
+	//根据专辑id获取歌曲
+	r.GET("/admin/getSongByAlbum", func(c *gin.Context) {
+		songs, err := controller.NewSongController().GetSongInfoByalbumIdHanderler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+				"data": nil,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"data": songs,
+			})
+		}
+	})
+
+	//获得特定页所有歌手信息
+	r.GET("/admin/getPageArtist", func(c *gin.Context) {
+		artists, totalPage := controller.NewArtistController().AllArtistInfoHandler(c)
+		c.JSON(http.StatusOK, gin.H{
+			"code":   200,
+			"data":   artists,
+			"totals": totalPage,
+		},
+		)
+	})
+
+	//获得特定名称歌手信息
+	r.GET("/admin/getArtist", func(c *gin.Context) {
+		artists, err := controller.NewArtistController().ArtistInfoHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+				"data": artists,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"data": artists,
+			})
+		}
+	})
+
+	//添加歌手信息
+	r.POST("/admin/addArtist", func(c *gin.Context) {
+		totals, currentPage, artistlist, err := controller.NewArtistController().AddArtistHandler(c)
+		var code int
+		if err != nil {
+			fmt.Print(err.Error())
+			code = 300
+		} else {
+			code = 200
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code":        code,
+			"totals":      totals,
+			"currentPage": currentPage,
+			"data":        artistlist,
+		})
+	})
+
+	//删除歌手信息
+	r.GET("/admin/deleteArtist", func(c *gin.Context) {
+		err := controller.NewArtistController().DeleteArtistInfoHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
+
+	//修改歌手信息
+	r.POST("/admin/modifyArtist", func(c *gin.Context) {
+		err := controller.NewArtistController().ModifyArtistInfoHandler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+			})
+		}
+	})
+
+	//根据专辑id获取歌手
+	r.GET("/admin/getArtistByAlbum", func(c *gin.Context) {
+		artists, err := controller.NewArtistController().GetArtistInfoByalbumIdHanderler(c)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 300,
+				"data": artists,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"data": artists,
+			})
+		}
+	})
 	// 获取用户所有点赞评论
 	r.GET("/user/comment/like", func(c *gin.Context) {
 		like_ids, err := controller.NewCommentController().GetAllLikeHandler(c)
