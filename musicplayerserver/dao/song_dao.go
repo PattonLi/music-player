@@ -4,6 +4,8 @@ import (
 	"errors"
 	"math"
 	"music-player/musicplayerserver/model"
+
+	"gorm.io/gorm"
 )
 
 type Songdao struct {
@@ -95,9 +97,9 @@ func (s *Songdao) GetSongByKeyWord(keyword string) ([]model.SongInfo, error) {
 // 根据名字获取歌曲信息
 func (*Songdao) GetSongbyName(name string) ([]model.SongInfo, error) {
 	song := []model.SongInfo{}
-	err := DB.Where(&song, "name=?", name).Find(&song).Error
-	if err != nil {
-		err = errors.New("查询歌曲信息出错！")
+	err := DB.Where("name LIKE ?", "%"+name+"%").Find(&song).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) || DB.RowsAffected == 0 {
+		err = errors.New("查找不到歌曲信息！")
 	}
 	return song, err
 }

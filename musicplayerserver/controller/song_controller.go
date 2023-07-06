@@ -113,7 +113,7 @@ func (sc *SongController) GetSongByKeyWordHandler(c *gin.Context) ([]model.SongI
 
 // 获取特定名称歌曲信息
 func (sc *SongController) SongInfoHandler(c *gin.Context) ([]model.SongInfo, error) {
-	name := c.Query("name")
+	name := c.Query("songName")
 	songlist, err := sc.songservice.SongInfo(name)
 	return songlist, err
 }

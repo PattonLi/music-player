@@ -40,7 +40,7 @@ func (ac *AlbumController) GetAlbumByIdHandler(c *gin.Context) (model.AlbumInfo,
 
 // 获取特定名称专辑信息
 func (ac *AlbumController) AlbumInfoHandler(c *gin.Context) ([]model.AlbumInfo, error) {
-	name := c.Query("name")
+	name := c.Query("albumName")
 	albumlist, err := ac.albumService.AlbumInfo(name)
 	return albumlist, err
 }

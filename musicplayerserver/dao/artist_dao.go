@@ -3,6 +3,8 @@ package dao
 import (
 	"errors"
 	"music-player/musicplayerserver/model"
+
+	"gorm.io/gorm"
 )
 
 type ArtistDao struct {
@@ -81,12 +83,12 @@ func (*ArtistDao) GetAllArtistInfo(page int, pagesize int) ([]model.ArtistInfo, 
 
 // 根据名字获取歌手信息
 func (*ArtistDao) GetArtistbyName(name string) ([]model.ArtistInfo, error) {
-	song := []model.ArtistInfo{}
-	err := DB.Where(&song, "name=?", name).Find(&song).Error
-	if err != nil {
-		err = errors.New("查询歌曲信息出错！")
+	artist := []model.ArtistInfo{}
+	err := DB.Where("name LIKE ?", "%"+name+"%").Find(&artist).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) || DB.RowsAffected == 0 {
+		err = errors.New("查找不到歌手信息！")
 	}
-	return song, err
+	return artist, err
 }
 
 // 添加歌手
