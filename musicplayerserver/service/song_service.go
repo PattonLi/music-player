@@ -108,7 +108,7 @@ func (s *SongService) GetSongByKeyWord(pagesize int, currentpage int, keyword st
 		return []model.SongInfo{}, err, nil, 0
 	}
 
-	if currentpage > pagenum {
+	if currentpage >= pagenum {
 		err1 := errors.New("当前要获取的歌曲分页过大！")
 		return nil, err, err1, pagenum
 	}

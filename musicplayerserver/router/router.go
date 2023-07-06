@@ -455,18 +455,6 @@ func GETs(r *gin.Engine) {
 					"type":       1,
 				},
 				{
-					"searchWord": "渡 The Crossing",
-					"type":       3,
-				},
-				{
-					"searchWord": "薛之谦",
-					"type":       2,
-				},
-				{
-					"searchWord": "上原れな",
-					"type":       2,
-				},
-				{
 					"searchWord": "Fill You",
 					"type":       1,
 				},
@@ -474,16 +462,30 @@ func GETs(r *gin.Engine) {
 					"searchWord": "boy meets girl and girl",
 					"type":       1,
 				},
+
 				{
-					"searchWord": "谢天华",
+					"searchWord": "展翅高飞Let Go",
 					"type":       2,
 				},
 				{
-					"searchWord": "展翅高飞Let Go",
+					"searchWord": "Girlfriend",
+					"type":       2,
+				},
+				{
+					"searchWord": "渡 The Crossing",
+					"type":       2,
+				},
+				{
+					"searchWord": "薛之谦",
 					"type":       3,
 				},
 				{
-					"searchWord": "Girlfriend",
+					"searchWord": "上原れな",
+					"type":       3,
+				},
+
+				{
+					"searchWord": "谢天华",
 					"type":       3,
 				},
 			},
@@ -506,15 +508,15 @@ func GETs(r *gin.Engine) {
 			for i := 0; i < len(albums) && i < 4; i++ {
 				album := albums[i]
 				message := gin.H{
-					"albumid":      album.AlbumID,
-					"album":        album.Name,
-					"picUrl":       album.Pic_url,
-					"artist":       album.Artist,
-					"publish_time": album.Publish_time,
-					"size":         album.Size,
-					"type":         album.Type,
-					"artist_id":    album.Artist_ID,
-					"profile":      album.Profile,
+					"albumId":     album.AlbumID,
+					"album":       album.Name,
+					"picUrl":      album.Pic_url,
+					"artist":      album.Artist,
+					"publishTime": album.Publish_time,
+					"size":        album.Size,
+					"type":        album.Type,
+					"artistId":    album.Artist_ID,
+					"profile":     album.Profile,
 				}
 				messages_album = append(messages_album, message)
 			}
@@ -866,7 +868,7 @@ func GETs(r *gin.Engine) {
 		songpage, err0, err1, pagetotal := controller.NewSongController().GetSongByKeyWordHandler(c)
 		if err0 != nil || err1 != nil {
 			c.JSON(http.StatusOK, gin.H{
-				"code":      300,
+				"code":      200,
 				"pageTotal": nil,
 				"songs":     nil,
 			})
@@ -884,7 +886,7 @@ func GETs(r *gin.Engine) {
 		artistpage, err0, err1, pagetotal := controller.NewArtistController().GetArtistByKeyWordHandler(c)
 		if err0 != nil || err1 != nil {
 			c.JSON(http.StatusOK, gin.H{
-				"code":      300,
+				"code":      200,
 				"pageTotal": nil,
 				"artists":   nil,
 			})
@@ -902,7 +904,7 @@ func GETs(r *gin.Engine) {
 		albumpage, err0, err1, pagetotal := controller.NewAlbumController().GetAlbumByKeyWordHandler(c)
 		if err0 != nil || err1 != nil {
 			c.JSON(http.StatusOK, gin.H{
-				"code":      300,
+				"code":      200,
 				"pageTotal": nil,
 				"albums":    nil,
 			})
@@ -1330,9 +1332,14 @@ func GETs(r *gin.Engine) {
 	r.GET("/user/comment/like", func(c *gin.Context) {
 		like_ids, err := controller.NewCommentController().GetAllLikeHandler(c)
 		empty_arr := []int{}
-		if err != nil || like_ids == nil {
+		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code":         300,
+				"commentLikes": empty_arr,
+			})
+		} else if like_ids == nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":         200,
 				"commentLikes": empty_arr,
 			})
 		} else {
