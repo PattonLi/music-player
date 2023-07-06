@@ -57,7 +57,7 @@
           />
           <IconPark :icon="Add" size="20" class="hover-text" />
           <IconPark :icon="DownTwo" size="20" class="hover-text" @click="dwld" />
-          <el-badge :value="song.mark" :max="999" class="badge">
+          <el-badge :value="propSong.mark" :max="999" class="badge">
             <IconPark
               :icon="Comment"
               size="18"
