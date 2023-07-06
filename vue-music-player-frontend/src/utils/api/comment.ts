@@ -34,6 +34,6 @@ export const apiPublishComment = async (comment: string, userId: number, songId:
 export const apiGetCommentLikes = async (userId: number) => {
   return await myAxios.get<{
     code: number
-    commentLikes:number[]
-  }>('/user/comment/like', {userId: userId })
+    commentLikes: number[]
+  }>('/user/comment/like', { userId: userId })
 }

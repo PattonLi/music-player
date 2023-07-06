@@ -4,6 +4,8 @@ import (
 	"errors"
 	"math"
 	"music-player/musicplayerserver/model"
+
+	"gorm.io/gorm"
 )
 
 type Songdao struct {
@@ -68,10 +70,10 @@ func (s *Songdao) GetTenSongs() []model.SongInfo {
 	return songs
 }
 
-// 获取专辑中的所有歌曲
-func (s *Songdao) GetSongsInAlbum(albumid int) ([]model.SongInfo, error) {
+// 根据专辑id获取歌曲
+func (s *Songdao) GetSongByAlbumid(album_id int) ([]model.SongInfo, error) {
 	var song []model.SongInfo
-	result := DB.Where("album_id = ?", albumid).Find(&song)
+	result := DB.Where("album_id = ?", album_id).Find(&song)
 	return song, result.Error
 }
 
@@ -108,9 +110,9 @@ func (s *Songdao) GetSongByKeyWord(keyword string) ([]model.SongInfo, error) {
 // 根据名字获取歌曲信息
 func (*Songdao) GetSongbyName(name string) ([]model.SongInfo, error) {
 	song := []model.SongInfo{}
-	err := DB.Where(&song, "name=?", name).Find(&song).Error
-	if err != nil {
-		err = errors.New("查询歌曲信息出错！")
+	err := DB.Where("name LIKE ?", "%"+name+"%").Find(&song).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) || DB.RowsAffected == 0 {
+		err = errors.New("查找不到歌曲信息！")
 	}
 	return song, err
 }
@@ -145,12 +147,5 @@ func (*Songdao) DeleteSong(songID int) error {
 func (a *Songdao) GetSongByArtistid(artist_id int) ([]model.SongInfo, error) {
 	var song []model.SongInfo
 	result := DB.Where("artist_id = ?", artist_id).Find(&song)
-	return song, result.Error
-}
-
-// 根据歌手id获取歌曲
-func (a *Songdao) GetSongByAlbumid(album_id int) ([]model.SongInfo, error) {
-	var song []model.SongInfo
-	result := DB.Where("album_id = ?", album_id).Find(&song)
 	return song, result.Error
 }

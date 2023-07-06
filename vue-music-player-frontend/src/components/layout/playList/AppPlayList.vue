@@ -19,7 +19,7 @@
             v-for="item in playList"
             :key="item.songId"
             :song="item"
-            :active="item.songId === song.songId"
+            :active="item.songId == song.songId"
             @dblclick="play(item.songId)"
           />
         </el-scrollbar>
@@ -35,8 +35,8 @@ import { usePlayerStore } from '@/stores/player'
 import IconPark from '@/components/common/IconPark.vue'
 import PlayListItem from '@/components/layout/playList/PlayListItem.vue'
 
-const { showPlayList, getPlayListCount: playListCount, playList } = storeToRefs(usePlayerStore())
-const { play, clearPlayList, song } = usePlayerStore()
+const { showPlayList, getPlayListCount: playListCount, playList,song } = storeToRefs(usePlayerStore())
+const { play, clearPlayList} =  usePlayerStore()
 </script>
 <style lang="scss">
 .play-list {

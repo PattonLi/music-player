@@ -63,14 +63,16 @@
         <el-descriptions-item label="邮箱">
           {{ profile.email }}
         </el-descriptions-item>
-        <el-descriptions-item label="Remarks">
+        <el-descriptions-item label="权限">
           <el-tag>普通用户</el-tag>
         </el-descriptions-item>
-        <el-descriptions-item label="Address"
+        <el-descriptions-item label="地址"
           >No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu Province
         </el-descriptions-item>
       </el-descriptions>
-      <div class="mt-6 text-xl">欢迎您来到QQ音乐网页版(仿),本网站中山大学软件工程学院学生开发!</div>
+      <div class="mt-6 text-4xl text-emerald-500">
+        欢迎您来到QQ音乐网页版(仿),本网站中山大学软件工程学院学生开发!
+      </div>
     </el-page-header>
   </div>
 </template>
