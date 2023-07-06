@@ -4,6 +4,8 @@ import (
 	"errors"
 	"math"
 	"music-player/musicplayerserver/model"
+
+	"gorm.io/gorm"
 )
 
 type AlbumDao struct {
@@ -29,17 +31,11 @@ func (a *AlbumDao) GetAlbumById(id int) (model.AlbumInfo, error) {
 // 获取特定专辑
 func (*AlbumDao) GetAlbumbyName(name string) ([]model.AlbumInfo, error) {
 	album := []model.AlbumInfo{}
-<<<<<<< HEAD
 	err := DB.Where("name LIKE ?", "%"+name+"%").Find(&album).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("查找不到专辑信息！")
 	} else {
 		err = nil
-=======
-	err := DB.Where(&album, "name=?", name).Find(&album).Error
-	if err != nil {
-		err = errors.New("查询专辑信息出错！")
->>>>>>> 4bb1aae69f1cac19755ca17095f27f7def4f1818
 	}
 	return album, err
 }
