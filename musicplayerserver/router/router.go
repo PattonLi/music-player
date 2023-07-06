@@ -1152,6 +1152,7 @@ func GETs(r *gin.Engine) {
 	//修改歌曲信息
 	r.POST("/admin/modifySong", func(c *gin.Context) {
 		err := controller.NewSongController().ModifySongInfoHandler(c)
+		fmt.Println(err)
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 300,

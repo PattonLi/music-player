@@ -86,11 +86,11 @@ func (*AlbumDao) AddAlbum(album *model.AlbumInfo) (int64, int64, []model.AlbumIn
 // 修改专辑信息
 func (*AlbumDao) ModifyAlbum(album *model.AlbumInfo) error {
 	result := DB.Save(album)
-	var err error = nil
+	// var err error = nil
 	if result.Error != nil {
-		err = errors.New("修改失败！")
+		return errors.New("修改失败！")
 	}
-	return err
+	return nil
 }
 
 // 删除专辑信息
