@@ -1,6 +1,7 @@
 <template>
-  <!-- 主体界面 -->
-  <div class="search-detail px-7">
+  <RouterView :key="$route.fullPath">
+<!-- 主体界面 -->
+<div class="search-detail px-7">
     <!-- 分页tab栏 -->
     <el-tabs v-model="tab" class="mt-4">
       <!-- 歌曲搜索结果 -->
@@ -17,6 +18,8 @@
       </el-tab-pane>
     </el-tabs>
   </div>
+  </RouterView>
+  
 </template>
 
 <script setup lang="ts">

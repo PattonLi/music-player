@@ -128,10 +128,10 @@ const delSongListLike = () => {
   }
 }
 
-const commentDetail=()=>{
-  if(song.value.songId!=undefined){
+const commentDetail = () => {
+  if (song.value.songId != undefined) {
     routerPushByNameId(Pages.songComment, song.value.songId)
-  }else{
+  } else {
     AlertError('没有歌曲被选中')
   }
 }

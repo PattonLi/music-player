@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex song-item items-center w-full hover-bg-main"
-    :class="{ playing: id == propSong.songId }"
+    :class="{ playing: id == propSong.songId,active: isPlay }"
     @dblclick="play(propSong.songId)"
   >
     <!-- 左部 -->
@@ -106,6 +106,12 @@ import { downloadSong } from '@/utils/download/dowmload'
 const { userId, isLogin } = storeToRefs(useAuthStore())
 const { songs } = storeToRefs(useLikeStore())
 const { addLike, delLike } = useLikeStore()
+const { play } = usePlayerStore()
+const { song } = storeToRefs(usePlayerStore())
+const props = defineProps<{
+  propSong: Song
+  order: number
+}>()
 
 const dwld = () => {
   if (props.propSong.url) {
@@ -115,6 +121,11 @@ const dwld = () => {
   }
 }
 
+const isPlay = computed(()=>{
+  if(song.value.songId==props.propSong.songId) return true
+  else return false
+})
+
 const isSongLike = computed(() => {
   let index = _.findIndex(songs.value, (o) => {
     return o.songId == props.propSong.songId
@@ -122,12 +133,6 @@ const isSongLike = computed(() => {
   return index == -1 ? false : true
 })
 
-const props = defineProps<{
-  propSong: Song
-  order: number
-}>()
-const { play } = usePlayerStore()
-const { song } = storeToRefs(usePlayerStore())
 const id = song.value.songId
 
 const addSongLike = () => {
@@ -178,5 +183,9 @@ const delSongListLike = () => {
 //在播放时
 .playing {
   @apply bg-emerald-50 dark:bg-stone-800;
+}
+
+.active {
+  @apply border-l-emerald-300 text-emerald-200 rounded-xl;
 }
 </style>

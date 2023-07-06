@@ -13,5 +13,6 @@ export const useDwldStore = defineStore('download', {
     clearDwld() {
       this.dwldSongs = []
     }
-  }
+  },
+  persist: true
 })

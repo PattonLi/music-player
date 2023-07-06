@@ -85,7 +85,7 @@ export const usePlayerStore = defineStore('player', {
     },
     //获取前一首歌曲
     prevSong(state): Song {
-      if (this.getPlayListIndex === 0) {
+      if (this.getPlayListIndex == 0) {
         return state.playList[this.playList.length - 1] //回到播放列表尾部
       } else {
         //正常情况
@@ -126,7 +126,7 @@ export const usePlayerStore = defineStore('player', {
     },
     //开始播放
     async play(id: number) {
-      if (id == this.song.songId) return
+      // if (id == this.song.songId) return
       this.isPlaying = false
       //获取歌曲信息
       const res = await apiGetSong(id)
@@ -158,8 +158,10 @@ export const usePlayerStore = defineStore('player', {
     rePlay() {
       setTimeout(() => {
         this.currentTime = 0
+        this.audio.currentTime=0
         this.audio.play()
-      }, 1000)
+        console.log('rePlay')
+      }, 200)
     },
     //下一曲
     nextPlay() {

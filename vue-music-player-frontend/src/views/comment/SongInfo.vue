@@ -12,8 +12,9 @@
         <span class="text-xl">{{ song?.name }}</span>
       </div>
       <div class="flex">
-        专辑：<span class="text-dc mr-6">{{ song?.album }}</span>
-        歌手：<span class="text-dc">{{ song?.artist }}</span>
+        专辑：<span class="text-dc mr-6">{{ song?.album }}</span> 歌手：<span class="text-dc">{{
+          song?.artist
+        }}</span>
       </div>
     </div>
   </div>
