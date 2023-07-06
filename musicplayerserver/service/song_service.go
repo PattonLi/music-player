@@ -104,19 +104,28 @@ func (s *SongService) GetSongByKeyWord(pagesize int, currentpage int, keyword st
 		remainder_flag = true
 	}
 
-	if currentpage > pagenum {
+	if l == 0 {
+		return []model.SongInfo{}, err, nil, 0
+	}
+
+	if currentpage >= pagenum {
 		err1 := errors.New("当前要获取的歌曲分页过大！")
 		return nil, err, err1, pagenum
 	}
 
 	var songpage []model.SongInfo
 
-	if currentpage == pagenum && remainder_flag {
+	if currentpage == 0 && pagenum == 1 {
+		songpage = songs[0:l]
+		return songpage, err, nil, pagenum
+	}
+
+	if currentpage == (pagenum-1) && remainder_flag {
 		songpage = songs[(currentpage-1)*pagesize : l]
 		return songpage, err, nil, pagenum
 	}
 
-	songpage = songs[(currentpage-1)*pagesize : (currentpage)*pagesize]
+	songpage = songs[currentpage*pagesize : (currentpage+1)*pagesize]
 	return songpage, err, nil, pagenum
 }
 

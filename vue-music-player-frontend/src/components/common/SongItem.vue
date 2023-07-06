@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex song-item items-center w-full hover-bg-main"
-    :class="{ playing: id == propSong.songId,active: isPlay }"
+    :class="{ playing: id == propSong.songId, active: isPlay }"
     @dblclick="play(propSong.songId)"
   >
     <!-- 左部 -->
@@ -72,7 +72,7 @@
     </div>
 
     <!-- 专辑名 -->
-    <div class="text-lg flex-shrink-0 w-1/3 items-center">
+    <div class="text-lg flex-shrink-0 w-1/3 items-center overflow-hidden">
       <small
         class="truncate hover-text"
         @click="routerPushByNameId(Pages.albumDetail, propSong.albumId)"
@@ -121,8 +121,8 @@ const dwld = () => {
   }
 }
 
-const isPlay = computed(()=>{
-  if(song.value.songId==props.propSong.songId) return true
+const isPlay = computed(() => {
+  if (song.value.songId == props.propSong.songId) return true
   else return false
 })
 

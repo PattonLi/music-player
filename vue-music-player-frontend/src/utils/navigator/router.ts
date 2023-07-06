@@ -6,16 +6,15 @@ import { NavigationFailureType, isNavigationFailure } from 'vue-router'
 //带参数跳转
 export const routerPushByNameId = (name: string, id: number) => {
   // if(name==Pages.albumDetail||name==Pages.artistDetail||name==Pages.playlistDetail){
-    // router.push({ name: name, query: { id: id } ,replace:true})
+  // router.push({ name: name, query: { id: id } ,replace:true})
   // }else{
-    router.push({ name: name, query: { id: id } })
+  router.push({ name: name, query: { id: id } })
   // }
-  
 }
 
 //跳转搜索
 export const routerPushByNameKeyWord = (name: string, keyWord: string) => {
-  router.push({ name: name, query: { keyWord: keyWord },replace:true }).then((failure) => {
+  router.push({ name: name, query: { keyWord: keyWord }, replace: true }).then((failure) => {
     if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
       //failure.to.path
       //failure.from.path

@@ -51,6 +51,10 @@ func (a *ArtistService) GetArtistByKeyWord(pagesize int, currentpage int, keywor
 		remainder_flag = true
 	}
 
+	if l == 0 {
+		return []model.ArtistInfo{}, err, nil, 0
+	}
+
 	if currentpage > pagenum {
 		err1 := errors.New("当前要获取的歌手分页过大！")
 		return nil, err, err1, pagenum
@@ -58,12 +62,17 @@ func (a *ArtistService) GetArtistByKeyWord(pagesize int, currentpage int, keywor
 
 	var artistpage []model.ArtistInfo
 
-	if currentpage == pagenum && remainder_flag {
+	if currentpage == 0 && pagenum == 1 {
+		artistpage = artists[0:l]
+		return artistpage, err, nil, pagenum
+	}
+
+	if currentpage == (pagenum-1) && remainder_flag {
 		artistpage = artists[(currentpage-1)*pagesize : l]
 		return artistpage, err, nil, pagenum
 	}
 
-	artistpage = artists[(currentpage-1)*pagesize : currentpage*pagesize]
+	artistpage = artists[currentpage*pagesize : (currentpage+1)*pagesize]
 	return artistpage, err, nil, pagenum
 }
 
