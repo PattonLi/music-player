@@ -74,3 +74,36 @@ func (cc *CommentController) DeleLike(c *gin.Context) error {
 	err := cc.commentService.DeleLike(comment.User_id, comment.Comment_id)
 	return err
 }
+
+//获取特定歌曲评论
+func (cc *CommentController) GetSongCommentHandler(c *gin.Context) ([]gin.H, error){
+	frontendcommentlist := []gin.H{}
+	songID,_ := strconv.Atoi(c.Query(("songId")))
+	commentlist, err := cc.commentService.GetSongComment(songID)
+	if err != nil && err.Error() == "数据库查找错误！" {
+		return frontendcommentlist, err
+	} else {
+		for _,comment := range commentlist{
+			err = nil
+			user, err :=cc.userService.UserProfile(comment.User_id)
+			if err == nil{
+				frontendcommentlist = append(frontendcommentlist, gin.H{
+					"nickname": user.Nickname,
+					"picUrl": user.Pic_url,
+					"comment": comment.Comment,
+					"commentId": comment.Comment_id,
+					"commentTime": comment.Comment_time,
+					"like": comment.Like,
+				})
+			}
+		}
+		return frontendcommentlist, err
+	}
+}
+
+//删除特定评论
+func (cc *CommentController) DeleteCommentHandler(c *gin.Context) error {
+	commentID,_ := strconv.Atoi(c.Query("commentId"))
+	err := cc.commentService.DeleteComment(commentID)
+	return err
+}
