@@ -38,7 +38,7 @@ func (p *PlaylistService) GetHotPlaylist(pagesize int, currentpage int) ([]model
 		return playlistpage, err, nil, pagenum
 	}
 
-	playlistpage = playlist[(currentpage-1)*pagesize : currentpage*pagesize]
+	playlistpage = playlist[currentpage*pagesize : (currentpage+1)*pagesize]
 	return playlistpage, err, nil, pagenum
 }
 

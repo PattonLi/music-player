@@ -3,6 +3,7 @@ package router
 import (
 	"fmt"
 	"music-player/musicplayerserver/controller"
+	"music-player/musicplayerserver/model"
 	utils "music-player/musicplayerserver/utils/jwt"
 	"net/http"
 	"strconv"
@@ -926,6 +927,40 @@ func GETs(r *gin.Engine) {
 				"code":      200,
 				"pageTotal": pagetotal,
 				"artists":   atrtists,
+			})
+		}
+	})
+
+	// 获取歌曲所有评论
+	r.GET("/song/comment", func(c *gin.Context) {
+		comments, err := controller.NewCommentController().GetAllCommentHandler(c)
+		empty_arr := []model.Comments{}
+		if err != nil || comments == nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":     300,
+				"comments": empty_arr,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":     200,
+				"comments": comments,
+			})
+		}
+	})
+
+	// 获取用户所有点赞评论
+	r.GET("/user/comment/like", func(c *gin.Context) {
+		like_ids, err := controller.NewCommentController().GetAllLikeHandler(c)
+		empty_arr := []int{}
+		if err != nil || like_ids == nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":         300,
+				"commentLikes": empty_arr,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code":         200,
+				"commentLikes": like_ids,
 			})
 		}
 	})
