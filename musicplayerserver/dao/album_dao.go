@@ -2,7 +2,7 @@ package dao
 
 import (
 	"errors"
-	"math"
+
 	"music-player/musicplayerserver/model"
 )
 
@@ -29,7 +29,7 @@ func (a *AlbumDao) GetAlbumById(id int) (model.AlbumInfo, error) {
 // 获取特定专辑
 func (*AlbumDao) GetAlbumbyName(name string) ([]model.AlbumInfo, error) {
 	album := []model.AlbumInfo{}
-	err := DB.Where(&album, "name=?", name).Find(&album).Error
+	err := DB.Where("name LIKE ?", "%"+name+"%").Find(&album).Error
 	if err != nil {
 		err = errors.New("查询专辑信息出错！")
 	}
@@ -42,8 +42,7 @@ func (*AlbumDao) GetAllAlbumInfo(page int, pagesize int) ([]model.AlbumInfo, int
 	var totalrecord int64
 	offset := (page - 1) * pagesize
 	DB.Offset(offset).Limit(pagesize).Find(&albumlist).Offset(-1).Limit(-1).Count(&totalrecord)
-	totalPage := int64(math.Ceil(float64(totalrecord) / float64(pagesize)))
-	return albumlist, totalPage
+	return albumlist, totalrecord
 }
 
 // 根据歌手id获取歌手所有专辑

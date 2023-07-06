@@ -49,8 +49,8 @@ func (ac *AlbumController) AlbumInfoHandler(c *gin.Context) ([]model.AlbumInfo, 
 func (ac *AlbumController) AllAlbumInfoHandler(c *gin.Context) ([]model.AlbumInfo, int64) {
 	page, _ := strconv.Atoi(c.Query("currentPage"))
 	pagesize, _ := strconv.Atoi(c.Query("pageSize"))
-	albumlist, totalPage := ac.albumService.AllAlbumInfo(page, pagesize)
-	return albumlist, totalPage
+	albumlist, totalrecord := ac.albumService.AllAlbumInfo(page, pagesize)
+	return albumlist, totalrecord
 }
 
 // 分页获取歌手专辑
@@ -105,7 +105,7 @@ func (alc *AlbumController) DeleteAlbumInfoHandler(c *gin.Context) error {
 
 // 根据歌手id获取专辑
 func (alc *AlbumController) GetAlbumInfoByartistIdHanderler(c *gin.Context) ([]model.AlbumInfo, error) {
-	artist_id := c.Query("artist_id")
+	artist_id := c.Query("artistId")
 	artistIDInt, err := strconv.Atoi(artist_id)
 	if err != nil {
 		fmt.Println("字符串转换错误")

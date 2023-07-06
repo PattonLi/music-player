@@ -63,15 +63,15 @@ func (sc *SongController) GetTenSongsHandler(c *gin.Context) []model.SongInfo {
 	return songs
 }
 
-// 获取专辑的所有歌曲
-func (sc *SongController) GetAlbumSongsHandler(c *gin.Context) ([]model.SongInfo, error) {
-	albumid := c.Query("albumId")
-	albumId, err0 := strconv.Atoi(albumid)
-	if err0 != nil {
+// 根据专辑id获取歌曲
+func (sc *SongController) GetSongInfoByalbumIdHanderler(c *gin.Context) ([]model.SongInfo, error) {
+	album_id := c.Query("albumId")
+	albumIDInt, err := strconv.Atoi(album_id)
+	if err != nil {
 		fmt.Println("字符串转换错误")
 	}
-	songs, err := sc.songservice.GetAlbumSongs(albumId)
-	return songs, err
+	songlist, err := sc.songservice.GetSongByAlbumid(albumIDInt)
+	return songlist, err
 }
 
 // 分页获取歌手歌曲
@@ -143,22 +143,13 @@ func (sc *SongController) DeleteSongInfoHandler(c *gin.Context) error {
 
 // 根据歌手id获取歌曲
 func (sc *SongController) GetSongInfoByartistIdHanderler(c *gin.Context) ([]model.SongInfo, error) {
-	artist_id := c.Query("artist_id")
+	artist_id := c.Query("artistId")
+	fmt.Println("artist_id:", artist_id)
 	artistIDInt, err := strconv.Atoi(artist_id)
 	if err != nil {
 		fmt.Println("字符串转换错误")
+
 	}
 	songlist, err := sc.songservice.GetSongByArtistid(artistIDInt)
-	return songlist, err
-}
-
-// 根据专辑id获取歌曲
-func (sc *SongController) GetSongInfoByalbumIdHanderler(c *gin.Context) ([]model.SongInfo, error) {
-	album_id := c.Query("album_id")
-	albumIDInt, err := strconv.Atoi(album_id)
-	if err != nil {
-		fmt.Println("字符串转换错误")
-	}
-	songlist, err := sc.songservice.GetSongByArtistid(albumIDInt)
 	return songlist, err
 }

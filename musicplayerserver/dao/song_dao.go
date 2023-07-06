@@ -59,10 +59,10 @@ func (s *Songdao) GetTenSongs() []model.SongInfo {
 	return songs
 }
 
-// 获取专辑中的所有歌曲
-func (s *Songdao) GetSongsInAlbum(albumid int) ([]model.SongInfo, error) {
+// 根据专辑id获取歌曲
+func (s *Songdao) GetSongByAlbumid(album_id int) ([]model.SongInfo, error) {
 	var song []model.SongInfo
-	result := DB.Where("album_id = ?", albumid).Find(&song)
+	result := DB.Where("album_id = ?", album_id).Find(&song)
 	return song, result.Error
 }
 
@@ -132,12 +132,5 @@ func (*Songdao) DeleteSong(songID int) error {
 func (a *Songdao) GetSongByArtistid(artist_id int) ([]model.SongInfo, error) {
 	var song []model.SongInfo
 	result := DB.Where("artist_id = ?", artist_id).Find(&song)
-	return song, result.Error
-}
-
-// 根据歌手id获取歌曲
-func (a *Songdao) GetSongByAlbumid(album_id int) ([]model.SongInfo, error) {
-	var song []model.SongInfo
-	result := DB.Where("album_id = ?", album_id).Find(&song)
 	return song, result.Error
 }
