@@ -23,12 +23,14 @@ func NewCommentService() *CommentService {
 
 // 发表评论
 func (cs *CommentService) PublishComment(comment string, userId int, songId int) error {
+	currentTime := time.Now()
+	formattedTime := currentTime.Format("2006-01-02 15:04:05")
 	err := cs.commentDao.InsertComment(model.CommentInfo{
 		User_id:      userId,
 		Song_id:      songId,
 		Comment:      comment,
 		Like:         0,
-		Comment_time: time.RFC1123,
+		Comment_time: formattedTime,
 		Type:         1,
 	})
 	return err
@@ -86,14 +88,14 @@ func (cs *CommentService) DeleLike(userid int, comment_id int) error {
 	return err
 }
 
-//获取特定歌曲评论
+// 获取特定歌曲评论
 func (cs *CommentService) GetSongComment(songID int) ([]model.CommentInfo, error) {
 	commentlist, err := cs.commentDao.GetSongCommentById(songID)
 	return commentlist, err
 }
 
-//删除特定评论
+// 删除特定评论
 func (cs *CommentService) DeleteComment(commentID int) error {
-	err :=  cs.commentDao.DeleteCommentById(commentID)
+	err := cs.commentDao.DeleteCommentById(commentID)
 	return err
 }
