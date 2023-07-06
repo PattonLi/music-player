@@ -90,6 +90,10 @@ func (al *AlbumService) GetAlbumByKeyWord(pagesize int, currentpage int, keyword
 		remainder_flag = true
 	}
 
+	if l == 0 {
+		return []model.AlbumInfo{}, err, nil, 0
+	}
+
 	if currentpage > pagenum {
 		err1 := errors.New("当前要获取的专辑分页过大！")
 		return nil, err, err1, pagenum
@@ -97,12 +101,17 @@ func (al *AlbumService) GetAlbumByKeyWord(pagesize int, currentpage int, keyword
 
 	var albumpage []model.AlbumInfo
 
-	if currentpage == pagenum && remainder_flag {
+	if currentpage == 0 && pagenum == 1 {
+		albumpage = albums[0:l]
+		return albumpage, err, nil, pagenum
+	}
+
+	if currentpage == (pagenum-1) && remainder_flag {
 		albumpage = albums[(currentpage-1)*pagesize : l]
 		return albumpage, err, nil, pagenum
 	}
 
-	albumpage = albums[(currentpage-1)*pagesize : currentpage*pagesize]
+	albumpage = albums[currentpage*pagesize : (currentpage+1)*pagesize]
 	return albumpage, err, nil, pagenum
 }
 

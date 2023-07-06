@@ -1005,7 +1005,7 @@ func GETs(r *gin.Engine) {
 	r.GET("/song/comment", func(c *gin.Context) {
 		comments, err := controller.NewCommentController().GetAllCommentHandler(c)
 		empty_arr := []model.Comments{}
-		if err != nil || comments == nil {
+		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code":     300,
 				"comments": empty_arr,
