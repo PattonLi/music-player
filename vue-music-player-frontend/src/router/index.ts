@@ -144,7 +144,6 @@ const router = createRouter({
           //搜索结果页
           path: 'search/result',
           name: Pages.searchResult,
-          meta: { keepAlive: true },
           component: () => import('@/views/search-result/AppSearchResult.vue')
         },
 

@@ -158,7 +158,7 @@ export const usePlayerStore = defineStore('player', {
     rePlay() {
       setTimeout(() => {
         this.currentTime = 0
-        this.audio.currentTime=0
+        this.audio.currentTime = 0
         this.audio.play()
         console.log('rePlay')
       }, 200)

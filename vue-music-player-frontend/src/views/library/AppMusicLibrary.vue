@@ -17,9 +17,7 @@
     </el-affix>
     <div class="mt-5">
       <router-view v-slot="{ Component }">
-        <transition class="animate__animated animate__zoomIn" mode="out-in">
           <component :is="Component" />
-        </transition>
       </router-view>
     </div>
   </div>
