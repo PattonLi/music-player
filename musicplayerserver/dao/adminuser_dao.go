@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"music-player/musicplayerserver/model"
+
 	"gorm.io/gorm"
 )
 
@@ -37,17 +38,19 @@ func (*AdminUserDao) GetAllAdminInfo(currentPage int, pageSize int) (int64, []mo
 	return totals, adminlist
 }
 
-//根据adminname获取特定管理员信息
-func (*AdminUserDao) GetAdminInfo(adminname string) ([]model.AdminUserInfo,error) {
+// 根据adminname获取特定管理员信息
+func (*AdminUserDao) GetAdminInfo(adminname string) ([]model.AdminUserInfo, error) {
 	var adminlist []model.AdminUserInfo
-	err := DB.Find(&adminlist,"adminname LIKE ?", "%"+adminname+"%").Error
-	if errors.Is(err, gorm.ErrRecordNotFound) || DB.RowsAffected == 0 {
+	err := DB.Find(&adminlist, "adminname LIKE ?", "%"+adminname+"%").Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("查找不到管理员信息！")
+	} else {
+		err = nil
 	}
 	return adminlist, err
 }
 
-//修改管理员信息
+// 修改管理员信息
 func (*AdminUserDao) ModifyAdminUser(adminuser *model.AdminUserInfo) error {
 	result := DB.Save(adminuser)
 	var err error = nil
@@ -57,7 +60,7 @@ func (*AdminUserDao) ModifyAdminUser(adminuser *model.AdminUserInfo) error {
 	return err
 }
 
-//添加管理员信息
+// 添加管理员信息
 func (*AdminUserDao) AddAdminUser(adminuser *model.AdminUserInfo) (int64, int64, []model.AdminUserInfo, error) {
 	var adminlist []model.AdminUserInfo
 	var totalrecord int64
@@ -65,19 +68,19 @@ func (*AdminUserDao) AddAdminUser(adminuser *model.AdminUserInfo) (int64, int64,
 	var currentPage int64
 	err := DB.Create(adminuser).Error
 	DB.Table("admin_user").Count(&totalrecord)
-	if(totalrecord % 10 == 0){
+	if totalrecord%10 == 0 {
 		offset = totalrecord - 10
 		currentPage = totalrecord / 10
 	} else {
 		offset = totalrecord - (totalrecord % 10)
-		currentPage = totalrecord / 10 + 1
+		currentPage = totalrecord/10 + 1
 	}
 	DB.Offset(int(offset)).Limit(10).Find(&adminlist)
 	return totalrecord, currentPage, adminlist, err
 }
 
 // 管理员登录验证
-func (*AdminUserDao) AdminLoginCheck(au *model.AdminUserInfo) (int,error) {
+func (*AdminUserDao) AdminLoginCheck(au *model.AdminUserInfo) (int, error) {
 	adminname := au.Adminname
 	password := au.Password
 	admin := model.AdminUserInfo{}
@@ -87,12 +90,13 @@ func (*AdminUserDao) AdminLoginCheck(au *model.AdminUserInfo) (int,error) {
 	}
 	return admin.ID, err
 }
+
 // 管理员用户名验证
 func (*AdminUserDao) AdminUserNameCheck(au *model.AdminUserInfo) (int, error) {
 	adminname := au.Adminname
 	adminuser := model.AdminUserInfo{}
 	err := DB.Take(&adminuser, "adminname = ?", adminname).Error
-	if errors.Is(err, gorm.ErrRecordNotFound){
+	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("查找不到记录！")
 	} else {
 		err = nil
@@ -100,14 +104,14 @@ func (*AdminUserDao) AdminUserNameCheck(au *model.AdminUserInfo) (int, error) {
 	return adminuser.ID, err
 }
 
-//根据ID获取单个管理员信息
-func (*AdminUserDao) GetAdminProfile(adminID int)(string, error) {
+// 根据ID获取单个管理员信息
+func (*AdminUserDao) GetAdminProfile(adminID int) (string, error) {
 	admin := model.AdminUserInfo{}
-	err := DB.First(&admin,"admin_id = ?", adminID).Error
+	err := DB.First(&admin, "admin_id = ?", adminID).Error
 	return admin.Adminname, err
 }
 
-//删除管理员信息
+// 删除管理员信息
 func (*AdminUserDao) DeleteAdminUser(adminID int) error {
 	err := DB.Delete(&model.AdminUserInfo{}, adminID).Error
 	return err

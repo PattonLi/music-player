@@ -85,8 +85,10 @@ func (*ArtistDao) GetAllArtistInfo(page int, pagesize int) ([]model.ArtistInfo, 
 func (*ArtistDao) GetArtistbyName(name string) ([]model.ArtistInfo, error) {
 	artist := []model.ArtistInfo{}
 	err := DB.Where("name LIKE ?", "%"+name+"%").Find(&artist).Error
-	if errors.Is(err, gorm.ErrRecordNotFound) || DB.RowsAffected == 0 {
+	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("查找不到歌手信息！")
+	} else {
+		err = nil
 	}
 	return artist, err
 }

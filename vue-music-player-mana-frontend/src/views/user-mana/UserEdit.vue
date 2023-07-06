@@ -337,6 +337,7 @@ const confirmAdd = () => {
     state.totals = data.totals
     state.tableData = data.data
     console.log(state.tableData)
+    console.log(state.currentPage)
   })
   addDialog.data = {} as CustomerInfo
   addDialog.visable = false

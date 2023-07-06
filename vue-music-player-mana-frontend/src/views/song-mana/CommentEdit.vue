@@ -140,7 +140,7 @@
     console.log(`current page: ${val}`)
     await getSongInfo(val, 1).then((data) => {
       if (data.code == 200) {
-        state.songData = data.data
+        state.songData = data.data[0]
         state.totals = data.totals
         console.log(state.totals)
         console.log(data.data)
@@ -188,6 +188,7 @@ const SearchClick = async() => {
     } else if (data.code === 200) {
       console.log(data.data)
       state.songData = data.data[0]
+      state.currentPage = state.songData.songId
     }
   })
   console.log('state.songData.songId' + state.songData.songId)

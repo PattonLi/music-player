@@ -686,9 +686,25 @@ func GETs(r *gin.Engine) {
 			},
 			)
 		} else {
+			messages_album := make([]gin.H, 0)
+			for i := 0; i < len(albums); i++ {
+				album := albums[i]
+				message := gin.H{
+					"albumId":     album.AlbumID,
+					"album":       album.Name,
+					"picUrl":      album.Pic_url,
+					"artist":      album.Artist,
+					"publishTime": album.Publish_time,
+					"size":        album.Size,
+					"type":        album.Type,
+					"artistId":    album.Artist_ID,
+					"profile":     album.Profile,
+				}
+				messages_album = append(messages_album, message)
+			}
 			c.JSON(http.StatusOK, gin.H{
 				"code": 200,
-				"data": albums,
+				"data": messages_album,
 			},
 			)
 		}
@@ -1091,9 +1107,30 @@ func GETs(r *gin.Engine) {
 				"data": songs,
 			})
 		} else {
+			message_song := make([]gin.H, 0)
+			for i := 0; i < len(songs); i++ {
+				song := songs[i]
+				message := gin.H{
+					"songId":      song.Song_ID,
+					"name":        song.Name,
+					"artist":      song.Artist,
+					"album":       song.Album,
+					"duration":    song.Duration,
+					"albumId":     song.Album_ID,
+					"artistId":    song.Artist_ID,
+					"pop":         song.Pop,
+					"mark":        song.Mark,
+					"publishTime": song.Publish_time,
+					"url":         song.Url,
+					"lyricUrl":    song.Lyric_url,
+					"picUrl":      song.Pic_url,
+					"type":        song.Type,
+				}
+				message_song = append(message_song, message)
+			}
 			c.JSON(http.StatusOK, gin.H{
 				"code": 200,
-				"data": songs,
+				"data": message_song,
 			})
 		}
 	})
@@ -1133,6 +1170,7 @@ func GETs(r *gin.Engine) {
 	//修改歌曲信息
 	r.POST("/admin/modifySong", func(c *gin.Context) {
 		err := controller.NewSongController().ModifySongInfoHandler(c)
+		fmt.Println(err)
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 300,
