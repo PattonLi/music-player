@@ -52,6 +52,7 @@ func (ac *AlbumController) AllAlbumInfoHandler(c *gin.Context) ([]model.AlbumInf
 	albumlist, totalPage := ac.albumService.AllAlbumInfo(page, pagesize)
 	return albumlist, totalPage
 }
+
 // 分页获取歌手专辑
 func (ac *AlbumController) GetAlbumPageHandler(c *gin.Context) ([]model.AlbumInfo, error, error, int) {
 	artistid := c.Query("artistId")
@@ -77,4 +78,38 @@ func (ac *AlbumController) GetAlbumByKeyWordHandler(c *gin.Context) ([]model.Alb
 
 	albumpage, err0, err1, pagetotal := ac.albumService.GetAlbumByKeyWord(pageSize, currntPage, keyword)
 	return albumpage, err0, err1, pagetotal
+}
+
+// 添加专辑
+func (ac *AlbumController) AddAlbumHandler(c *gin.Context) (int64, int64, []model.AlbumInfo, error) {
+	album := model.AlbumInfo{}
+	c.BindJSON(&album)
+	totals, currentPage, albumlist, err := ac.albumService.AddAlbumInfo(&album)
+	return totals, currentPage, albumlist, err
+}
+
+// 专辑信息修改
+func (alc *AlbumController) ModifyAlbumInfoHandler(c *gin.Context) error {
+	album := model.AlbumInfo{}
+	c.BindJSON(&album)
+	err := alc.albumService.ModifyAlbumInfo(&album)
+	return err
+}
+
+// 删除专辑信息
+func (alc *AlbumController) DeleteAlbumInfoHandler(c *gin.Context) error {
+	albumID, _ := strconv.Atoi(c.Query("albumId"))
+	err := alc.albumService.DeleteAlbumInfo(albumID)
+	return err
+}
+
+// 根据歌手id获取专辑
+func (alc *AlbumController) GetAlbumInfoByartistIdHanderler(c *gin.Context) ([]model.AlbumInfo, error) {
+	artist_id := c.Query("artist_id")
+	artistIDInt, err := strconv.Atoi(artist_id)
+	if err != nil {
+		fmt.Println("字符串转换错误")
+	}
+	albumlist, err := alc.albumService.GetAlbumByArtistid(artistIDInt)
+	return albumlist, err
 }
