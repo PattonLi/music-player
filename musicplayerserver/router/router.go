@@ -470,6 +470,22 @@ func GETs(r *gin.Engine) {
 					"searchWord": "Fill You",
 					"type":       1,
 				},
+				{
+					"searchWord": "boy meets girl and girl",
+					"type":       1,
+				},
+				{
+					"searchWord": "谢天华",
+					"type":       2,
+				},
+				{
+					"searchWord": "展翅高飞Let Go",
+					"type":       3,
+				},
+				{
+					"searchWord": "Girlfriend",
+					"type":       3,
+				},
 			},
 		})
 
@@ -745,7 +761,7 @@ func GETs(r *gin.Engine) {
 		albumpage, err0, err1, pagenum := controller.NewAlbumController().GetAlbumPageHandler(c)
 		if err0 != nil || err1 != nil {
 			c.JSON(http.StatusOK, gin.H{
-				"code":      300,
+				"code":      200,
 				"albums":    nil,
 				"pageTotal": nil,
 			})
