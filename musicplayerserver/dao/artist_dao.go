@@ -2,8 +2,9 @@ package dao
 
 import (
 	"errors"
-	"math"
 	"music-player/musicplayerserver/model"
+
+	"gorm.io/gorm"
 )
 
 type ArtistDao struct {
@@ -14,7 +15,7 @@ func (a *ArtistDao) GetTenArtist() []model.ArtistInfo {
 	var artist []model.ArtistInfo
 	var artists []model.ArtistInfo
 	DB.Find(&artist)
-	artists = artist[:10]
+	artists = artist[:30]
 	return artists
 }
 
@@ -77,18 +78,17 @@ func (*ArtistDao) GetAllArtistInfo(page int, pagesize int) ([]model.ArtistInfo, 
 	var totalrecord int64
 	offset := (page - 1) * pagesize
 	DB.Offset(offset).Limit(pagesize).Find(&artistlist).Offset(-1).Limit(-1).Count(&totalrecord)
-	totalPage := int64(math.Ceil(float64(totalrecord) / float64(pagesize)))
-	return artistlist, totalPage
+	return artistlist, totalrecord
 }
 
 // 根据名字获取歌手信息
 func (*ArtistDao) GetArtistbyName(name string) ([]model.ArtistInfo, error) {
-	song := []model.ArtistInfo{}
-	err := DB.Where(&song, "name=?", name).Find(&song).Error
-	if err != nil {
-		err = errors.New("查询歌曲信息出错！")
+	artist := []model.ArtistInfo{}
+	err := DB.Where("name LIKE ?", "%"+name+"%").Find(&artist).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) || DB.RowsAffected == 0 {
+		err = errors.New("查找不到歌手信息！")
 	}
-	return song, err
+	return artist, err
 }
 
 // 添加歌手
@@ -128,8 +128,17 @@ func (*ArtistDao) ModifyArtist(artist *model.ArtistInfo) error {
 }
 
 // 根据专辑id获取特定歌手
-func (s *ArtistDao) GetArtistByAlbumid(album_id int) (model.ArtistInfo, error) {
-	var artist model.ArtistInfo
-	result := DB.First(&artist, album_id)
+func (s *ArtistDao) GetArtistByAlbumid(album_id int) ([]model.ArtistInfo, error) {
+
+	var artist []model.ArtistInfo
+	// 先在 album 数据库中根据 album_id 找到对应的 artist_id
+	var artist_id int
+	err := DB.Table("album").Select("artist_id").Where("album_id = ?", album_id).Row().Scan(&artist_id)
+	if err != nil {
+		return nil, err
+	}
+
+	// 在 artist 数据库中根据 artist_id 找到对应的艺术家信息
+	result := DB.Table("artist").Where("artist_id = ?", artist_id).Find(&artist)
 	return artist, result.Error
 }

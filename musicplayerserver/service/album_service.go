@@ -38,8 +38,8 @@ func (as *AlbumService) AlbumInfo(Name string) ([]model.AlbumInfo, error) {
 
 // 特定页所有专辑信息获取
 func (als *AlbumService) AllAlbumInfo(page int, pagesize int) ([]model.AlbumInfo, int64) {
-	albumlist, totalPage := als.albumdao.GetAllAlbumInfo(page, pagesize)
-	return albumlist, totalPage
+	albumlist, totalrecord := als.albumdao.GetAllAlbumInfo(page, pagesize)
+	return albumlist, totalrecord
 }
 
 // 分页获取歌手专辑

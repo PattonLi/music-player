@@ -83,20 +83,24 @@ func (a *ArtistService) GetAtrtistByContition(pagesize int, currentpage int, fir
 		remainder_flag = true
 	}
 
+	if l == 0 {
+		return []model.ArtistInfo{}, err, nil, 0
+	}
+
 	if currentpage > pagenum {
 		err1 := errors.New("当前要获取的歌手分页过大！")
-		return nil, err, err1, pagenum
+		return []model.ArtistInfo{}, err, err1, pagenum
 	}
 
 	var artistpage []model.ArtistInfo
 
-	if currentpage == pagenum && remainder_flag {
-		artistpage = artists[(currentpage-1)*pagesize : l]
+	if currentpage == 0 && pagenum == 1 {
+		artistpage = artists[0:l]
 		return artistpage, err, nil, pagenum
 	}
 
-	if currentpage == 0 {
-		artistpage = artists[0:pagesize]
+	if currentpage == (pagenum-1) && remainder_flag {
+		artistpage = artists[(currentpage-1)*pagesize : l]
 		return artistpage, err, nil, pagenum
 	}
 
@@ -107,8 +111,8 @@ func (a *ArtistService) GetAtrtistByContition(pagesize int, currentpage int, fir
 
 // 特定页歌手信息获取
 func (as *ArtistService) AllArtistInfo(page int, pagesize int) ([]model.ArtistInfo, int64) {
-	artistlist, totalPage := as.artistdao.GetAllArtistInfo(page, pagesize)
-	return artistlist, totalPage
+	artistlist, totalrecord := as.artistdao.GetAllArtistInfo(page, pagesize)
+	return artistlist, totalrecord
 }
 
 // 特定歌手信息获取
@@ -136,7 +140,7 @@ func (as *ArtistService) ModifyArtistInfo(artist *model.ArtistInfo) error {
 }
 
 // 根据专辑id获取歌手
-func (as *ArtistService) GetArtistByAlbumid(album_id int) (model.ArtistInfo, error) {
-	artist, err := as.artistdao.GetArtistByAlbumid(album_id)
-	return artist, err
+func (as *ArtistService) GetArtistByAlbumid(album_id int) ([]model.ArtistInfo, error) {
+	artistlist, err := as.artistdao.GetArtistByAlbumid(album_id)
+	return artistlist, err
 }
