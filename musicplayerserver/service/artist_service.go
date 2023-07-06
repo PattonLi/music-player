@@ -107,8 +107,8 @@ func (a *ArtistService) GetAtrtistByContition(pagesize int, currentpage int, fir
 
 // 特定页歌手信息获取
 func (as *ArtistService) AllArtistInfo(page int, pagesize int) ([]model.ArtistInfo, int64) {
-	artistlist, totalPage := as.artistdao.GetAllArtistInfo(page, pagesize)
-	return artistlist, totalPage
+	artistlist, totalrecord := as.artistdao.GetAllArtistInfo(page, pagesize)
+	return artistlist, totalrecord
 }
 
 // 特定歌手信息获取
@@ -136,7 +136,7 @@ func (as *ArtistService) ModifyArtistInfo(artist *model.ArtistInfo) error {
 }
 
 // 根据专辑id获取歌手
-func (as *ArtistService) GetArtistByAlbumid(album_id int) (model.ArtistInfo, error) {
-	artist, err := as.artistdao.GetArtistByAlbumid(album_id)
-	return artist, err
+func (as *ArtistService) GetArtistByAlbumid(album_id int) ([]model.ArtistInfo, error) {
+	artistlist, err := as.artistdao.GetArtistByAlbumid(album_id)
+	return artistlist, err
 }

@@ -79,8 +79,8 @@ func (ac *ArtistController) GetAtistByCHanddler(c *gin.Context) ([]model.ArtistI
 func (ac *ArtistController) AllArtistInfoHandler(c *gin.Context) ([]model.ArtistInfo, int64) {
 	page, _ := strconv.Atoi(c.Query("currentPage"))
 	pagesize, _ := strconv.Atoi(c.Query("pageSize"))
-	artistlist, totalPage := ac.artistservice.AllArtistInfo(page, pagesize)
-	return artistlist, totalPage
+	artistlist, totalrecord := ac.artistservice.AllArtistInfo(page, pagesize)
+	return artistlist, totalrecord
 }
 
 // 获取特定名称歌手信息
@@ -114,12 +114,12 @@ func (ac *ArtistController) ModifyArtistInfoHandler(c *gin.Context) error {
 }
 
 // 根据专辑id获取歌手
-func (ac *ArtistController) GetArtistInfoByalbumIdHanderler(c *gin.Context) (model.ArtistInfo, error) {
+func (ac *ArtistController) GetArtistInfoByalbumIdHanderler(c *gin.Context) ([]model.ArtistInfo, error) {
 	album_id := c.Query("album_id")
 	albumIDInt, err := strconv.Atoi(album_id)
 	if err != nil {
 		fmt.Println("字符串转换错误")
 	}
-	artist, err := ac.artistservice.GetArtistByAlbumid(albumIDInt)
-	return artist, err
+	artistlist, err := ac.artistservice.GetArtistByAlbumid(albumIDInt)
+	return artistlist, err
 }

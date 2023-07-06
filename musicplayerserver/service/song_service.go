@@ -44,10 +44,10 @@ func (s *SongService) GetTenSongs() []model.SongInfo {
 	return songs
 }
 
-// 获取专辑的所有歌曲
-func (s *SongService) GetAlbumSongs(albumid int) ([]model.SongInfo, error) {
-	songs, err := s.songdao.GetSongsInAlbum(albumid)
-	return songs, err
+// 根据专辑id获取歌曲
+func (ss *SongService) GetSongByAlbumid(album_id int) ([]model.SongInfo, error) {
+	songlist, err := ss.songdao.GetSongByAlbumid(album_id)
+	return songlist, err
 }
 
 // 根据时间或者热度对歌手歌曲进行排序,获取歌曲分页
