@@ -95,7 +95,12 @@ func (a *ArtistService) GetAtrtistByContition(pagesize int, currentpage int, fir
 		return artistpage, err, nil, pagenum
 	}
 
-	artistpage = artists[(currentpage-1)*pagesize : currentpage*pagesize]
+	if currentpage == 0 {
+		artistpage = artists[0:pagesize]
+		return artistpage, err, nil, pagenum
+	}
+
+	artistpage = artists[currentpage*pagesize : (currentpage+1)*pagesize]
 	return artistpage, err, nil, pagenum
 
 }
