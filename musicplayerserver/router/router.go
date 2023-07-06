@@ -958,10 +958,10 @@ func GETs(r *gin.Engine) {
 			code = 200
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"code":        code,
-			"totals":      totals,
-			"currentPage": currentPage,
-			"data":        albumlist,
+			"code":      code,
+			"totals":    totals,
+			"totalPage": currentPage,
+			"data":      albumlist,
 		})
 	})
 
