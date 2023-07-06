@@ -1,25 +1,24 @@
 <template>
   <RouterView :key="$route.fullPath">
-<!-- 主体界面 -->
-<div class="search-detail px-7">
-    <!-- 分页tab栏 -->
-    <el-tabs v-model="tab" class="mt-4">
-      <!-- 歌曲搜索结果 -->
-      <el-tab-pane lazy label="歌曲" name="song">
-        <SongSearchResult />
-      </el-tab-pane>
-      <!-- 专辑搜索结果 -->
-      <el-tab-pane lazy label="专辑" name="album">
-        <AlbumSearchResult />
-      </el-tab-pane>
-      <!-- 歌手搜索结果 -->
-      <el-tab-pane lazy label="歌手" name="artist">
-        <ArtistSearchResult />
-      </el-tab-pane>
-    </el-tabs>
-  </div>
+    <!-- 主体界面 -->
+    <div class="search-detail px-7">
+      <!-- 分页tab栏 -->
+      <el-tabs v-model="tab" class="mt-4">
+        <!-- 歌曲搜索结果 -->
+        <el-tab-pane lazy label="歌曲" name="song">
+          <SongSearchResult />
+        </el-tab-pane>
+        <!-- 专辑搜索结果 -->
+        <el-tab-pane lazy label="专辑" name="album">
+          <AlbumSearchResult />
+        </el-tab-pane>
+        <!-- 歌手搜索结果 -->
+        <el-tab-pane lazy label="歌手" name="artist">
+          <ArtistSearchResult />
+        </el-tab-pane>
+      </el-tabs>
+    </div>
   </RouterView>
-  
 </template>
 
 <script setup lang="ts">

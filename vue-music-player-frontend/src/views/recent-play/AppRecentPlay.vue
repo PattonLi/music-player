@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-8 mx-5">
+  <div class="mt-8 mx-4 overflow-hidden">
     <div class="mt-5 mb-3 flex items-center justify-between">
       <!-- 功能区 -->
       <div class="flex gap-x-3">

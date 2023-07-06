@@ -28,7 +28,7 @@
               size="20"
               :stroke-width="3"
               class="text-gray-400 ml-3 mr-2 cursor-pointer hover:text-red-400"
-              @click="apiLikeComment(comment.commentId, userId);refresh()"
+              @click="like"
             />
             <IconPark
               v-else
@@ -37,7 +37,7 @@
               :stroke-width="3"
               theme="filled"
               fill="#d0021b"
-              @click="apiDelCommentLike(comment.commentId, userId);refresh()"
+              @click="unLike"
               class="text-gray-400 ml-3 mr-2 cursor-pointer"
             />
           </div>
@@ -52,7 +52,7 @@
 import type { Comment } from '@/models/comment'
 import { ThumbsUp } from '@icon-park/vue-next'
 import { useAuthStore } from '@/stores/auth'
-import { AlertError } from '@/utils/alert/AlertPop'
+import { AlertError, AlertSuccess } from '@/utils/alert/AlertPop'
 import { apiGetCommentLikes, apiLikeComment, apiDelCommentLike } from '@/utils/api/comment'
 import { storeToRefs } from 'pinia'
 const { userId } = storeToRefs(useAuthStore())
@@ -60,9 +60,10 @@ const props = defineProps<{
   comment: Comment
 }>()
 const likes = ref<number[]>()
+const refresh1 = inject('refreshComment') as any
 
 const isSongLike = computed(() => {
-  if (props.comment.commentId in likes) return true
+  if (likes.value?.indexOf(props.comment.commentId)!=-1) return true
   else return false
 })
 
@@ -74,7 +75,31 @@ const refresh = async () => {
     AlertError('获取点赞信息失败')
   }
 }
-onMounted(()=>{
+
+
+const like = async() => {
+  const data = await apiLikeComment(props.comment.commentId, userId.value)
+  if(data.code==200){
+    AlertSuccess('点赞成功')
+    refresh()
+    refresh1()
+  }else{
+    AlertError('点赞失败')
+  }
+}
+const unLike = async() => {
+  const data = await apiDelCommentLike(props.comment.commentId, userId.value)
+  if(data.code==200){
+    AlertSuccess('取消点赞成功')
+    refresh()
+    refresh1()
+  }else{
+    AlertError('取消点赞失败')
+  }
+}
+
+onMounted(() => {
   refresh()
+  refresh1()
 })
 </script>

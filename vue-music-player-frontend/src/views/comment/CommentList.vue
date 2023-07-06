@@ -28,11 +28,9 @@ import { apiGetSongComment } from '@/utils/api/comment'
 import { AlertError } from '@/utils/alert/AlertPop'
 import type { Comment } from '@/models/comment'
 
-const props = defineProps<{comments:Comment[]}>()
+const props = defineProps<{ comments: Comment[] }>()
 const refresh = inject('refreshComment') as any
 onMounted(async () => {
   refresh()
 })
-
-
 </script>

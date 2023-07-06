@@ -18,10 +18,10 @@
       />
       <!-- 第二列文字信息 -->
       <div class="px-3 flex-auto flex flex-col">
-        <div class="text-bg truncate">
+        <div class="text-bg truncate overflow-hidden">
           {{ item.name }}
         </div>
-        <div class="mt-1.5 text-dc truncate">
+        <div class="mt-1.5 text-dc truncate overflow-hidden">
           {{ item.artist }}
         </div>
       </div>

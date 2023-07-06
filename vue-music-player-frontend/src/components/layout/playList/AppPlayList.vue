@@ -35,8 +35,13 @@ import { usePlayerStore } from '@/stores/player'
 import IconPark from '@/components/common/IconPark.vue'
 import PlayListItem from '@/components/layout/playList/PlayListItem.vue'
 
-const { showPlayList, getPlayListCount: playListCount, playList,song } = storeToRefs(usePlayerStore())
-const { play, clearPlayList} =  usePlayerStore()
+const {
+  showPlayList,
+  getPlayListCount: playListCount,
+  playList,
+  song
+} = storeToRefs(usePlayerStore())
+const { play, clearPlayList } = usePlayerStore()
 </script>
 <style lang="scss">
 .play-list {
