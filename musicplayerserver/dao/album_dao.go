@@ -73,13 +73,13 @@ func (*AlbumDao) AddAlbum(album *model.AlbumInfo) (int64, int64, []model.AlbumIn
 	DB.Create(album)
 	DB.Table("album").Count(&totalrecord)
 	if totalrecord%10 == 0 {
-		offset = totalrecord - 10
-		currentPage = totalrecord / 10
+		offset = totalrecord - 5
+		currentPage = totalrecord / 5
 	} else {
-		offset = totalrecord - (totalrecord % 10)
-		currentPage = totalrecord/10 + 1
+		offset = totalrecord - (totalrecord % 5)
+		currentPage = totalrecord/5 + 1
 	}
-	DB.Offset(int(offset)).Limit(10).Find(&albumlist)
+	DB.Offset(int(offset)).Limit(5).Find(&albumlist)
 	return totalrecord, currentPage, albumlist, err
 }
 
