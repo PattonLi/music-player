@@ -146,10 +146,9 @@ func (sc *SongController) ModifySongInfoHandler(c *gin.Context) error {
 	}{
 		// 通过解析 JSON 数据将相应字段赋值给结构体中的字段
 	}
-	c.BindJSON(&songData)
-
 	// 创建一个新的 SongInfo 结构体对象，并将需要插入到数据库的字段赋值
-	songToSave := model.SongInfo{
+	var err error
+	song := model.SongInfo{
 		Name:         songData.Name,
 		Artist:       songData.Artist,
 		Pop:          songData.Pop,
@@ -160,9 +159,14 @@ func (sc *SongController) ModifySongInfoHandler(c *gin.Context) error {
 		Duration:     songData.Duration,
 		Mark:         songData.Mark,
 		Url:          songData.Url,
+		Lyric:        "",
 	}
-
-	var err error = sc.songservice.ModifySongInfo(&songToSave)
+	err = c.ShouldBind(&song)
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+		return err
+	}
+	err = sc.songservice.ModifySongInfo(&song)
 	return err
 }
 

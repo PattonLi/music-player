@@ -103,13 +103,13 @@ func (*ArtistDao) AddArtist(artist *model.ArtistInfo) (int64, int64, []model.Art
 	DB.Create(artist)
 	DB.Table("artist").Count(&totalrecord)
 	if totalrecord%10 == 0 {
-		offset = totalrecord - 10
-		currentPage = totalrecord / 10
+		offset = totalrecord - 5
+		currentPage = totalrecord / 5
 	} else {
-		offset = totalrecord - (totalrecord % 10)
-		currentPage = totalrecord/10 + 1
+		offset = totalrecord - (totalrecord % 5)
+		currentPage = totalrecord/5 + 1
 	}
-	DB.Offset(int(offset)).Limit(10).Find(&artistlist)
+	DB.Offset(int(offset)).Limit(5).Find(&artistlist)
 	return totalrecord, currentPage, artistlist, err
 }
 
