@@ -52,14 +52,14 @@ func (*UserDao) AddUser(user *model.UserInfo) (int64, int64, []model.UserInfo, e
 	}
 	DB.Create(user)
 	DB.Table("user").Count(&totalrecord)
-	if totalrecord%10 == 0 {
-		offset = totalrecord - 10
-		currentPage = totalrecord / 10
+	if totalrecord%5 == 0 {
+		offset = totalrecord - 5
+		currentPage = totalrecord / 5
 	} else {
-		offset = totalrecord - (totalrecord % 10)
-		currentPage = totalrecord/10 + 1
+		offset = totalrecord - (totalrecord % 5)
+		currentPage = totalrecord/5 + 1
 	}
-	DB.Offset(int(offset)).Limit(10).Find(&userlist)
+	DB.Offset(int(offset)).Limit(5).Find(&userlist)
 	return totalrecord, currentPage, userlist, err
 }
 
